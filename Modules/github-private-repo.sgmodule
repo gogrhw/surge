@@ -1,0 +1,12 @@
+#!name=GitHub Private Repo
+#!author=gogrhw
+#!category=Philalethia
+#!desc=Access private GitHub repos/gists in Surge subscriptions, overrides, and scripts.
+#!arguments=Username:YOUR_GITHUB_USERNAME,Token:YOUR_GITHUB_TOKEN
+#!arguments-desc=- Username: your GitHub username.\n- Token: GitHub personal access token with repo scope.
+
+[Script]
+github-private-repo = type=http-request,pattern=^https://(raw|gist)\.githubusercontent\.com/,requires-body=false,modify-headers=true,script-path=https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Scripts/github-private-repo.js,argument=username={{{Username}}}&token={{{Token}}}
+
+[MITM]
+hostname = %APPEND% raw.githubusercontent.com, gist.githubusercontent.com

@@ -1,0 +1,15 @@
+#!name=Unlock Kelee
+#!author=gogrhw
+#!category=Philalethia
+#!desc=Bypass Kelee.one access restrictions by rewriting request headers with a custom User-Agent.
+#!arguments=Loon Version:962
+#!arguments-desc=- Loon build version number, e.g. 962. The script composes the full User-Agent string automatically.
+
+[Header Rewrite]
+http-response ^https?:\/\/kelee\.one header-replace 'Content-Type' 'text/plain;charset=utf-8'
+
+[Script]
+unlock-ikelee = type=http-request,pattern=^https?://kelee.one,script-path=https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Scripts/unlock-ikelee.js,argument="ua:{{{Loon Version}}}"
+
+[MITM]
+hostname = %APPEND% kelee.one

@@ -1,0 +1,11 @@
+#!name=GoodNotes Notability Unlock
+#!author=gogrhw
+#!category=Philalethia
+#!desc=Unlock GoodNotes & Notability premium subscriptions by faking receipt and subscriber data.
+
+[Script]
+goodnotes-notability-unlock = type=http-response,pattern=^https:\/\/isi\.csan\.[a-z.]+\/.+\/(receipts$|subscribers\/[^/]+$),requires-body=true,script-path=https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Scripts/goodnotes-notability-unlock.js
+goodnotes-notability-unlock = type=http-response,pattern=^https?:\/\/notability\.com\/global,requires-body=true,script-path=https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Scripts/goodnotes-notability-unlock.js
+
+[MITM]
+hostname = %APPEND% isi.csan.*, notability.com

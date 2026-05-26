@@ -1,0 +1,10 @@
+#!name=Emby Unlock
+#!author=gogrhw
+#!category=Philalethia
+#!desc=Fake mb3admin.com device validation to unlock Emby client playback.
+
+[Script]
+emby-unlock = type=http-response,pattern=^https?:\/\/mb3admin\.com\/admin\/service\/registration\/validateDevice,requires-body=true,script-path=https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Scripts/emby-unlock.js
+
+[MITM]
+hostname = %APPEND% mb3admin.com

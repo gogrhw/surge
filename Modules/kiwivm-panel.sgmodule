@@ -1,0 +1,22 @@
+#!name=KiwiVM Panel
+#!author=gogrhw
+#!category=Philalethia
+#!desc=Read-only Surge information panels for KiwiVM/BandwagonHost status, traffic, network, snapshots, backups, security, and maintenance.
+#!arguments=Panel Title:KiwiVM,Update Interval:600,Panel Icon:server.rack,Panel Color:6F4A35,VEID:YOUR_VEID,API Key:YOUR_API_KEY
+#!arguments-desc=- Panel Title: display title for the panel group.\n- Update Interval: refresh interval in seconds.\n- Panel Icon: SF Symbols icon name.\n- Panel Color: hex color without leading #.\n- VEID: your BandwagonHost VPS ID.\n- API Key: KiwiVM API key from the control panel.\n\nAll panels are read-only. This module does not expose restart, stop, reinstall, shell, snapshot restore, or other VPS operation calls.
+
+[Panel]
+KiwiVM Overview = title="{{{Panel Title}}} / Overview",content="Waiting for refresh",icon="{{{Panel Icon}}}",script-name=kiwivm-overview,update-interval={{{Update Interval}}}
+KiwiVM Live = title="{{{Panel Title}}} / Live",content="Waiting for refresh",icon="waveform.path.ecg",script-name=kiwivm-live,update-interval={{{Update Interval}}}
+KiwiVM Network = title="{{{Panel Title}}} / Network",content="Waiting for refresh",icon="network",script-name=kiwivm-network,update-interval={{{Update Interval}}}
+KiwiVM Storage = title="{{{Panel Title}}} / Storage",content="Waiting for refresh",icon="externaldrive.fill",script-name=kiwivm-storage,update-interval={{{Update Interval}}}
+KiwiVM Security = title="{{{Panel Title}}} / Security",content="Waiting for refresh",icon="lock.shield.fill",script-name=kiwivm-security,update-interval={{{Update Interval}}}
+KiwiVM Maintenance = title="{{{Panel Title}}} / Maintenance",content="Waiting for refresh",icon="wrench.and.screwdriver.fill",script-name=kiwivm-maintenance,update-interval={{{Update Interval}}}
+
+[Script]
+kiwivm-overview = type=generic,timeout=15,script-path=https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Scripts/kiwivm-panel.js,argument="mode=overview&title={{{Panel Title}}}&icon={{{Panel Icon}}}&color={{{Panel Color}}}&veid={{{VEID}}}&api_key={{{API Key}}}"
+kiwivm-live = type=generic,timeout=20,script-path=https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Scripts/kiwivm-panel.js,argument="mode=live&title={{{Panel Title}}}&color={{{Panel Color}}}&veid={{{VEID}}}&api_key={{{API Key}}}"
+kiwivm-network = type=generic,timeout=20,script-path=https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Scripts/kiwivm-panel.js,argument="mode=network&title={{{Panel Title}}}&color={{{Panel Color}}}&veid={{{VEID}}}&api_key={{{API Key}}}"
+kiwivm-storage = type=generic,timeout=20,script-path=https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Scripts/kiwivm-panel.js,argument="mode=storage&title={{{Panel Title}}}&color={{{Panel Color}}}&veid={{{VEID}}}&api_key={{{API Key}}}"
+kiwivm-security = type=generic,timeout=20,script-path=https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Scripts/kiwivm-panel.js,argument="mode=security&title={{{Panel Title}}}&color={{{Panel Color}}}&veid={{{VEID}}}&api_key={{{API Key}}}"
+kiwivm-maintenance = type=generic,timeout=20,script-path=https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Scripts/kiwivm-panel.js,argument="mode=maintenance&title={{{Panel Title}}}&color={{{Panel Color}}}&veid={{{VEID}}}&api_key={{{API Key}}}"

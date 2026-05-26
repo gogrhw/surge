@@ -1,0 +1,9 @@
+#!name=BandwagonHost Traffic
+#!author=gogrhw
+#!category=Philalethia
+#!desc=Shows BandwagonHost monthly traffic usage on a daily schedule.
+#!arguments=Cron Expression:0 0 * * *,VEID:YOUR_VEID,API Key:YOUR_API_KEY
+#!arguments-desc=- Cron Expression: standard cron expression, e.g. 0 0 * * * runs daily at midnight.\n- VEID: your BandwagonHost VPS ID.\n- API Key: KiwiVM API key from the control panel.
+
+[Script]
+bandwagonhost-traffic = type=cron,cronexp="{{{Cron Expression}}}",script-path=https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Scripts/bandwagonhost-traffic.js,timeout=10,argument=veid={{{VEID}}}&api_key={{{API Key}}}

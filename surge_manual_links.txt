@@ -1,0 +1,5 @@
+Surge scripting common manual:
+https://manual.nssurge.com/scripting/common.html
+
+Surge module manual:
+https://manual.nssurge.com/others/module.html
