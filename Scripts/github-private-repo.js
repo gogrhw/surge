@@ -17,7 +17,6 @@ const token = args.token || "";
 if (!username || !token) {
   console.log("GitHub Private: username or token not configured");
   $done({});
-  return;
 }
 
 const url = $request.url;
