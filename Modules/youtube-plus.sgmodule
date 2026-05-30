@@ -1,57 +1,48 @@
 #!name=YouTube Plus
 #!author=gogrhw + Maasea + Aioneas + QingRex + VirgilClyne
 #!category=Philalethia
-#!desc=YouTube ad blocking, Shorts management, PiP/background playback, bilingual subtitles & lyric translation. Configurable via parameters.
-#!arguments=lyricLang:off,captionLang:off,blockUpload:true,blockImmersive:true,blockShorts:true,debug:false,Type:Official,AutoCC:true,ShowOnly:false,Position:Forward
-#!arguments-desc=- lyricLang: lyric translation language, ISO 639-1 code or "off"\n- captionLang: auto-translate caption language, ISO 639-1 code or "off"\n- blockUpload: block upload-type content, [true, false]\n- blockImmersive: block immersive music content, [true, false]\n- blockShorts: block YouTube Shorts, [true, false]\n- debug: enable debug logging, [true, false]\n- Type: subtitle type, [Official, Translate]\n- AutoCC: auto-show translated subtitles, [true, false]\n- ShowOnly: only show translated subtitles, [true, false]\n- Position: original subtitle position, [Forward, Reverse]
+#!desc=YouTube ad blocking, Shorts & content filtering, PiP/background playback, bilingual subtitles and lyric translation. Combines former YouTube Plus and YouTube Subtitles Translate modules.
+#!arguments=lyricLang:off,captionLang:off,blockUpload:true,blockImmersive:true,blockShorts:true,debug:false,Type:Translate,AutoCC:true,ShowOnly:false,Position:Forward
+#!arguments-desc=- Content Filtering -\n- lyricLang: lyric translation language, ISO 639-1 code or "off"\n- captionLang: auto-translate caption language, ISO 639-1 code or "off"\n- blockUpload: block upload-type feed content, [true, false]\n- blockImmersive: block immersive music feed content, [true, false]\n- blockShorts: block YouTube Shorts, [true, false]\n- debug: enable debug logging, [true, false]\n- Subtitle Translation -\n- Type: subtitle type, [Official, Translate]\n- AutoCC: auto-show translated subtitles, [true, false]\n- ShowOnly: only show translated subtitles, [true, false]\n- Position: original subtitle position, [Forward, Reverse]
 
 [URL Rewrite]
+# PiP & background playback
 ^https?:\/\/[\w-]+\.googlevideo\.com\/(?!dclk_video_ads).+?&ctier=L(&.+?),ctier,(.+) https://$1$2$3 302
 
 [Map Local]
+# Block video ads (googlevideo)
 ^https?:\/\/[\w-]+\.googlevideo\.com\/(?!(dclk_video_ads|videoplayback\?)).+&oad data-type=text data=" " status-code=200
+# Block stats / pagead / ptracking / qoe ads
 ^https?:\/\/(www|s)\.youtube\.com\/api\/stats\/ads data-type=text data=" " status-code=200
 ^https?:\/\/(www|s)\.youtube\.com\/(pagead|ptracking) data-type=text data=" " status-code=200
 ^https?:\/\/s\.youtube\.com\/api\/stats\/qoe\?adcontext data-type=text data=" " status-code=200
 
 [Script]
-# YouTube Plus — response
+# --- Ad blocking, Shorts filtering & lyric translation ---
 youtube.response = type=http-response, pattern=^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next|player|search|reel\/reel_watch_sequence|guide|account\/get_setting|get_watch), script-path=https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Scripts/youtube.response.js, requires-body=true, binary-body-mode=true, max-size=-1, timeout=60, argument=lyricLang={{{lyricLang}}}&captionLang={{{captionLang}}}&blockUpload={{{blockUpload}}}&blockImmersive={{{blockImmersive}}}&blockShorts={{{blockShorts}}}&debug={{{debug}}}
 
-# YouTube Player — JSON request
+# --- Subtitle translation: Player (JSON) ---
 youtube-subtitles-request-player-json = type=http-request,pattern=^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player\?(.*),requires-body=true,max-size=-1,script-path=https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Scripts/youtube-subtitles-request.js,tag=JSON YouTube Player Request,argument=Type={{{Type}}}&AutoCC={{{AutoCC}}}&ShowOnly={{{ShowOnly}}}&Position={{{Position}}}
-
-# YouTube Player — JSON response
 youtube-subtitles-response-player-json = type=http-response,pattern=^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player\?(.*),requires-body=true,max-size=-1,script-path=https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Scripts/youtube-subtitles-response.js,tag=JSON YouTube Player Response,argument=Type={{{Type}}}&AutoCC={{{AutoCC}}}&ShowOnly={{{ShowOnly}}}&Position={{{Position}}}
 
-# YouTube Player — Proto request
+# --- Subtitle translation: Player (Proto) ---
 youtube-subtitles-request-player-proto = type=http-request,pattern=^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player\?(.*),requires-body=true,max-size=-1,binary-body-mode=true,script-path=https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Scripts/youtube-subtitles-request.js,tag=Proto YouTube Player Request,argument=Type={{{Type}}}&AutoCC={{{AutoCC}}}&ShowOnly={{{ShowOnly}}}&Position={{{Position}}}
-
-# YouTube Player — Proto response
 youtube-subtitles-response-player-proto = type=http-response,pattern=^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/player\?(.*),requires-body=true,max-size=-1,binary-body-mode=true,script-path=https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Scripts/youtube-subtitles-response.js,tag=Proto YouTube Player Response,argument=Type={{{Type}}}&AutoCC={{{AutoCC}}}&ShowOnly={{{ShowOnly}}}&Position={{{Position}}}
 
-# YouTube GetWatch — Proto response
+# --- Subtitle translation: GetWatch (Proto) ---
 youtube-subtitles-response-getwatch-proto = type=http-response,pattern=^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/get_watch\?(.*),requires-body=true,max-size=-1,binary-body-mode=true,script-path=https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Scripts/youtube-subtitles-response.js,tag=Proto GetWatch Response,argument=Type={{{Type}}}&AutoCC={{{AutoCC}}}&ShowOnly={{{ShowOnly}}}&Position={{{Position}}}
 
-# YouTube Timedtext — request
+# --- Subtitle translation: Timedtext ---
 youtube-subtitles-request-timedtext = type=http-request,pattern=^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext\?(.*),requires-body=false,script-path=https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Scripts/youtube-subtitles-request.js,tag=YouTube Timedtext Request,argument=Type={{{Type}}}&AutoCC={{{AutoCC}}}&ShowOnly={{{ShowOnly}}}&Position={{{Position}}}
-
-# YouTube Timedtext — composite response (Official/External)
 youtube-subtitles-response-timedtext-composite = type=http-response,pattern=^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext\?(.*)subtype=(Official|External),requires-body=true,max-size=-1,script-path=https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Scripts/youtube-subtitles-composite-response.js,argument=Type={{{Type}}}&AutoCC={{{AutoCC}}}&ShowOnly={{{ShowOnly}}}&Position={{{Position}}},tag=YouTube Timedtext Composite Response
-
-# YouTube Timedtext — translate response
 youtube-subtitles-response-timedtext-translate = type=http-response,pattern=^https?:\/\/(www|m)\.youtube\.com\/api\/timedtext\?(.*)subtype=Translate,requires-body=true,max-size=-1,script-path=https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Scripts/youtube-subtitles-translate-response.js,argument=Type={{{Type}}}&AutoCC={{{AutoCC}}}&ShowOnly={{{ShowOnly}}}&Position={{{Position}}},tag=YouTube Timedtext Translate Response
 
-# YouTube Music Browse — JSON request
+# --- Subtitle translation: YouTube Music Browse (JSON) ---
 youtube-subtitles-request-browse-json = type=http-request,pattern=^https?:\/\/music\.youtube\.com\/youtubei\/v1\/browse\?(.*),requires-body=true,max-size=-1,script-path=https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Scripts/youtube-subtitles-request.js,tag=JSON YouTube Music Browse Request,argument=Type={{{Type}}}&AutoCC={{{AutoCC}}}&ShowOnly={{{ShowOnly}}}&Position={{{Position}}}
-
-# YouTube Music Browse — Proto request
-youtube-subtitles-request-browse-proto = type=http-request,pattern=^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/browse\?(.*),requires-body=true,max-size=-1,binary-body-mode=true,script-path=https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Scripts/youtube-subtitles-request.js,tag=Proto YouTube Music Browse Request,argument=Type={{{Type}}}&AutoCC={{{AutoCC}}}&ShowOnly={{{ShowOnly}}}&Position={{{Position}}}
-
-# YouTube Music Browse — JSON translate response
 youtube-subtitles-response-browse-json = type=http-response,pattern=^https?:\/\/music\.youtube\.com\/youtubei\/v1\/browse\?(.*)subtype=Translate,requires-body=true,max-size=-1,script-path=https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Scripts/youtube-subtitles-translate-response.js,argument=Type={{{Type}}}&AutoCC={{{AutoCC}}}&ShowOnly={{{ShowOnly}}}&Position={{{Position}}},tag=JSON YouTube Music Lyrics Response
 
-# YouTube Music Browse — Proto translate response
+# --- Subtitle translation: YouTube Music Browse (Proto) ---
+youtube-subtitles-request-browse-proto = type=http-request,pattern=^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/browse\?(.*),requires-body=true,max-size=-1,binary-body-mode=true,script-path=https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Scripts/youtube-subtitles-request.js,tag=Proto YouTube Music Browse Request,argument=Type={{{Type}}}&AutoCC={{{AutoCC}}}&ShowOnly={{{ShowOnly}}}&Position={{{Position}}}
 youtube-subtitles-response-browse-proto = type=http-response,pattern=^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/browse\?(.*)subtype=Translate,requires-body=true,max-size=-1,binary-body-mode=true,script-path=https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Scripts/youtube-subtitles-translate-response.js,argument=Type={{{Type}}}&AutoCC={{{AutoCC}}}&ShowOnly={{{ShowOnly}}}&Position={{{Position}}},tag=Proto YouTube Music Lyrics Response
 
 [MITM]
