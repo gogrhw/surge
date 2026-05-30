@@ -1,7 +1,7 @@
 #!name=YouTube Plus
 #!author=gogrhw + Maasea + Aioneas + QingRex + VirgilClyne
 #!category=Philalethia
-#!desc=YouTube ad blocking, Shorts & content filtering, PiP/background playback, bilingual subtitles. Combines former YouTube Plus and YouTube Subtitles Translate modules.
+#!desc=YouTube ad blocking, Shorts & content filtering, PiP/background playback, bilingual subtitles.
 #!arguments=blockUpload:true,blockImmersive:true,blockShorts:true,debug:false,Type:Translate,AutoCC:true,ShowOnly:false,Position:Forward
 #!arguments-desc=- Content Filtering -\n- blockUpload: block upload-type feed content, [true, false]\n- blockImmersive: block immersive music feed content, [true, false]\n- blockShorts: block YouTube Shorts, [true, false]\n- debug: enable debug logging, [true, false]\n- Subtitle Translation -\n- Type: subtitle type, [Official, Translate]\n- AutoCC: auto-show translated subtitles, [true, false]\n- ShowOnly: only show translated subtitles, [true, false]\n- Position: original subtitle position, [Forward, Reverse]
 
