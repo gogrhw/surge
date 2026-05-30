@@ -28,6 +28,6 @@ Personal [Surge](https://nssurge.com/) module collection.
 | Parameter | Default | Description |
 |-----------|---------|-------------|
 | `Type` | `Translate` | Subtitle type, `Translate` or `Official` |
-| `AutoCC` | `true` | Auto-show translated subtitles |
+| `AutoCC` | `false` | Auto-show translated subtitles |
 | `ShowOnly` | `false` | Only show translated subtitles |
 | `Position` | `Forward` | Original subtitle position, `Forward` or `Reverse` |
