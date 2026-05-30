@@ -18,8 +18,6 @@ Personal [Surge](https://nssurge.com/) module collection.
 
 | Parameter | Default | Description |
 |-----------|---------|-------------|
-| `lyricLang` | `off` | Lyric translation language, ISO 639-1 code or `off` |
-| `captionLang` | `off` | Auto-translated caption language, ISO 639-1 code or `off` |
 | `blockUpload` | `true` | Block upload-type feed content |
 | `blockImmersive` | `true` | Block immersive music feed content |
 | `blockShorts` | `true` | Block YouTube Shorts |
