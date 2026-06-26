@@ -10,6 +10,7 @@
 | GoodNotes Notability 解锁 | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/goodnotes-notability-unlock.sgmodule |
 | KiwiVM 面板 | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/kiwivm-panel.sgmodule |
 | Kelee 解锁 | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/unlock-ikelee.sgmodule |
+| Spotify 解锁 | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/Spotify-unlock.sgmodule |
 | YouTube Plus | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/youtube-plus.sgmodule |
 
 ## 模块参数说明
@@ -47,6 +48,10 @@
 | 参数 | 默认值 | 说明 |
 |------|--------|------|
 | `Loon Version` | `962` | Loon 客户端版本号，脚本会自动拼接完整的 User-Agent 字符串 |
+
+### Spotify 解锁
+
+无需配置参数。通过重写账户属性和客户端 API 请求来解锁 Spotify Premium 功能。需要 MITM 开启并信任证书。
 
 ### YouTube Plus
 
