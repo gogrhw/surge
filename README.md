@@ -6,6 +6,7 @@
 |--------|----------|
 | BandwagonHost 流量 | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/bandwagonhost-traffic.sgmodule |
 | Emby 解锁 | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/emby-unlock.sgmodule |
+| GitHub PDF 预览 | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/github-pdf-preview.sgmodule |
 | GitHub 私有仓库 | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/github-private-repo.sgmodule |
 | GoodNotes Notability 解锁 | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/goodnotes-notability-unlock.sgmodule |
 | KiwiVM 面板 | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/kiwivm-panel.sgmodule |
@@ -29,6 +30,10 @@
 |------|--------|------|
 | `Username` | 必填 | GitHub 用户名 |
 | `Token` | 必填 | GitHub Personal Access Token，需勾选 repo 权限 |
+
+### GitHub PDF 预览
+
+无需配置参数。将 `raw.githubusercontent.com` 返回的 PDF 响应类型修正为 `application/pdf`，并移除强制下载响应头，使 Safari 等浏览器直接预览文件。需要开启 MITM 并信任 Surge 证书。
 
 ### KiwiVM 面板
 

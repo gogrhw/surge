@@ -1,0 +1,12 @@
+#!name=GitHub PDF Preview
+#!author=gogrhw
+#!category=Philalethia
+#!desc=Preview PDF files from GitHub raw URLs in the browser instead of downloading them.
+
+[Header Rewrite]
+http-response ^https:\/\/raw\.githubusercontent\.com\/[^?]*\.[pP][dD][fF](?:\?.*)?$ header-del 'Content-Type'
+http-response ^https:\/\/raw\.githubusercontent\.com\/[^?]*\.[pP][dD][fF](?:\?.*)?$ header-add 'Content-Type' 'application/pdf'
+http-response ^https:\/\/raw\.githubusercontent\.com\/[^?]*\.[pP][dD][fF](?:\?.*)?$ header-del 'Content-Disposition'
+
+[MITM]
+hostname = %APPEND% raw.githubusercontent.com
