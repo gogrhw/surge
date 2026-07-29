@@ -43,10 +43,16 @@
 | `Update Interval` | `600` | 面板刷新间隔，单位秒 |
 | `Panel Icon` | `server.rack` | 面板图标，SF Symbols 图标名 |
 | `Panel Color` | `6F4A35` | 面板颜色，十六进制颜色值（不含 `#`） |
+| `Show Overview` | `true` | 是否显示总览面板 |
+| `Show Live` | `true` | 是否显示实时状态面板 |
+| `Show Network` | `true` | 是否显示网络面板 |
+| `Show Storage` | `true` | 是否显示快照与备份面板 |
+| `Show Security` | `true` | 是否显示安全面板 |
+| `Show Maintenance` | `true` | 是否显示维护面板 |
 | `VEID` | 必填 | BandwagonHost VPS 的 VEID |
 | `API Key` | 必填 | KiwiVM 控制面板的 API Key |
 
-所有面板均为只读模式，不会调用重启、关机、重装、Shell、快照恢复等 VPS 操作接口。
+将某个 `Show ...` 参数设为 `false`，即可隐藏对应面板。所有面板均为只读模式，不会调用重启、关机、重装、Shell、快照恢复等 VPS 操作接口。
 
 ### Kelee 解锁
 
