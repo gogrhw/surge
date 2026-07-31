@@ -12,6 +12,7 @@ const MODULE = fs.readFileSync(
   path.join(ROOT, 'Modules/plex-fast-connect.sgmodule'),
   'utf8'
 );
+const README = fs.readFileSync(path.join(ROOT, 'README.md'), 'utf8');
 const IDENTITY = [
   '<?xml version="1.0" encoding="UTF-8"?>',
   '<MediaContainer size="0" claimed="1" ',
@@ -97,6 +98,20 @@ const LIBRARY_SECTIONS = [
   assert.match(MODULE, /^#!arguments-desc=/m);
   assert.match(MODULE, /bypass_official=\{\{\{BYPASS_OFFICIAL\}\}\}/);
   assert.equal(MODULE.includes('%SCRIPT_URL%'), false);
+  assertOrdered(
+    README,
+    '| Kelee 解锁 |',
+    '| Plex Fast Connect |',
+    '| Spotify 解锁 |',
+    'README module table'
+  );
+  assertOrdered(
+    README,
+    '### Kelee 解锁',
+    '### Plex Fast Connect',
+    '### Spotify 解锁',
+    'README module descriptions'
+  );
 
   assert.equal(
     (MODULE.match(
@@ -738,4 +753,13 @@ function allConnectionAddresses(xml) {
     .map(function (match) {
       return match[1];
     });
+}
+
+function assertOrdered(text, before, item, after, label) {
+  const beforeIndex = text.indexOf(before);
+  const itemIndex = text.indexOf(item);
+  const afterIndex = text.indexOf(after);
+  assert.ok(beforeIndex >= 0, label + ': missing ' + before);
+  assert.ok(itemIndex > beforeIndex, label + ': ' + item + ' is out of order');
+  assert.ok(afterIndex > itemIndex, label + ': ' + after + ' is out of order');
 }
