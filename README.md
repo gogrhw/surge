@@ -6,6 +6,7 @@
 |--------|----------|
 | BandwagonHost 流量 | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/bandwagonhost-traffic.sgmodule |
 | Emby 解锁 | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/emby-unlock.sgmodule |
+| Plex Fast Connect | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/plex-fast-connect.sgmodule |
 | GitHub PDF 预览 | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/github-pdf-preview.sgmodule |
 | GitHub 私有仓库 | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/github-private-repo.sgmodule |
 | GoodNotes Notability 解锁 | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/goodnotes-notability-unlock.sgmodule |
@@ -15,6 +16,30 @@
 | YouTube Plus | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/youtube-plus.sgmodule |
 
 ## 模块参数说明
+
+### Plex Fast Connect
+
+加速 Infuse 的 Plex 服务器发现。首次请求仍访问 Plex 官方
+`resources.xml`，脚本自动识别并缓存正确的官方 Device；后续请求会先认证可用
+直连并只返回最快的一条，避免客户端逐个等待无效候选地址超时。
+
+| 参数 | 默认值 | 说明 |
+|------|--------|------|
+| `BYPASS_OFFICIAL` | `true` | 缓存可用时绕过 Plex 官方发现 |
+| `LAN_URL` | `auto` | 局域网 Plex 根地址；`auto` 表示使用官方候选 |
+| `REMOTE_URL` | `auto` | 远程 Plex 根地址；`auto` 表示使用官方候选 |
+| `BYPASS_TIMEOUT` | `3` | 直连认证超时秒数，范围 `0.5–4` |
+| `PROBE_TIMEOUT` | `2` | 关闭绕过时筛选官方候选的超时秒数，范围 `0.5–3` |
+| `ALLOW_RELAY` | `true` | 关闭绕过后，直连失败时是否尝试 Plex Relay |
+| `DEBUG` | `false` | 输出不含 Token 的诊断日志 |
+
+两个 URL 都为 `auto` 时完全自动识别。任意参数填写 HTTP(S) URL 后进入显式
+模式，只使用实际填写的 URL；例如只填写 `LAN_URL` 时不会探测远程或自动候选。
+
+模块只 MITM `plex.tv` 的资源发现请求，不会解密实际媒体流。服务器专用 Token
+来自 Plex 官方响应，仅保存在 Surge 本机的 `$persistentStore` 中，不会写入
+模块、上传到 GitHub 或输出到日志。安装前需在 Surge 中启用 MITM、脚本并信任
+Surge CA。
 
 ### BandwagonHost 流量
 
