@@ -1,6 +1,6 @@
 #!name=Plex Fast Connect
 #!author=gogrhw
-#!category=Media
+#!category=Philalethia
 #!desc=Automatically identify and cache the exact official Plex Device. Non-empty LAN/remote URLs strictly override automatic connection discovery. Always fails open.
 #!arguments=BYPASS_OFFICIAL:true,LAN_URL:auto,REMOTE_URL:auto,BYPASS_TIMEOUT:3,PROBE_TIMEOUT:2,ALLOW_RELAY:true,DEBUG:false
 #!arguments-desc=- Cached Discovery -\n- BYPASS_OFFICIAL: use the cached official Device after the first request, [true, false]\n- LAN_URL: local Plex base URL, or auto for automatic discovery\n- REMOTE_URL: remote Plex base URL, or auto for automatic discovery\n- BYPASS_TIMEOUT: authenticated direct URL probe timeout in seconds, [0.5-4]\n- Official Filter -\n- PROBE_TIMEOUT: official candidate probe timeout in seconds when bypass is disabled, [0.5-3]\n- ALLOW_RELAY: try Plex Relay after direct candidates fail, [true, false]\n- DEBUG: enable sanitized probe logging, [true, false]
