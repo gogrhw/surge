@@ -1,0 +1,13 @@
+#!name=AI Balance
+#!author=gogrhw
+#!category=Philalethia
+#!desc=Read-only Surge information panel showing the DeepSeek total balance and Qwen/Model Studio available balance.
+#!arguments=Update Interval:600,DeepSeek API Key:YOUR_DEEPSEEK_API_KEY,Qwen AccessKey ID:YOUR_ALIBABA_CLOUD_ACCESS_KEY_ID,Qwen AccessKey Secret:YOUR_ALIBABA_CLOUD_ACCESS_KEY_SECRET
+#!arguments-desc=- Update Interval: refresh interval in seconds.\n- DeepSeek API Key: API key from the DeepSeek platform.\n- Qwen AccessKey ID: Alibaba Cloud RAM AccessKey ID; this is not a DashScope API key.\n- Qwen AccessKey Secret: matching Alibaba Cloud RAM AccessKey secret. Grant only read access to QueryAccountBalance.
+#!requirement=CORE_VERSION>=22
+
+[Panel]
+AI = title="AI Balance",content="Waiting for refresh",script-name=ai-balance,update-interval={{{Update Interval}}}
+
+[Script]
+ai-balance = type=generic,timeout=15,script-path=https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Scripts/ai-balance.js,argument="deepseek_api_key={{{DeepSeek API Key}}}&qwen_access_key_id={{{Qwen AccessKey ID}}}&qwen_access_key_secret={{{Qwen AccessKey Secret}}}"

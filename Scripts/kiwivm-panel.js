@@ -11,8 +11,6 @@
     veid: args.veid || "",
     apiKey: args.api_key || "",
     title: args.title || "KiwiVM",
-    icon: args.icon || "",
-    color: normalizeColor(args.color || "#6F4A35"),
   };
 
   var runners = {
@@ -28,8 +26,6 @@
     return finishPanel({
       title: config.title + " / 配置错误",
       content: "未知面板模式: " + mode,
-      icon: "exclamationmark.triangle.fill",
-      color: "#D14343",
     });
   }
 
@@ -72,8 +68,6 @@
         finishPanel({
           title: config.title + " / 总览",
           content: lines.join("\n"),
-          icon: iconFor("overview"),
-          color: risk.color || config.color,
         });
       }
     );
@@ -119,8 +113,6 @@
       finishPanel({
         title: config.title + " / 实时",
         content: lines.join("\n"),
-        icon: iconFor("live"),
-        color: live.ve_status === "Stopped" ? "#8A8F98" : config.color,
       });
     });
   }
@@ -153,8 +145,6 @@
         finishPanel({
           title: config.title + " / 网络",
           content: lines.join("\n"),
-          icon: iconFor("network"),
-          color: config.color,
         });
       }
     );
@@ -191,8 +181,6 @@
         finishPanel({
           title: config.title + " / 快照备份",
           content: lines.join("\n"),
-          icon: iconFor("storage"),
-          color: config.color,
         });
       }
     );
@@ -243,8 +231,6 @@
         finishPanel({
           title: config.title + " / 安全",
           content: lines.join("\n"),
-          icon: iconFor("security"),
-          color: risk.color || config.color,
         });
       }
     );
@@ -282,8 +268,6 @@
         finishPanel({
           title: config.title + " / 维护",
           content: lines.join("\n"),
-          icon: iconFor("maintenance"),
-          color: config.color,
         });
       }
     );
@@ -360,9 +344,9 @@
   }
 
   function riskSummary(info) {
-    if (isTruthy(info.suspended)) return { text: "已暂停", color: "#D14343" };
-    if (isTruthy(info.policy_violation)) return { text: "有待处理违规", color: "#B45309" };
-    return { text: "正常", color: "#2E7D32" };
+    if (isTruthy(info.suspended)) return { text: "已暂停" };
+    if (isTruthy(info.policy_violation)) return { text: "有待处理违规" };
+    return { text: "正常" };
   }
 
   function ipSummary(info) {
@@ -414,12 +398,10 @@
     if (keys.length) lines.push(line("部分失败", keys.join(", ")));
   }
 
-  function finishError(title, message, iconMode) {
+  function finishError(title, message) {
     finishPanel({
       title: config.title + " / " + title,
       content: message,
-      icon: iconFor(iconMode || mode) || "xmark.octagon.fill",
-      color: "#D14343",
     });
   }
 
@@ -427,21 +409,7 @@
     $done({
       title: panel.title || config.title,
       content: panel.content || "",
-      icon: panel.icon || iconFor(mode),
-      "icon-color": normalizeColor(panel.color || config.color),
     });
-  }
-
-  function iconFor(name) {
-    if (config.icon && (name === "overview" || name === mode)) return config.icon;
-    return {
-      overview: "server.rack",
-      live: "waveform.path.ecg",
-      network: "network",
-      storage: "externaldrive.fill",
-      security: "lock.shield.fill",
-      maintenance: "wrench.and.screwdriver.fill",
-    }[name] || config.icon || "server.rack";
   }
 
   function parseArguments(input) {
@@ -482,14 +450,6 @@
       index += 1;
     }
     return bytes.toFixed(index === 0 ? 0 : 2) + " " + units[index];
-  }
-
-  function normalizeColor(input) {
-    var text = String(input || "").trim();
-    if (!text) return "#6F4A35";
-    text = text.replace(/^%23/i, "#");
-    if (text.charAt(0) !== "#") text = "#" + text;
-    return text;
   }
 
   function formatUnix(valueToFormat) {
