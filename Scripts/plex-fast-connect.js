@@ -292,7 +292,10 @@
     }, Math.ceil((timeout + 0.25) * 1000));
 
     candidates.forEach(function (connection) {
-      var headers = { Accept: 'application/xml' };
+      var headers = {
+        Accept: 'application/xml',
+        'Accept-Encoding': 'identity',
+      };
       var probeToken = connection.probeToken || token;
       if (probeToken) headers['X-Plex-Token'] = probeToken;
 

@@ -2,6 +2,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
+const zlib = require('node:zlib');
 
 const ROOT = path.resolve(__dirname, '..');
 const SOURCE = fs.readFileSync(
@@ -66,6 +67,9 @@ const LIBRARY_SECTIONS = [
   '<?xml version="1.0" encoding="UTF-8"?>',
   '<MediaContainer size="1"><Directory key="1" title="Movies"/></MediaContainer>',
 ].join('');
+const GZIP_LIBRARY_SECTIONS = zlib
+  .gzipSync(Buffer.from(LIBRARY_SECTIONS, 'utf8'))
+  .toString('latin1');
 
 (async function () {
   assert.match(MODULE, /\[MITM\][\s\S]*hostname = %APPEND% plex\.tv/);
@@ -362,6 +366,42 @@ const LIBRARY_SECTIONS = [
     }),
     false,
     'Plex token must not be logged'
+  );
+
+  const gzipWarm = await runScript({
+    argument: [
+      'phase=request',
+      'bypass_official=true',
+      'lan_url=http://192.0.2.10:32400',
+      'remote_url=https://plex.example.com:8443',
+      'bypass_timeout=3',
+      'debug=true',
+    ].join('&'),
+    request: {
+      url: 'https://plex.tv/api/resources.xml?includeHttps=1&includeRelay=1',
+      headers: { 'X-Plex-Token': 'fixture-account-token' },
+    },
+    replies: {
+      'http://192.0.2.10:32400/library/sections': {
+        status: 200,
+        body: function (requestOptions) {
+          return requestOptions.headers['Accept-Encoding'] === 'identity'
+            ? LIBRARY_SECTIONS
+            : GZIP_LIBRARY_SECTIONS;
+        },
+      },
+      'https://plex.example.com:8443/library/sections': {
+        error: 'TLS reset',
+      },
+    },
+    store: Object.assign({}, sharedStore),
+  });
+
+  assert.equal(gzipWarm.calls[0].options.headers['Accept-Encoding'], 'identity');
+  assert.equal(gzipWarm.result.response.status, 200);
+  assert.equal(
+    gzipWarm.result.response.headers['X-Surge-Plex-Fast-Connect'],
+    'cache-hit'
   );
 
   const warmRemote = await runScript({
@@ -708,7 +748,9 @@ function runScript(options) {
             callback(
               reply.error || null,
               reply.status === undefined ? null : { status: reply.status },
-              reply.body || ''
+              typeof reply.body === 'function'
+                ? reply.body(requestOptions)
+                : reply.body || ''
             );
           });
         },
