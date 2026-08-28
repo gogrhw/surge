@@ -5,15 +5,11 @@
 | 模块 |  Raw 链接 |
 |--------|----------|
 | AI Balance | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/ai-balance.sgmodule |
-| BandwagonHost 流量 | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/bandwagonhost-traffic.sgmodule |
-| Emby 解锁 | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/emby-unlock.sgmodule |
 | GitHub PDF 预览 | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/github-pdf-preview.sgmodule |
 | GitHub 私有仓库 | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/github-private-repo.sgmodule |
-| GoodNotes Notability 解锁 | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/goodnotes-notability-unlock.sgmodule |
 | Kelee 解锁 | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/unlock-ikelee.sgmodule |
 | KiwiVM 面板 | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/kiwivm-panel.sgmodule |
 | Plex Fast Connect | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/plex-fast-connect.sgmodule |
-| Spotify 解锁 | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/Spotify-unlock.sgmodule |
 | YouTube Plus | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/youtube-plus.sgmodule |
 
 ## 模块参数说明
@@ -30,14 +26,6 @@
 模块使用固定标题 `AI Balance`，将 DeepSeek 和 Qwen 余额合并到一张卡片，只显示 DeepSeek 总余额和 Qwen 可用余额。Qwen/百炼通过阿里云账户结算，因此 Qwen 可用余额来自 BSS OpenAPI `QueryAccountBalance`，代表整个阿里云账号可用于 Qwen/百炼等服务结算的可用额度；它不是单个 Qwen API Key 的用量统计。
 
 建议创建专用 RAM 用户，只授予 BSS 余额只读权限（例如`AliyunBSSReadOnlyAccess`），不要使用具备资源管理权限的主账号 AccessKey。卡片只访问 DeepSeek 与阿里云官方接口；阿里云 AccessKey Secret 仅在 Surge 本机用于生成 HMAC-SHA1 请求签名，不会作为明文参数发送。
-
-### BandwagonHost 流量
-
-| 参数 | 默认值 | 说明 |
-|------|--------|------|
-| `Cron Expression` | `0 0 * * *` | 定时刷新流量的 cron 表达式，默认每天凌晨执行 |
-| `VEID` | 必填 | BandwagonHost VPS 的 VEID |
-| `API Key` | 必填 | KiwiVM 控制面板的 API Key |
 
 ### GitHub PDF 预览
 
@@ -90,10 +78,6 @@
 两个 URL 都为 `auto` 时完全自动识别。任意参数填写 HTTP(S) URL 后进入显式模式，只使用实际填写的 URL；例如只填写 `LAN_URL` 时不会探测远程或自动候选。
 
 模块只 MITM `plex.tv` 的资源发现请求，不会解密实际媒体流。服务器专用 Token 来自 Plex 官方响应，仅保存在 Surge 本机的 `$persistentStore` 中，不会写入模块、上传到 GitHub 或输出到日志。安装前需在 Surge 中启用 MITM、脚本并信任 Surge CA。
-
-### Spotify 解锁
-
-无需配置参数。通过重写账户属性和客户端 API 请求来解锁 Spotify Premium 功能。需要 MITM 开启并信任证书。
 
 ### YouTube Plus
 
