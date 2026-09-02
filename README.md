@@ -9,6 +9,7 @@
 | GitHub 私有仓库 | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/github-private-repo.sgmodule |
 | Kelee 解锁 | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/unlock-ikelee.sgmodule |
 | KiwiVM 面板 | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/kiwivm-panel.sgmodule |
+| Plexamp Qwen | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/plexamp-qwen.sgmodule |
 | Plex Fast Connect | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/plex-fast-connect.sgmodule |
 | YouTube Plus | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/youtube-plus.sgmodule |
 
@@ -78,6 +79,23 @@
 两个 URL 都为 `auto` 时完全自动识别。任意参数填写 HTTP(S) URL 后进入显式模式，只使用实际填写的 URL；例如只填写 `LAN_URL` 时不会探测远程或自动候选。
 
 模块只 MITM `plex.tv` 的资源发现请求，不会解密实际媒体流。服务器专用 Token 来自 Plex 官方响应，仅保存在 Surge 本机的 `$persistentStore` 中，不会写入模块、上传到 GitHub 或输出到日志。安装前需在 Surge 中启用 MITM、脚本并信任 Surge CA。
+
+### Plexamp Qwen
+
+让固定使用 OpenAI 接口的 Plexamp 接入阿里云百炼 Model Studio：在 Plexamp 的 OpenAI API Key 输入框填写百炼 API Key，模块会在本机返回兼容的模型列表，将聊天请求转发到兼容模式 API，并将 Qwen-Image 的结果转换为 OpenAI Images 格式。
+
+| 参数 | 默认值 | 说明 |
+|------|--------|------|
+| `API_HOST` | `dashscope.aliyuncs.com` | 百炼 API 主机名 |
+| `TEXT_MODEL` | `qwen3.8-max` | 聊天请求使用的模型 |
+| `IMAGE_MODEL` | `qwen-image-3.0` | 图像生成使用的模型 |
+| `IMAGE_SIZE` | `auto` | `auto` 沿用 Plexamp 请求的尺寸，也可指定如 `1024*1024` |
+| `PROMPT_EXTEND` | `true` | 是否启用图像提示词扩写 |
+| `WATERMARK` | `false` | 是否为生成图像添加水印 |
+| `IMAGE_TIMEOUT` | `180` | 图像生成超时秒数，范围 `30–210` |
+| `DEBUG` | `false` | 输出不含 API Key 的诊断日志 |
+
+模块 MITM `api.openai.com`。安装前需在 Surge 中启用 MITM、脚本并信任 Surge CA。API Key 只从 Plexamp 请求头转发到百炼，不会写入模块、脚本、日志或持久化存储。
 
 ### YouTube Plus
 

@@ -1,0 +1,13 @@
+#!name=Plexamp Qwen
+#!author=gogrhw
+#!category=Philalethia
+#!desc=Use an Alibaba Cloud Model Studio API key in Plexamp's OpenAI API key field, then proxy text and image requests to Qwen.
+#!arguments=API_HOST:dashscope.aliyuncs.com,TEXT_MODEL:qwen3.8-max,IMAGE_MODEL:qwen-image-3.0,IMAGE_SIZE:auto,PROMPT_EXTEND:true,WATERMARK:false,IMAGE_TIMEOUT:180,DEBUG:false
+#!arguments-desc=Keep the Model Studio API key in Plexamp. API_HOST is the Model Studio compatible API host; IMAGE_TIMEOUT is clamped to 30–210 seconds. Enable and trust Surge MITM before use.
+#!requirement=CORE_VERSION>=20
+
+[Script]
+plexamp-qwen = type=http-request,pattern=^https:\/\/api\.openai\.com\/v1\/(?:models(?:\/[^?]+)?|chat\/completions|images\/generations)(?:\?.*)?$,requires-body=true,max-size=1048576,timeout=300,script-path=https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Scripts/plexamp-qwen.js,argument="api_host={{{API_HOST}}}&text_model={{{TEXT_MODEL}}}&image_model={{{IMAGE_MODEL}}}&image_size={{{IMAGE_SIZE}}}&prompt_extend={{{PROMPT_EXTEND}}}&watermark={{{WATERMARK}}}&image_timeout={{{IMAGE_TIMEOUT}}}&debug={{{DEBUG}}}"
+
+[MITM]
+hostname = %APPEND% api.openai.com

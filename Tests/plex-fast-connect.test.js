@@ -106,14 +106,14 @@ const GZIP_LIBRARY_SECTIONS = zlib
     README,
     '| Kelee 解锁 |',
     '| Plex Fast Connect |',
-    '| Spotify 解锁 |',
+    '| Plexamp Qwen |',
     'README module table'
   );
   assertOrdered(
     README,
     '### Kelee 解锁',
     '### Plex Fast Connect',
-    '### Spotify 解锁',
+    '### Plexamp Qwen',
     'README module descriptions'
   );
 
