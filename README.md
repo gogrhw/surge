@@ -42,11 +42,25 @@
 
 ### ISVORO 面板
 
-按 [ISVORO Open API 文档](https://isvoro.com/docs/api) 的 `read` 权限范围提供七张面板。Key 在控制台的 **Open API** 页面创建，只需选择只读权限。
+默认只显示一张总览，突出余额、服务器状态、剩余流量和到期时间。Key 在控制台的 **Open API** 页面创建，只需 `read` 权限。
 
 1. 导入 [isvoro-panel.sgmodule](Modules/isvoro-panel.sgmodule)，填写 `API_KEY`。
-2. 刷新服务器面板，查看服务器 ID。
-3. 将该 ID 填入 `SERVER_ID`，刷新实时监控、流量、备份与配置面板。
+2. 刷新总览。默认查看全部服务器；填写 `SERVER_ID` 可只看指定服务器。
+
+总览示例（使用官方文档样例数据）：
+
+```text
+ISVORO
+余额 ¥128.50
+
+香港 · hk-web-01 · 运行中
+流量剩余 1000 GiB · 100%
+21天后到期 · 10/21 · 自动续费
+```
+
+异常服务器优先，其次是 7 天内到期或剩余流量不超过 10% 的服务器。余额旁显示需关注的服务器数量；每台只计一次。流量配额或到期时间缺失时明确显示未知。总览自动读取服务器列表，每页 100 台，最多 10 页；请求失败、超时或未取完时保留已获取数据，并标明“数据不完整”。
+
+需要其他信息时，将 `SHOW_DETAILS` 设为 `true`，再通过各个 `SHOW_*` 开关选择详情面板。实时监控、流量、备份与配置需要填写 `SERVER_ID`，可从服务器详情面板查看 ID。升级旧模块后也默认只显示总览。
 
 `SCRIPT_PATH=auto` 使用本仓库的远程脚本。本地使用时，将 `SCRIPT_PATH` 设为 `/Users/guoguanhua/Documents/surge/Scripts/isvoro-panel.js`。在其他设备上，将脚本复制到 Surge 配置目录，再填写该设备上的脚本路径。
 
@@ -55,17 +69,18 @@
 | `API_KEY` | 必填 | `isv_` 开头的 Open API Key |
 | `SCRIPT_PATH` | `auto` | 使用本仓库远程脚本；可改为自定义 URL 或本地脚本路径 |
 | `UPDATE_INTERVAL` | `600` | 面板刷新间隔，单位秒 |
-| `SERVER_ID` | `NONE` | 显示服务器列表；填写 ID 后显示该服务器详情，并用于监控、流量和配置查询 |
+| `SERVER_ID` | `NONE` | 总览显示全部服务器；填写 ID 后只看该服务器，也用于监控、流量和配置查询 |
 | `PRODUCT_ID` | `NONE` | 显示产品列表；填写 ID 后查询单个产品 |
 | `INVOICE_ID` | `NONE` | 显示账单列表；填写 ID 后查询单张账单 |
 | `PAGE` | `1` | 产品、服务器、账单列表的页码 |
 | `PER_PAGE` | `5` | 列表每页条数，范围 `1–100` |
-| `MAX_ROWS` | `5` | 每组最多显示条数，范围 `1–100`；统计仍使用本次返回的全部数据 |
+| `MAX_ROWS` | `5` | 总览最多显示的服务器数、详情每组条数，范围 `1–100`；统计使用全部已获取的数据 |
 | `SERVER_STATUS` | `NONE` | 不筛选；可填写服务器列表的 `status` 值 |
 | `SERVER_QUERY` | `NONE` | 不搜索；可填写服务器列表的 `q` 值 |
 | `INVOICE_STATUS` | `NONE` | 不筛选；可填写账单列表的 `status` 值 |
 | `TIMEFRAME` | `hour` | 历史指标区间：`hour`、`day`、`week`、`month`、`year` |
 | `TRAFFIC_DAYS` | `30` | 每日流量查询天数：`30`、`60`、`90` |
+| `SHOW_DETAILS` | `false` | 开启详情面板；下面七个开关仅在此项为 `true` 时生效 |
 | `SHOW_ACCOUNT` | `true` | 显示账户面板 |
 | `SHOW_PRODUCTS` | `true` | 显示产品面板 |
 | `SHOW_SERVERS` | `true` | 显示服务器面板 |
@@ -74,7 +89,7 @@
 | `SHOW_STORAGE` | `true` | 显示备份与配置面板 |
 | `SHOW_BILLING` | `true` | 显示账单面板 |
 
-将 `SHOW_*` 设为 `false` 可隐藏对应面板。列表会显示本页条数、总数和页码；修改 `PAGE` 查看其他页。填写单条 ID 后，列表筛选不参与详情查询。列表超过 `MAX_ROWS` 时，面板会注明显示条数；增大该参数可查看更多记录。
+详情列表会显示本页条数、总数和页码；修改 `PAGE` 查看其他页。`PAGE`、`PER_PAGE` 和筛选参数只影响详情列表，总览始终优先显示需关注的服务器。填写单条 ID 后，列表筛选不参与详情查询。超过 `MAX_ROWS` 时，面板会注明显示条数。
 
 可选参数用 `NONE` 表示未设置，也兼容空值。模块头部的默认值保持非空，远程脚本 URL 放在 `[Script]` 中。
 
@@ -82,6 +97,7 @@
 
 | 面板 | 只读接口 | 显示内容 |
 |------|----------|----------|
+| 总览（默认） | `GET /account`、`GET /servers` 或 `GET /servers/:serviceId` | 余额、需关注数量、服务器状态、剩余流量、距到期时间、自动续费状态 |
 | 账户 | `GET /account` | 账户信息、邮箱验证状态、余额及币种 |
 | 产品 | `GET /products`、`GET /products/:productId` | 规格、套餐价格、开通费、库存、限购、实名要求、系统模板 |
 | 服务器 | `GET /servers`、`GET /servers/:serviceId` | 状态、规格、IP、流量配额、到期日、自动续费状态、锁定和暂停原因 |
@@ -92,9 +108,9 @@
 
 时间按设备时区显示。历史 CPU 均值是返回采样值的算术平均，缺失值不参与计算。网速单位为字节每秒；`sampled=false` 显示“暂无有效采样”。没有返回的指标显示 `—`，真实零值保留为 `0`。
 
-脚本仅通过认证头发送 Key，固定访问 `https://isvoro.com/api/v1/open`，按路径白名单限制到上述 14 个 `read` 接口。模块不需要 MITM。接口失败会显示 HTTP 状态、API 错误码或网络错误；同组其他成功结果继续显示。Key 不写入脚本日志或脚本持久化存储。
+脚本仅通过认证头发送 Key，固定访问 `https://isvoro.com/api/v1/open`，按路径白名单限制到 [Open API 文档](https://isvoro.com/docs/api) 中上述 14 个 `read` 接口。模块不需要 MITM。接口失败会显示 HTTP 状态、API 错误码或网络错误；同组其他成功结果继续显示。Cloudflare 1010 单独显示为站点拦截，不判定为 Key 无效。Key 不写入脚本日志或脚本持久化存储。
 
-验证命令：`node --check Scripts/isvoro-panel.js` 和 `node Tests/isvoro-panel.test.js`。测试使用从官网文档提取的 [14 份响应示例](Tests/Fixtures/isvoro-api.json) 模拟 Surge，覆盖七张面板、列表与详情、分页、筛选、部分失败、超时和只读请求。实际账户查询需要在 Surge 中填写有效 Key。
+验证命令：`node --check Scripts/isvoro-panel.js` 和 `node Tests/isvoro-panel.test.js`。加 `--preview` 可打印总览示例。测试使用从官网文档提取的 [14 份响应示例](Tests/Fixtures/isvoro-api.json) 模拟 Surge，覆盖总览、七张详情面板、提醒排序、列表与详情、分页、筛选、部分失败、超时和只读请求。实际账户查询需要在 Surge 中填写有效 Key。
 
 ### Kelee 解锁
 

@@ -6,8 +6,9 @@
   "use strict";
 
   var args = parseArguments(typeof $argument === "string" ? $argument : "");
-  var mode = args.mode || "account";
+  var mode = args.mode || "overview";
   var labels = {
+    overview: "总览",
     account: "账户", products: "产品", servers: "服务器", live: "实时监控",
     traffic: "流量", storage: "备份与配置", billing: "账单",
   };
@@ -21,6 +22,7 @@
   var timeframe;
   var days;
   var key = String(args.api_key || "").trim();
+  var onTimeout = function () { finish(["查询超时，请刷新重试"]); };
 
   try {
     if (!Object.prototype.hasOwnProperty.call(labels, mode)) throw new Error("未知面板模式");
@@ -32,7 +34,7 @@
     }
     if (mode === "products" && args.product_id) productId = integer(args.product_id, 0, 1, 9007199254740991, "PRODUCT_ID");
     if (mode === "billing" && args.invoice_id) invoiceId = integer(args.invoice_id, 0, 1, 9007199254740991, "INVOICE_ID");
-    if (["servers", "live", "traffic", "storage"].indexOf(mode) >= 0 && args.server_id) {
+    if (["overview", "servers", "live", "traffic", "storage"].indexOf(mode) >= 0 && args.server_id) {
       serverId = integer(args.server_id, 0, 1, 9007199254740991, "SERVER_ID");
     }
     if (["live", "traffic", "storage"].indexOf(mode) >= 0 && !serverId) {
@@ -52,21 +54,146 @@
   }
 
   // Leave time for $done before the module's 20-second session timeout.
-  setTimeout(function () { finish(["查询超时，请刷新重试"]); }, 18000);
+  setTimeout(function () { onTimeout(); }, 18000);
   var runners = {
+    overview: runOverview,
     account: runAccount, products: runProducts, servers: runServers, live: runLive,
     traffic: runTraffic, storage: runStorage, billing: runBilling,
   };
   runners[mode]();
+
+  function runOverview() {
+    var account;
+    var accountError;
+    var serverError;
+    var accountReady = false;
+    var serversReady = false;
+    var servers = [];
+    var seen = Object.create(null);
+    var total;
+    onTimeout = function () {
+      if (!accountReady) accountError = "查询超时";
+      if (!serversReady) serverError = "查询超时";
+      accountReady = serversReady = true;
+      render();
+    };
+    request("/account", {}, "object", function (error, result) {
+      accountReady = true;
+      accountError = error;
+      account = result && result.data;
+      render();
+    });
+    if (serverId) {
+      request("/servers/" + serverId, {}, "object", function (error, result) {
+        serversReady = true;
+        serverError = error;
+        if (result) servers.push(result.data);
+        render();
+      });
+    } else {
+      fetchPage(1);
+    }
+
+    function fetchPage(nextPage) {
+      request("/servers", { page: nextPage, per_page: 100 }, "array", function (error, result) {
+        if (error) return stop(error);
+        var meta = result.meta || {};
+        var pages = finite(meta.total_pages);
+        var reportedTotal = finite(meta.total);
+        var duplicate = false;
+        result.data.forEach(function (s) {
+          if (s.id === undefined || s.id === null || seen[s.id]) { duplicate = true; return; }
+          seen[s.id] = true;
+          servers.push(s);
+        });
+        if (nextPage === 1) total = reportedTotal;
+        // Keep collected servers when pagination changes or a later page fails.
+        var invalidPages = pages === null || pages < 0 || Math.floor(pages) !== pages || (pages === 0 && total !== 0);
+        var invalidTotal = total === null || total < 0 || Math.floor(total) !== total || total !== reportedTotal;
+        var wrongPage = meta.page !== undefined && Number(meta.page) !== nextPage;
+        if (duplicate || invalidPages || invalidTotal || wrongPage) return stop("分页信息异常");
+        if (nextPage < pages) {
+          if (!result.data.length || nextPage >= 10) return stop("未取完服务器列表");
+          return fetchPage(nextPage + 1);
+        }
+        stop(servers.length === total ? null : "服务器列表数量不一致");
+      });
+    }
+    function stop(error) {
+      serversReady = true;
+      serverError = error;
+      render();
+    }
+    function render() {
+      if (!accountReady || !serversReady) return;
+      var cards = servers.map(function (s, index) { return overviewServer(s, index); });
+      cards.sort(function (a, b) { return b.priority - a.priority || a.expires - b.expires || a.index - b.index; });
+      var alerts = cards.filter(function (c) { return c.priority > 0; }).length;
+      var balance = accountError ? "余额查询失败：" + accountError : "余额 " + compactMoney(account.balance, account.currency);
+      var lines = [balance + (alerts ? " · " + (serverError ? "已知" : "") + alerts + "台需关注" : "")];
+      if (serverError) lines.push("服务器数据不完整：" + serverError);
+      if (!cards.length && !serverError) lines.push("暂无服务器");
+      cards.slice(0, rows).forEach(function (card) {
+        lines.push("");
+        Array.prototype.push.apply(lines, card.lines);
+      });
+      if (cards.length > rows) lines.push("显示" + rows + "/" + cards.length + "台" + (serverError ? "（已获取）" : ""));
+      finish(lines);
+    }
+  }
+
+  function overviewServer(s, index) {
+    var states = {
+      suspended: "已暂停", stopped: "已关机", stopping: "正在关机", pending: "开通中",
+      creating: "创建中", installing: "安装中", reinstalling: "重装中", failed: "故障",
+      error: "故障", expired: "已到期", terminated: "已终止", cancelled: "已取消",
+    };
+    var serviceProblem = s.status && s.status !== "active";
+    var vmProblem = s.vm_status && s.vm_status !== "active" && s.vm_status !== "running";
+    var state = serviceProblem ? s.status : vmProblem ? s.vm_status : s.power_status;
+    var running = !serviceProblem && !vmProblem && state === "running";
+    var status = running ? "运行中" : Object.prototype.hasOwnProperty.call(states, state) ? states[state] : state ? text(state) : "状态未知";
+    var priority = running ? 0 : 3;
+    if (s.locked) { status += " · 已锁定"; priority = 3; }
+    var t = s.traffic || {};
+    var used = finite(t.used_bytes);
+    var limit = finite(t.limit_bytes);
+    var traffic = "流量配额未知";
+    if (limit !== null && limit > 0) {
+      traffic = "流量用量未知";
+      if (used !== null && used >= 0) {
+        var remaining = Math.max(0, limit - used);
+        var fraction = remaining / limit;
+        var label = remaining === 0 ? "流量已耗尽" : fraction <= 0.1 ? "流量将耗尽" : "流量剩余";
+        traffic = label + " " + compactBytes(remaining) + " · " + Number((fraction * 100).toFixed(1)) + "%";
+        if (fraction <= 0.1) priority = Math.max(priority, remaining === 0 ? 3 : 2);
+      }
+    }
+    var expires = s.expires_at ? new Date(s.expires_at).getTime() : NaN;
+    var expiry = "到期时间未知";
+    if (isFinite(expires)) {
+      var left = expires - Date.now();
+      expiry = left <= 0 ? "已到期" : left <= 86400000 ? "24小时内到期" : Math.ceil(left / 86400000) + "天后到期";
+      expiry += " · " + date(s.expires_at).slice(5, 10).replace("-", "/");
+      if (left <= 7 * 86400000) priority = Math.max(priority, left <= 0 ? 3 : 2);
+    }
+    expiry += s.auto_renew === true ? " · 自动续费" : s.auto_renew === false ? " · 手动续费" : "";
+    var location = (s.location || {}).name;
+    return { priority: priority, expires: isFinite(expires) ? expires : Infinity, index: index, lines: [
+      (location ? text(location) + " · " : "") + text(s.hostname || "#" + s.id) + " · " + status,
+      traffic,
+      expiry,
+    ] };
+  }
 
   function runAccount() {
     request("/account", {}, "object", function (error, result) {
       if (error) return finish([error]);
       var a = result.data;
       finish([
+        "余额: " + money(a.balance, a.currency),
         "账户: " + text(a.name) + " (#" + text(a.id) + ")",
         "邮箱: " + text(a.email) + " / 已验证 " + yesNo(a.email_verified),
-        "余额: " + money(a.balance, a.currency),
       ]);
     });
   }
@@ -278,6 +405,7 @@
   }
 
   function apiError(status, envelope, headers) {
+    if (status === 403 && envelope && envelope.cloudflare_error === true && Number(envelope.error_code) === 1010) return "站点拦截请求（Cloudflare 1010）";
     var code = envelope && envelope.message;
     // Do not echo arbitrary server text or transport errors containing secrets.
     if (typeof code !== "string" || !/^[A-Z][A-Z0-9_]{0,100}$/.test(code)) code = "查询失败";
@@ -305,13 +433,17 @@
   }
   function appendRows(lines, items, render) {
     if (!items.length) { lines.push("暂无记录"); return; }
-    items.slice(0, rows).forEach(function (item) { Array.prototype.push.apply(lines, render(item || {})); });
+    items.slice(0, rows).forEach(function (item) {
+      var block = render(item || {});
+      if (block.length > 1 && lines.length) lines.push("");
+      Array.prototype.push.apply(lines, block);
+    });
     if (items.length > rows) lines.push("仅显示 " + rows + "/" + items.length + " 条，可增大 MAX_ROWS");
   }
   function finish(lines) {
     if (finished) return;
     finished = true;
-    $done({ title: "ISVORO / " + (Object.prototype.hasOwnProperty.call(labels, mode) ? labels[mode] : "配置错误"), content: lines.join("\n") });
+    $done({ title: mode === "overview" ? "ISVORO" : "ISVORO / " + (Object.prototype.hasOwnProperty.call(labels, mode) ? labels[mode] : "配置错误"), content: lines.join("\n") });
   }
   function parseArguments(input) {
     var out = Object.create(null);
@@ -339,6 +471,8 @@
   function yesNo(b) { return b === true || b === 1 ? "是" : b === false || b === 0 ? "否" : "—"; }
   function amount(n) { n = finite(n); return n === null ? "—" : n.toFixed(2); }
   function money(n, currency) { return text(currency) + " " + amount(n); }
+  function compactMoney(n, currency) { return currency === "CNY" ? "¥" + amount(n) : money(n, currency); }
+  function compactBytes(n) { return bytes(n).replace(/\.00 /, " ").replace(/(\.\d)0 /, "$1 "); }
   function percent(n) { n = finite(n); return n === null ? "—" : (n * 100).toFixed(1) + "%"; }
   function bytes(n) {
     n = finite(n);
