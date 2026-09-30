@@ -8,9 +8,9 @@
   var args = parseArguments(typeof $argument === "string" ? $argument : "");
   var mode = args.mode || "overview";
   var labels = {
-    overview: "总览",
-    account: "账户", products: "产品", servers: "服务器", live: "实时监控",
-    traffic: "流量", storage: "备份与配置", billing: "账单",
+    overview: "Overview",
+    account: "Account", products: "Products", servers: "Servers", live: "Live",
+    traffic: "Traffic", storage: "Storage", billing: "Billing",
   };
   var finished = false;
   var rows;
@@ -443,7 +443,7 @@
   function finish(lines) {
     if (finished) return;
     finished = true;
-    $done({ title: mode === "overview" ? "ISVORO" : "ISVORO / " + (Object.prototype.hasOwnProperty.call(labels, mode) ? labels[mode] : "配置错误"), content: lines.join("\n") });
+    $done({ title: mode === "overview" ? "ISVORO" : "ISVORO / " + (Object.prototype.hasOwnProperty.call(labels, mode) ? labels[mode] : "Configuration Error"), content: lines.join("\n") });
   }
   function parseArguments(input) {
     var out = Object.create(null);
