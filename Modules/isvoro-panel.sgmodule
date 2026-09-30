@@ -1,0 +1,25 @@
+#!name=ISVORO Panel
+#!author=gogrhw
+#!category=Philalethia
+#!desc=ISVORO 只读面板：账户、产品、服务器、实时与历史监控、流量、备份、端口转发、系统模板、账单。覆盖 Open API 的 14 个 read 接口。
+#!arguments=API_KEY:YOUR_API_KEY,SCRIPT_PATH:https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Scripts/isvoro-panel.js,UPDATE_INTERVAL:600,SERVER_ID:,PRODUCT_ID:,INVOICE_ID:,PAGE:1,PER_PAGE:5,MAX_ROWS:5,SERVER_STATUS:,SERVER_QUERY:,INVOICE_STATUS:,TIMEFRAME:hour,TRAFFIC_DAYS:30,SHOW_ACCOUNT:true,SHOW_PRODUCTS:true,SHOW_SERVERS:true,SHOW_LIVE:true,SHOW_TRAFFIC:true,SHOW_STORAGE:true,SHOW_BILLING:true
+#!arguments-desc=API_KEY：控制台 Open API 创建的 isv_ 开头 Key，只需 read 权限。\nSCRIPT_PATH：远程脚本 URL 或本地绝对路径。\nUPDATE_INTERVAL：刷新间隔（秒）。\nSERVER_ID：空值显示服务器列表；填写后显示详情，并启用实时、流量、备份与配置查询。\nPRODUCT_ID / INVOICE_ID：空值显示列表；填写后显示该条详情。\nPAGE / PER_PAGE：列表页码与每页条数（1–100）。\nMAX_ROWS：每组最多显示条数（1–100），不影响统计。\nSERVER_STATUS / SERVER_QUERY / INVOICE_STATUS：可选列表筛选；SERVER_QUERY 含特殊字符时需 URL 编码。\nTIMEFRAME：hour、day、week、month、year。\nTRAFFIC_DAYS：30、60、90。\nSHOW_*：true 显示，false 隐藏对应面板。
+#!requirement=CORE_VERSION>=22
+
+[Panel]
+ISVORO Account = title="ISVORO / 账户",content="等待刷新",script-name=isvoro-account,update-interval={{{UPDATE_INTERVAL}}} #!REQUIREMENT "'{{{SHOW_ACCOUNT}}}' == 'true'"
+ISVORO Products = title="ISVORO / 产品",content="等待刷新",script-name=isvoro-products,update-interval={{{UPDATE_INTERVAL}}} #!REQUIREMENT "'{{{SHOW_PRODUCTS}}}' == 'true'"
+ISVORO Servers = title="ISVORO / 服务器",content="等待刷新",script-name=isvoro-servers,update-interval={{{UPDATE_INTERVAL}}} #!REQUIREMENT "'{{{SHOW_SERVERS}}}' == 'true'"
+ISVORO Live = title="ISVORO / 实时监控",content="填写 SERVER_ID 后刷新",script-name=isvoro-live,update-interval={{{UPDATE_INTERVAL}}} #!REQUIREMENT "'{{{SHOW_LIVE}}}' == 'true'"
+ISVORO Traffic = title="ISVORO / 流量",content="填写 SERVER_ID 后刷新",script-name=isvoro-traffic,update-interval={{{UPDATE_INTERVAL}}} #!REQUIREMENT "'{{{SHOW_TRAFFIC}}}' == 'true'"
+ISVORO Storage = title="ISVORO / 备份与配置",content="填写 SERVER_ID 后刷新",script-name=isvoro-storage,update-interval={{{UPDATE_INTERVAL}}} #!REQUIREMENT "'{{{SHOW_STORAGE}}}' == 'true'"
+ISVORO Billing = title="ISVORO / 账单",content="等待刷新",script-name=isvoro-billing,update-interval={{{UPDATE_INTERVAL}}} #!REQUIREMENT "'{{{SHOW_BILLING}}}' == 'true'"
+
+[Script]
+isvoro-account = type=generic,timeout=20,script-path={{{SCRIPT_PATH}}},argument="mode=account&api_key={{{API_KEY}}}&max_rows={{{MAX_ROWS}}}" #!REQUIREMENT "'{{{SHOW_ACCOUNT}}}' == 'true'"
+isvoro-products = type=generic,timeout=20,script-path={{{SCRIPT_PATH}}},argument="mode=products&api_key={{{API_KEY}}}&product_id={{{PRODUCT_ID}}}&page={{{PAGE}}}&per_page={{{PER_PAGE}}}&max_rows={{{MAX_ROWS}}}" #!REQUIREMENT "'{{{SHOW_PRODUCTS}}}' == 'true'"
+isvoro-servers = type=generic,timeout=20,script-path={{{SCRIPT_PATH}}},argument="mode=servers&api_key={{{API_KEY}}}&server_id={{{SERVER_ID}}}&page={{{PAGE}}}&per_page={{{PER_PAGE}}}&max_rows={{{MAX_ROWS}}}&status={{{SERVER_STATUS}}}&q={{{SERVER_QUERY}}}" #!REQUIREMENT "'{{{SHOW_SERVERS}}}' == 'true'"
+isvoro-live = type=generic,timeout=20,script-path={{{SCRIPT_PATH}}},argument="mode=live&api_key={{{API_KEY}}}&server_id={{{SERVER_ID}}}&timeframe={{{TIMEFRAME}}}&max_rows={{{MAX_ROWS}}}" #!REQUIREMENT "'{{{SHOW_LIVE}}}' == 'true'"
+isvoro-traffic = type=generic,timeout=20,script-path={{{SCRIPT_PATH}}},argument="mode=traffic&api_key={{{API_KEY}}}&server_id={{{SERVER_ID}}}&days={{{TRAFFIC_DAYS}}}&max_rows={{{MAX_ROWS}}}" #!REQUIREMENT "'{{{SHOW_TRAFFIC}}}' == 'true'"
+isvoro-storage = type=generic,timeout=20,script-path={{{SCRIPT_PATH}}},argument="mode=storage&api_key={{{API_KEY}}}&server_id={{{SERVER_ID}}}&max_rows={{{MAX_ROWS}}}" #!REQUIREMENT "'{{{SHOW_STORAGE}}}' == 'true'"
+isvoro-billing = type=generic,timeout=20,script-path={{{SCRIPT_PATH}}},argument="mode=billing&api_key={{{API_KEY}}}&invoice_id={{{INVOICE_ID}}}&page={{{PAGE}}}&per_page={{{PER_PAGE}}}&max_rows={{{MAX_ROWS}}}&status={{{INVOICE_STATUS}}}" #!REQUIREMENT "'{{{SHOW_BILLING}}}' == 'true'"

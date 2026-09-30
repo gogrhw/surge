@@ -1,0 +1,420 @@
+{
+  "source": "https://isvoro.com/docs/api",
+  "asset": "https://isvoro.com/assets/ApiDocs-FYf_OsgX.js",
+  "verified_at": "2026-09-30",
+  "endpoints": [
+    {
+      "id": "account-get",
+      "method": "GET",
+      "path": "/account",
+      "scope": "read",
+      "data": {
+        "id": 1,
+        "email": "a@b.com",
+        "name": "张三",
+        "email_verified": true,
+        "balance": 128.5,
+        "currency": "CNY"
+      }
+    },
+    {
+      "id": "products-list",
+      "method": "GET",
+      "path": "/products",
+      "scope": "read",
+      "data": [
+        {
+          "id": 12,
+          "name": "HK CN2 基础",
+          "description": "<p>管理员富文本 HTML</p>",
+          "category": {
+            "id": 5,
+            "name": "香港"
+          },
+          "location": {
+            "id": 3,
+            "name": "香港"
+          },
+          "specs": {
+            "cores": 2,
+            "memory_mb": 2048,
+            "disk_gb": 20,
+            "bandwidth_mbps": 100,
+            "traffic_gb": 1000,
+            "ipv4": 1,
+            "ipv6": 0,
+            "nat": false,
+            "nat_ports": 0
+          },
+          "plans": [
+            {
+              "id": 34,
+              "name": "月付",
+              "billing_period": 1,
+              "billing_unit": "month",
+              "price": 39.0,
+              "setup_fee": 0
+            }
+          ],
+          "stock": 8,
+          "available": true,
+          "unavailable_reason": "",
+          "per_user_limit": 3,
+          "require_kyc": false,
+          "os_templates": [
+            {
+              "id": 7,
+              "name": "Debian 12",
+              "type": "qemu"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "products-get",
+      "method": "GET",
+      "path": "/products/:productId",
+      "scope": "read",
+      "data": {
+        "id": 12,
+        "name": "HK CN2 基础",
+        "description": "<p>管理员富文本 HTML</p>",
+        "category": {
+          "id": 5,
+          "name": "香港"
+        },
+        "location": {
+          "id": 3,
+          "name": "香港"
+        },
+        "specs": {
+          "cores": 2,
+          "memory_mb": 2048,
+          "disk_gb": 20,
+          "bandwidth_mbps": 100,
+          "traffic_gb": 1000,
+          "ipv4": 1,
+          "ipv6": 0,
+          "nat": false,
+          "nat_ports": 0
+        },
+        "plans": [
+          {
+            "id": 34,
+            "name": "月付",
+            "billing_period": 1,
+            "billing_unit": "month",
+            "price": 39.0,
+            "setup_fee": 0
+          }
+        ],
+        "stock": 8,
+        "available": true,
+        "unavailable_reason": "",
+        "per_user_limit": 3,
+        "require_kyc": false,
+        "os_templates": [
+          {
+            "id": 7,
+            "name": "Debian 12",
+            "type": "qemu"
+          }
+        ]
+      }
+    },
+    {
+      "id": "servers-list",
+      "method": "GET",
+      "path": "/servers",
+      "scope": "read",
+      "data": [
+        {
+          "id": 1234,
+          "hostname": "hk-web-01",
+          "status": "active",
+          "vm_status": "active",
+          "power_status": "running",
+          "product": {
+            "id": 12,
+            "name": "HK CN2 基础"
+          },
+          "plan": {
+            "id": 34,
+            "name": "月付",
+            "billing_period": 1,
+            "billing_unit": "month",
+            "price": 39.0
+          },
+          "location": {
+            "id": 3,
+            "name": "香港"
+          },
+          "os": {
+            "id": 7,
+            "name": "Debian 12",
+            "type": "qemu"
+          },
+          "specs": {
+            "cores": 2,
+            "memory_mb": 2048,
+            "disk_gb": 20,
+            "bandwidth_mbps": 100,
+            "traffic_gb": 1000
+          },
+          "network": {
+            "ipv4": "1.2.3.4",
+            "ipv6": "",
+            "is_nat": false,
+            "nat_ip": ""
+          },
+          "traffic": {
+            "used_bytes": 123,
+            "limit_bytes": 1073741824000,
+            "next_reset_at": "2026-10-01T00:00:00+08:00"
+          },
+          "expires_at": "2026-10-21T12:00:00+08:00",
+          "auto_renew": true,
+          "locked": false,
+          "note": "",
+          "created_at": "2026-09-21T12:00:00+08:00",
+          "suspend_source": "",
+          "suspend_reason": ""
+        }
+      ]
+    },
+    {
+      "id": "servers-get",
+      "method": "GET",
+      "path": "/servers/:serviceId",
+      "scope": "read",
+      "data": {
+        "id": 1234,
+        "hostname": "hk-web-01",
+        "status": "active",
+        "vm_status": "active",
+        "power_status": "running",
+        "product": {
+          "id": 12,
+          "name": "HK CN2 基础"
+        },
+        "plan": {
+          "id": 34,
+          "name": "月付",
+          "billing_period": 1,
+          "billing_unit": "month",
+          "price": 39.0
+        },
+        "location": {
+          "id": 3,
+          "name": "香港"
+        },
+        "os": {
+          "id": 7,
+          "name": "Debian 12",
+          "type": "qemu"
+        },
+        "specs": {
+          "cores": 2,
+          "memory_mb": 2048,
+          "disk_gb": 20,
+          "bandwidth_mbps": 100,
+          "traffic_gb": 1000
+        },
+        "network": {
+          "ipv4": "1.2.3.4",
+          "ipv6": "",
+          "is_nat": false,
+          "nat_ip": ""
+        },
+        "traffic": {
+          "used_bytes": 123,
+          "limit_bytes": 1073741824000,
+          "next_reset_at": "2026-10-01T00:00:00+08:00"
+        },
+        "expires_at": "2026-10-21T12:00:00+08:00",
+        "auto_renew": true,
+        "locked": false,
+        "note": "",
+        "created_at": "2026-09-21T12:00:00+08:00",
+        "suspend_source": "",
+        "suspend_reason": ""
+      }
+    },
+    {
+      "id": "servers-status",
+      "method": "GET",
+      "path": "/servers/:serviceId/status",
+      "scope": "read",
+      "data": {
+        "power_status": "running",
+        "cpu_usage": 0.12,
+        "memory_used_bytes": 512000000,
+        "memory_total_bytes": 2147483648,
+        "uptime_seconds": 86400,
+        "netin_bytes": 123,
+        "netout_bytes": 456
+      }
+    },
+    {
+      "id": "servers-metrics",
+      "method": "GET",
+      "path": "/servers/:serviceId/metrics",
+      "scope": "read",
+      "data": [
+        {
+          "time": 1726900000,
+          "cpu": 0.02,
+          "maxcpu": 2,
+          "mem": 536870912,
+          "maxmem": 2147483648,
+          "netin": 1234.5,
+          "netout": 456.7,
+          "diskread": 0,
+          "diskwrite": 1024
+        }
+      ]
+    },
+    {
+      "id": "servers-netrate",
+      "method": "GET",
+      "path": "/servers/:serviceId/netrate",
+      "scope": "read",
+      "data": {
+        "rx": 1234.5,
+        "tx": 456.7,
+        "netin": 123456789,
+        "netout": 98765432,
+        "ts": 1726900000000,
+        "sampled": true,
+        "status": "running"
+      }
+    },
+    {
+      "id": "servers-traffic-daily",
+      "method": "GET",
+      "path": "/servers/:serviceId/traffic-daily",
+      "scope": "read",
+      "data": {
+        "days": [
+          {
+            "date": "2026-09-20",
+            "inbound_bytes": 2147483648,
+            "outbound_bytes": 8589934592
+          }
+        ],
+        "resets": [
+          {
+            "reset_type": "monthly",
+            "previous_usage_bytes": 1073741824000,
+            "occurred_at": "2026-09-01T00:00:00+08:00",
+            "date": "2026-09-01"
+          }
+        ]
+      }
+    },
+    {
+      "id": "servers-os-templates",
+      "method": "GET",
+      "path": "/servers/:serviceId/os-templates",
+      "scope": "read",
+      "data": [
+        {
+          "id": 7,
+          "name": "Debian 12",
+          "type": "qemu"
+        }
+      ]
+    },
+    {
+      "id": "servers-port-forwards-list",
+      "method": "GET",
+      "path": "/servers/:serviceId/port-forwards",
+      "scope": "read",
+      "data": [
+        {
+          "id": 1,
+          "server_id": 9,
+          "ip_pool_id": 3,
+          "protocol": "tcp",
+          "external_port": 20001,
+          "internal_port": 22,
+          "internal_ip": "10.0.0.5",
+          "description": "ssh",
+          "is_range": false,
+          "range_size": 1,
+          "is_active": true,
+          "created_at": "2026-09-20T12:00:00+08:00",
+          "updated_at": "2026-09-20T12:00:00+08:00"
+        }
+      ]
+    },
+    {
+      "id": "servers-backups-list",
+      "method": "GET",
+      "path": "/servers/:serviceId/backups",
+      "scope": "read",
+      "data": [
+        {
+          "volid": "local:backup/vzdump-qemu-123-2026_09_20-03_00_00.vma.zst",
+          "size": 1234567,
+          "ctime": 1726800000,
+          "format": "vma.zst",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "id": "invoices-list",
+      "method": "GET",
+      "path": "/invoices",
+      "scope": "read",
+      "data": [
+        {
+          "id": 555,
+          "number": "INV-000555",
+          "status": "pending",
+          "type": "service_pay",
+          "total": 39.0,
+          "remaining": 39.0,
+          "currency": "CNY",
+          "due_at": "2026-09-28T00:00:00+08:00",
+          "paid_at": null,
+          "created_at": "2026-09-21T12:00:00+08:00",
+          "items": [
+            {
+              "description": "HK CN2 基础 - 月付",
+              "amount": 39.0,
+              "service_id": 1234
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "invoices-get",
+      "method": "GET",
+      "path": "/invoices/:invoiceId",
+      "scope": "read",
+      "data": {
+        "id": 555,
+        "number": "INV-000555",
+        "status": "pending",
+        "type": "service_pay",
+        "total": 39.0,
+        "remaining": 39.0,
+        "currency": "CNY",
+        "due_at": "2026-09-28T00:00:00+08:00",
+        "paid_at": null,
+        "created_at": "2026-09-21T12:00:00+08:00",
+        "items": [
+          {
+            "description": "HK CN2 基础 - 月付",
+            "amount": 39.0,
+            "service_id": 1234
+          }
+        ]
+      }
+    }
+  ]
+}
