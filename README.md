@@ -48,22 +48,22 @@
 2. 刷新服务器面板，查看服务器 ID。
 3. 将该 ID 填入 `SERVER_ID`，刷新实时监控、流量、备份与配置面板。
 
-本地使用时，将 `SCRIPT_PATH` 设为 `/Users/guoguanhua/Documents/surge/Scripts/isvoro-panel.js`。在其他设备上，将脚本复制到 Surge 配置目录，再填写该设备上的脚本路径。默认 `SCRIPT_PATH` 和表中的 Raw 链接在这些文件发布到本仓库的 `main` 分支后可用。
+`SCRIPT_PATH=auto` 使用本仓库的远程脚本。本地使用时，将 `SCRIPT_PATH` 设为 `/Users/guoguanhua/Documents/surge/Scripts/isvoro-panel.js`。在其他设备上，将脚本复制到 Surge 配置目录，再填写该设备上的脚本路径。
 
 | 参数 | 默认值 | 说明 |
 |------|--------|------|
 | `API_KEY` | 必填 | `isv_` 开头的 Open API Key |
-| `SCRIPT_PATH` | 本仓库脚本 Raw URL | 可改为本地脚本路径 |
+| `SCRIPT_PATH` | `auto` | 使用本仓库远程脚本；可改为自定义 URL 或本地脚本路径 |
 | `UPDATE_INTERVAL` | `600` | 面板刷新间隔，单位秒 |
-| `SERVER_ID` | 空 | 空值显示服务器列表；填写后显示该服务器详情，并用于监控、流量和配置查询 |
-| `PRODUCT_ID` | 空 | 空值显示产品列表；填写后查询单个产品 |
-| `INVOICE_ID` | 空 | 空值显示账单列表；填写后查询单张账单 |
+| `SERVER_ID` | `NONE` | 显示服务器列表；填写 ID 后显示该服务器详情，并用于监控、流量和配置查询 |
+| `PRODUCT_ID` | `NONE` | 显示产品列表；填写 ID 后查询单个产品 |
+| `INVOICE_ID` | `NONE` | 显示账单列表；填写 ID 后查询单张账单 |
 | `PAGE` | `1` | 产品、服务器、账单列表的页码 |
 | `PER_PAGE` | `5` | 列表每页条数，范围 `1–100` |
 | `MAX_ROWS` | `5` | 每组最多显示条数，范围 `1–100`；统计仍使用本次返回的全部数据 |
-| `SERVER_STATUS` | 空 | 服务器列表的 `status` 筛选值 |
-| `SERVER_QUERY` | 空 | 服务器列表的 `q` 搜索值 |
-| `INVOICE_STATUS` | 空 | 账单列表的 `status` 筛选值 |
+| `SERVER_STATUS` | `NONE` | 不筛选；可填写服务器列表的 `status` 值 |
+| `SERVER_QUERY` | `NONE` | 不搜索；可填写服务器列表的 `q` 值 |
+| `INVOICE_STATUS` | `NONE` | 不筛选；可填写账单列表的 `status` 值 |
 | `TIMEFRAME` | `hour` | 历史指标区间：`hour`、`day`、`week`、`month`、`year` |
 | `TRAFFIC_DAYS` | `30` | 每日流量查询天数：`30`、`60`、`90` |
 | `SHOW_ACCOUNT` | `true` | 显示账户面板 |
@@ -76,7 +76,9 @@
 
 将 `SHOW_*` 设为 `false` 可隐藏对应面板。列表会显示本页条数、总数和页码；修改 `PAGE` 查看其他页。填写单条 ID 后，列表筛选不参与详情查询。列表超过 `MAX_ROWS` 时，面板会注明显示条数；增大该参数可查看更多记录。
 
-`SERVER_QUERY` 使用 URL 编码传入。搜索值含 `&`、`+`、`%`、逗号或双引号时，先编码这些字符，例如 `香港 & web` 填为 `%E9%A6%99%E6%B8%AF%20%26%20web`。
+可选参数用 `NONE` 表示未设置，也兼容空值。模块头部的默认值保持非空，远程脚本 URL 放在 `[Script]` 中。
+
+`SERVER_QUERY` 使用 URL 编码传入。搜索值含 `&`、`+`、`%`、逗号或双引号时，先编码这些字符，例如 `香港 & web` 填为 `%E9%A6%99%E6%B8%AF%20%26%20web`。要搜索字面值 `NONE`，填写 `%4EONE`。
 
 | 面板 | 只读接口 | 显示内容 |
 |------|----------|----------|

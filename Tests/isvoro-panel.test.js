@@ -135,6 +135,16 @@ async function main() {
   const metricRequest = live.requests.find((r) => r.url.includes("/metrics"));
   assert.equal(new URL(metricRequest.url).searchParams.get("timeframe"), "week");
 
+  const unset = await run("mode=servers&server_id=NONE&status=NONE&q=NONE");
+  assert.equal(unset.requests[0].url, base + "/servers?page=1&per_page=5");
+  await run("mode=servers&server_id=NONE&q=%4EONE", (r) => {
+    assert.equal(new URL(r.url).searchParams.get("q"), "NONE");
+    return officialResponse(r);
+  });
+  const unsetLive = await run("mode=live&server_id=NONE");
+  assert.equal(unsetLive.requests.length, 0);
+  assert.match(unsetLive.panel.content, /填写 SERVER_ID/);
+
   const traffic = await run("mode=traffic&server_id=1234&days=90");
   assert.equal(traffic.requests.length, 2);
   assert.match(traffic.panel.content, /90 天 \/ 1 条: 入 2\.00 GiB \/ 出 8\.00 GiB/);
@@ -282,35 +292,45 @@ async function main() {
   // Exercise the actual module arguments after Surge-style placeholder expansion.
   const moduleSource = fs.readFileSync(modulePath, "utf8");
   const defaults = Object.fromEntries(moduleSource.match(/^#!arguments=(.*)$/m)[1].split(",").map((part) => {
-    const i = part.indexOf(":");
-    return [part.slice(0, i), part.slice(i + 1)];
+    const components = part.split(":");
+    assert.equal(components.length, 2, "module header must use an unambiguous name:default declaration: " + part);
+    assert.ok(components[1], "module header defaults must not be empty: " + part);
+    return components;
   }));
   assert.ok(Object.keys(defaults).every((name) => /^[A-Za-z0-9_]+$/.test(name)));
   const placeholders = [...moduleSource.matchAll(/\{\{\{(.*?)\}\}\}/g)].map((m) => m[1]);
   assert.deepEqual([...new Set(placeholders)].sort(), Object.keys(defaults).sort());
-  const values = { ...defaults, API_KEY: key, SERVER_ID: "1234", SCRIPT_PATH: scriptPath };
-  const expanded = moduleSource.replace(/\{\{\{(.*?)\}\}\}/g, (_, name) => values[name]);
-  const scripts = expanded.split("[Script]\n")[1].trim().split("\n");
-  const panels = expanded.split("[Panel]\n")[1].split("\n\n[Script]")[0].trim().split("\n");
-  assert.equal(scripts.length, 7);
-  assert.equal(panels.length, 7);
+  const remoteScript = "https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Scripts/isvoro-panel.js";
+  assert.equal(defaults.SCRIPT_PATH, "auto");
   assert.doesNotMatch(moduleSource, /\[MITM\]|\[Rule\]|type=http-|\bicon(?:-color)?=/);
-  for (const line of scripts) {
-    const name = line.split(" = ")[0];
-    assert.match(line, /type=generic,timeout=20/);
-    assert.ok(line.includes("script-path=" + scriptPath));
-    const requirement = line.match(/#!REQUIREMENT "(.*?)"$/)[1];
-    assert.equal(requirement, "'true' == 'true'");
-    const panel = panels.find((p) => p.includes("script-name=" + name + ","));
-    assert.ok(panel, name);
-    assert.ok(panel.endsWith('#!REQUIREMENT "' + requirement + '"'));
-    const argument = line.match(/argument="(.*?)"/)[1];
-    const result = await run(argument);
-    assert.equal(result.panel.title, panel.match(/title="(.*?)"/)[1]);
+  for (const selectedPath of ["auto", scriptPath]) {
+    const values = { ...defaults, API_KEY: key, SERVER_ID: "1234", SCRIPT_PATH: selectedPath };
+    const expanded = moduleSource.replace(/\{\{\{(.*?)\}\}\}/g, (_, name) => values[name]);
+    const declarations = expanded.split("[Script]\n")[1].trim().split("\n");
+    const panels = expanded.split("[Panel]\n")[1].split("\n\n[Script]")[0].trim().split("\n");
+    assert.equal(declarations.length, 14);
+    assert.equal(panels.length, 7);
+    const scripts = declarations.filter((line) => {
+      const condition = line.match(/#!REQUIREMENT "'([^']*)' == 'true' && '([^']*)' (==|!=) 'auto'"$/);
+      assert.ok(condition, "script path selection must have a valid requirement");
+      return condition[1] === "true" && (condition[3] === "==" ? condition[2] === "auto" : condition[2] !== "auto");
+    });
+    assert.equal(scripts.length, 7);
+    assert.equal(new Set(scripts.map((line) => line.split(" = ")[0])).size, 7);
+    for (const line of scripts) {
+      const name = line.split(" = ")[0];
+      assert.match(line, /type=generic,timeout=20/);
+      assert.ok(line.includes("script-path=" + (selectedPath === "auto" ? remoteScript : scriptPath) + ","));
+      const panel = panels.find((p) => p.includes("script-name=" + name + ","));
+      assert.ok(panel, name);
+      const argument = line.match(/argument="(.*?)"/)[1];
+      const result = await run(argument);
+      assert.equal(result.panel.title, panel.match(/title="(.*?)"/)[1]);
+    }
   }
   for (const flag of Object.keys(defaults).filter((name) => name.startsWith("SHOW_"))) {
-    const hidden = moduleSource.replace(/\{\{\{(.*?)\}\}\}/g, (_, name) => name === flag ? "false" : values[name]);
-    assert.equal(hidden.split("\n").filter((line) => line.endsWith('#!REQUIREMENT "\'false\' == \'true\'"')).length, 2);
+    const hidden = moduleSource.replace(/\{\{\{(.*?)\}\}\}/g, (_, name) => name === flag ? "false" : defaults[name]);
+    assert.equal(hidden.split("\n").filter((line) => line.includes('#!REQUIREMENT "\'false\' == \'true\'')).length, 3);
   }
   assert.deepEqual([...covered].sort(), fixture.endpoints.map((e) => e.id).sort());
   console.log("isvoro-panel: " + cases + " simulations passed; all 14 read endpoints and 7 module panels verified");

@@ -318,7 +318,11 @@
     input.split("&").forEach(function (part) {
       var pos = part.indexOf("=");
       if (pos < 0) return;
-      out[decode(part.slice(0, pos))] = decode(part.slice(pos + 1));
+      var name = decode(part.slice(0, pos));
+      var raw = part.slice(pos + 1);
+      // Surge module defaults stay nonempty; encode NONE to search that literal.
+      var optional = ["server_id", "product_id", "invoice_id", "status", "q"].indexOf(name) >= 0;
+      out[name] = optional && raw === "NONE" ? "" : decode(raw);
     });
     return out;
   }
