@@ -1,0 +1,14 @@
+#!name=CPA Panel
+#!author=gogrhw
+#!category=Philalethia
+#!desc=Read-only CPA v8 quota panel. Automatically lists every upstream provider and account, with remaining quota, reset times, and dated cache on query failure. Providers without a quota API remain visible. No management or reset actions.
+#!arguments=BASE_URL:YOUR_CPA_URL,MANAGEMENT_KEY:YOUR_MANAGEMENT_KEY,SCRIPT_PATH:auto,UPDATE_INTERVAL:600
+#!arguments-desc=- BASE_URL: CPA HTTPS server address, without /v1. Also accepts /v8/management.\n- MANAGEMENT_KEY: CPA management key, not the client API key. The script only queries quota; CPA does not restrict this key to read access. URL-encode special characters.\n- SCRIPT_PATH: auto uses this repository's remote script. Accepts a custom URL or an absolute local path.\n- UPDATE_INTERVAL: refresh interval in seconds, checked when the panel is opened.\n\nAll providers and accounts returned by CPA are displayed automatically; no provider selection is needed. Disabled accounts are displayed without querying quota. Codex and Antigravity use fixed quota queries; other providers use CPA's quota fetch interface when available. No MITM is required. CPA may renew expired tokens internally during a query.
+#!requirement=CORE_VERSION>=22
+
+[Panel]
+CPA = title="CPA",content="Waiting for refresh",script-name=cpa-panel,update-interval={{{UPDATE_INTERVAL}}}
+
+[Script]
+cpa-panel = type=generic,timeout=30,script-path=https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Scripts/cpa-panel.js,argument="base_url={{{BASE_URL}}}&management_key={{{MANAGEMENT_KEY}}}" #!REQUIREMENT "'{{{SCRIPT_PATH}}}' == 'auto'"
+cpa-panel = type=generic,timeout=30,script-path={{{SCRIPT_PATH}}},argument="base_url={{{BASE_URL}}}&management_key={{{MANAGEMENT_KEY}}}" #!REQUIREMENT "'{{{SCRIPT_PATH}}}' != 'auto'"

@@ -5,6 +5,7 @@
 | 模块 |  Raw 链接 |
 |--------|----------|
 | AI Balance | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/ai-balance.sgmodule |
+| CPA 面板 | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/cpa-panel.sgmodule |
 | GitHub PDF 预览 | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/github-pdf-preview.sgmodule |
 | GitHub 私有仓库 | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/github-private-repo.sgmodule |
 | ISVORO 面板 | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/isvoro-panel.sgmodule |
@@ -28,6 +29,33 @@
 模块使用固定标题 `AI Balance`，将 DeepSeek 和 Qwen 余额合并到一张卡片，只显示 DeepSeek 总余额和 Qwen 可用余额。Qwen/百炼通过阿里云账户结算，因此 Qwen 可用余额来自 BSS OpenAPI `QueryAccountBalance`，代表整个阿里云账号可用于 Qwen/百炼等服务结算的可用额度；它不是单个 Qwen API Key 的用量统计。
 
 建议创建专用 RAM 用户，只授予 BSS 余额只读权限（例如`AliyunBSSReadOnlyAccess`），不要使用具备资源管理权限的主账号 AccessKey。卡片只访问 DeepSeek 与阿里云官方接口；阿里云 AccessKey Secret 仅在 Surge 本机用于生成 HMAC-SHA1 请求签名，不会作为明文参数发送。
+
+### CPA 面板
+
+[cpa-panel.sgmodule](Modules/cpa-panel.sgmodule) 在一张面板中自动展示 CPA v8 返回的全部上游厂商及账号，不传厂商、账号或数量筛选参数。查询异常、限流或任一窗口剩余额度不超过 10% 的账号优先。已停用的账号显示状态，不发起额度查询。邮箱显示为 `al***@example.com`。
+
+Codex 和 Antigravity 使用内置额度适配。其他厂商通过 CPA 的统一额度查询接口读取服务端已注册的额度插件或已配置的探测结果，显示窗口、套餐和余额摘要。厂商没有提供额度接口时，保留该账号并标明“暂不可查询”，不会隐藏或显示为零额度。新增厂商会随账号列表自动出现。
+
+填写 `BASE_URL` 和 `MANAGEMENT_KEY` 后刷新面板。`BASE_URL` 使用 CPA 的 HTTPS 地址，例如 `https://cpa.example.com`，也接受以 `/v8/management` 结尾的地址。普通客户端 API Key 无法查询管理接口。
+
+`SCRIPT_PATH=auto` 使用本仓库远程脚本。本地使用时填写该设备上 `cpa-panel.js` 的绝对路径，例如 `/path/to/surge/Scripts/cpa-panel.js`。
+
+| 参数 | 默认值 | 说明 |
+|------|--------|------|
+| `BASE_URL` | 必填 | CPA HTTPS 地址，不含 `/v1` |
+| `MANAGEMENT_KEY` | 必填 | CPA 管理密钥 |
+| `SCRIPT_PATH` | `auto` | 本仓库远程脚本、自定义 URL 或本地绝对路径 |
+| `UPDATE_INTERVAL` | `600` | 打开面板时检查的刷新间隔，单位秒 |
+
+参数含 `&`、`+`、`%`、逗号或双引号时，先用 URL 编码。例如密钥中的 `+` 填为 `%2B`。模块不需要 MITM。
+
+Codex 按 `limit_window_seconds` 识别周期，不把主窗口固定当作 5 小时。例如 `prolite` 返回的主窗口可以是一周；代码审查、附加额度及 Credits 也会显示。Antigravity 按模型组及窗口分别显示。每个窗口同时显示重置倒计时和设备时区的重置日期。未知值显示“未知”，真实零值显示 `0%`；重置时间已到时保留查询值，不推算为满额。不同账号和窗口的百分比不相加。
+
+查询最多并发 3 个账号，单次请求超时为 8 秒，整个脚本在 28 秒内返回。部分查询失败或超时时，其他账号的结果继续显示。Surge 本机只缓存归一化额度、脱敏标签、账号索引和成功时间，最长回退 24 小时。回退数据标明“缓存”及原成功时间；失败不会延长缓存有效期。管理接口拒绝账号列表请求时不展示缓存，成功返回的新列表会移除已删除或停用账号的缓存。
+
+脚本固定调用三个查询入口：`GET /v8/management/credentials`、`POST /v8/management/requests/api-call` 和 `POST /v8/management/credentials/quota/fetch`。`api-call` 只转发 Codex 的 `GET /backend-api/wham/usage` 或 Google 的 `POST /v1internal:retrieveUserQuotaSummary` 查询，请求目标使用脚本内白名单。`quota/fetch` 仅提交账号索引，由 CPA 提供归一化额度数据。模块不调用账号变更、配置写入、凭据刷新或额度重置接口。**这是脚本行为只读，Management Key 本身仍有完整管理权限。** CPA 可能在查询时自动续期过期 Token，这是服务端现有行为。密钥和上游 Token 不写入脚本日志或脚本缓存。
+
+接口依据：[CPA v8 管理 API](https://help.router-for.me/management/apiv8)、[CPA v8.0.3 转发实现](https://github.com/router-for-me/CLIProxyAPI/blob/v8.0.3/internal/api/handlers/management/api_tools.go)、[统一额度查询实现](https://github.com/router-for-me/CLIProxyAPI/blob/v8.0.3/internal/api/handlers/management/plugin_quota.go)和[额度响应类型](https://github.com/router-for-me/CLIProxyAPI/blob/v8.0.3/sdk/pluginapi/types.go)。测试使用 [虚构额度样例](Tests/Fixtures/cpa-quota.json)，可运行 `node --check Scripts/cpa-panel.js` 和 `node Tests/cpa-panel.test.js --preview` 检查语法、预览面板并验证自动展示全部厂商、周期解析、只读请求、缓存、部分失败和超时行为。
 
 ### GitHub PDF 预览
 
@@ -62,7 +90,7 @@ ISVORO
 
 需要其他信息时，将 `SHOW_DETAILS` 设为 `true`，再通过各个 `SHOW_*` 开关选择详情面板。实时监控、流量、备份与配置需要填写 `SERVER_ID`，可从服务器详情面板查看 ID。升级旧模块后也默认只显示总览。
 
-`SCRIPT_PATH=auto` 使用本仓库的远程脚本。本地使用时，将 `SCRIPT_PATH` 设为 `/Users/guoguanhua/Documents/surge/Scripts/isvoro-panel.js`。在其他设备上，将脚本复制到 Surge 配置目录，再填写该设备上的脚本路径。
+`SCRIPT_PATH=auto` 使用本仓库的远程脚本。本地使用时，将 `SCRIPT_PATH` 设为 `/path/to/surge/Scripts/isvoro-panel.js`。在其他设备上，将脚本复制到 Surge 配置目录，再填写该设备上的脚本路径。
 
 | 参数 | 默认值 | 说明 |
 |------|--------|------|

@@ -1,0 +1,139 @@
+{
+  "source": "Synthetic responses matching CPA v8.0.3 schemas. All identities, quota values, and timestamps are fictional.",
+  "credentials": {
+    "files": [
+      {
+        "auth_index": "ag-1",
+        "provider": "antigravity",
+        "email": "alice@example.com",
+        "project_id": "test-project",
+        "disabled": false
+      },
+      {
+        "auth_index": "codex-1",
+        "provider": "codex",
+        "email": "bob@example.com",
+        "disabled": false,
+        "id_token": {
+          "chatgpt_account_id": "test-prolite-account",
+          "plan_type": "prolite"
+        }
+      },
+      {
+        "auth_index": "codex-2",
+        "provider": "codex",
+        "email": "carol@example.com",
+        "disabled": false,
+        "id_token": {
+          "chatgpt_account_id": "test-plus-account",
+          "plan_type": "plus"
+        }
+      }
+    ]
+  },
+  "quotas": {
+    "ag-1": {
+      "groups": [
+        {
+          "displayName": "Gemini Models",
+          "buckets": [
+            {
+              "displayName": "Weekly Limit Remaining",
+              "bucketId": "gemini-weekly",
+              "window": "weekly",
+              "remainingFraction": 1,
+              "resetTime": "2026-01-08T00:00:00Z"
+            },
+            {
+              "displayName": "Five Hour Limit Remaining",
+              "bucketId": "gemini-5h",
+              "window": "5h",
+              "remainingFraction": 1,
+              "resetTime": "2026-01-01T05:00:00Z"
+            }
+          ]
+        },
+        {
+          "displayName": "Claude and GPT models",
+          "buckets": [
+            {
+              "displayName": "Weekly Limit Remaining",
+              "bucketId": "3p-weekly",
+              "window": "weekly",
+              "remainingFraction": 1,
+              "resetTime": "2026-01-08T00:00:00Z"
+            },
+            {
+              "displayName": "Five Hour Limit Remaining",
+              "bucketId": "3p-5h",
+              "window": "5h",
+              "remainingFraction": 1,
+              "resetTime": "2026-01-01T05:00:00Z"
+            }
+          ]
+        }
+      ]
+    },
+    "codex-1": {
+      "plan_type": "prolite",
+      "rate_limit": {
+        "allowed": true,
+        "limit_reached": false,
+        "primary_window": {
+          "used_percent": 30,
+          "limit_window_seconds": 604800,
+          "reset_after_seconds": 345600,
+          "reset_at": 1767571200
+        },
+        "secondary_window": null
+      },
+      "code_review_rate_limit": null,
+      "additional_rate_limits": null,
+      "credits": {
+        "has_credits": false,
+        "unlimited": false,
+        "balance": "0"
+      }
+    },
+    "codex-2": {
+      "plan_type": "plus",
+      "rate_limit": {
+        "allowed": true,
+        "limit_reached": false,
+        "primary_window": {
+          "used_percent": 0,
+          "limit_window_seconds": 18000,
+          "reset_after_seconds": 10800,
+          "reset_at": 1767236400
+        },
+        "secondary_window": {
+          "used_percent": 20,
+          "limit_window_seconds": 604800,
+          "reset_after_seconds": 172800,
+          "reset_at": 1767398400
+        }
+      },
+      "code_review_rate_limit": null,
+      "additional_rate_limits": [
+        {
+          "limit_name": "gpt-reserve",
+          "rate_limit": {
+            "allowed": true,
+            "primary_window": {
+              "used_percent": 0,
+              "limit_window_seconds": 604800,
+              "reset_after_seconds": 604800,
+              "reset_at": 1767830400
+            },
+            "secondary_window": null
+          }
+        }
+      ],
+      "credits": {
+        "has_credits": false,
+        "unlimited": false,
+        "balance": "0"
+      }
+    }
+  }
+}
