@@ -287,7 +287,6 @@
       if (data.credits !== null) lines.push("Credits " + data.credits);
       data.summary.forEach(function (metric) { lines.push(text(metric.label) + " " + text(metric.value)); });
     });
-    lines.push("", (listError ? "尝试查询 " : "本次查询 ") + date(Date.now()));
     finish(lines);
   }
 
