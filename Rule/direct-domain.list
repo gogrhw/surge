@@ -1,6 +1,6 @@
 # Surge domain direct rules; use RULE-SET,<URL>,DIRECT
 # Source: https://github.com/Loyalsoldier/v2ray-rules-dat
-# Geosite: apple, microsoft!github, zotero, cn, private
+# Geosite: apple, microsoft!github, zotero, cn
 # GitHub category excluded from the merged domain rules.
 AND,((AND,((DOMAIN-WILDCARD,cdn[0-9]-epicgames-[0-9]*.file.myqcloud.com),(NOT,((DOMAIN-WILDCARD,cdn[0-9]-epicgames-*[a-z._-]*.file.myqcloud.com))))),(NOT,((OR,((DOMAIN,copilot-proxy.githubusercontent.com),(DOMAIN,copilot-telemetry-service.githubusercontent.com),(DOMAIN,copilot-telemetry.githubusercontent.com),(DOMAIN,copilot-workspace.githubnext.com),(DOMAIN,copilotprodattachments.blob.core.windows.net),(DOMAIN,github-api.arkoselabs.com),(DOMAIN,github-cloud.s3.amazonaws.com),(DOMAIN,github-production-release-asset-2e65be.s3.amazonaws.com),(DOMAIN,github-production-repository-file-5c1aeb.s3.amazonaws.com),(DOMAIN,github-production-repository-image-32fea6.s3.amazonaws.com),(DOMAIN,github-production-upload-manifest-file-7fdce7.s3.amazonaws.com),(DOMAIN,github-production-user-asset-6210df.s3.amazonaws.com),(DOMAIN,productionresultssa0.blob.core.windows.net),(DOMAIN,productionresultssa1.blob.core.windows.net),(DOMAIN,productionresultssa10.blob.core.windows.net),(DOMAIN,productionresultssa11.blob.core.windows.net),(DOMAIN,productionresultssa12.blob.core.windows.net),(DOMAIN,productionresultssa13.blob.core.windows.net),(DOMAIN,productionresultssa14.blob.core.windows.net),(DOMAIN,productionresultssa15.blob.core.windows.net),(DOMAIN,productionresultssa16.blob.core.windows.net),(DOMAIN,productionresultssa17.blob.core.windows.net),(DOMAIN,productionresultssa18.blob.core.windows.net),(DOMAIN,productionresultssa19.blob.core.windows.net),(DOMAIN,productionresultssa2.blob.core.windows.net),(DOMAIN,productionresultssa3.blob.core.windows.net),(DOMAIN,productionresultssa4.blob.core.windows.net),(DOMAIN,productionresultssa5.blob.core.windows.net),(DOMAIN,productionresultssa6.blob.core.windows.net),(DOMAIN,productionresultssa7.blob.core.windows.net),(DOMAIN,productionresultssa8.blob.core.windows.net),(DOMAIN,productionresultssa9.blob.core.windows.net),(DOMAIN-SUFFIX,atom.io),(DOMAIN-SUFFIX,cafe.github.com),(DOMAIN-SUFFIX,collector.github.com),(DOMAIN-SUFFIX,dependabot.com),(DOMAIN-SUFFIX,gh.io),(DOMAIN-SUFFIX,ghcr.io),(DOMAIN-SUFFIX,ghe.com),(DOMAIN-SUFFIX,git.io),(DOMAIN-SUFFIX,github.ai),(DOMAIN-SUFFIX,github.blog),(DOMAIN-SUFFIX,github.career),(DOMAIN-SUFFIX,github.com),(DOMAIN-SUFFIX,github.community),(DOMAIN-SUFFIX,github.dev),(DOMAIN-SUFFIX,github.io),(DOMAIN-SUFFIX,githubapp.com),(DOMAIN-SUFFIX,githubassets.com),(DOMAIN-SUFFIX,githubcopilot.com),(DOMAIN-SUFFIX,githubhackathon.com),(DOMAIN-SUFFIX,githubnext.com),(DOMAIN-SUFFIX,githubpreview.dev),(DOMAIN-SUFFIX,githubstatus.com),(DOMAIN-SUFFIX,githubsupport.com),(DOMAIN-SUFFIX,githubuniverse.com),(DOMAIN-SUFFIX,githubusercontent.com),(DOMAIN-SUFFIX,myoctocat.com),(DOMAIN-SUFFIX,npm.community),(DOMAIN-SUFFIX,npmjs.com),(DOMAIN-SUFFIX,npmjs.org),(DOMAIN-SUFFIX,octocaptcha.com),(DOMAIN-SUFFIX,opensource.guide),(DOMAIN-SUFFIX,repo.new),(DOMAIN-SUFFIX,thegithubshop.com))))))
 AND,((AND,((DOMAIN-WILDCARD,epicgames-download[0-9]-[0-9]*.file.myqcloud.com),(NOT,((DOMAIN-WILDCARD,epicgames-download[0-9]-*[a-z._-]*.file.myqcloud.com))))),(NOT,((OR,((DOMAIN,copilot-proxy.githubusercontent.com),(DOMAIN,copilot-telemetry-service.githubusercontent.com),(DOMAIN,copilot-telemetry.githubusercontent.com),(DOMAIN,copilot-workspace.githubnext.com),(DOMAIN,copilotprodattachments.blob.core.windows.net),(DOMAIN,github-api.arkoselabs.com),(DOMAIN,github-cloud.s3.amazonaws.com),(DOMAIN,github-production-release-asset-2e65be.s3.amazonaws.com),(DOMAIN,github-production-repository-file-5c1aeb.s3.amazonaws.com),(DOMAIN,github-production-repository-image-32fea6.s3.amazonaws.com),(DOMAIN,github-production-upload-manifest-file-7fdce7.s3.amazonaws.com),(DOMAIN,github-production-user-asset-6210df.s3.amazonaws.com),(DOMAIN,productionresultssa0.blob.core.windows.net),(DOMAIN,productionresultssa1.blob.core.windows.net),(DOMAIN,productionresultssa10.blob.core.windows.net),(DOMAIN,productionresultssa11.blob.core.windows.net),(DOMAIN,productionresultssa12.blob.core.windows.net),(DOMAIN,productionresultssa13.blob.core.windows.net),(DOMAIN,productionresultssa14.blob.core.windows.net),(DOMAIN,productionresultssa15.blob.core.windows.net),(DOMAIN,productionresultssa16.blob.core.windows.net),(DOMAIN,productionresultssa17.blob.core.windows.net),(DOMAIN,productionresultssa18.blob.core.windows.net),(DOMAIN,productionresultssa19.blob.core.windows.net),(DOMAIN,productionresultssa2.blob.core.windows.net),(DOMAIN,productionresultssa3.blob.core.windows.net),(DOMAIN,productionresultssa4.blob.core.windows.net),(DOMAIN,productionresultssa5.blob.core.windows.net),(DOMAIN,productionresultssa6.blob.core.windows.net),(DOMAIN,productionresultssa7.blob.core.windows.net),(DOMAIN,productionresultssa8.blob.core.windows.net),(DOMAIN,productionresultssa9.blob.core.windows.net),(DOMAIN-SUFFIX,atom.io),(DOMAIN-SUFFIX,cafe.github.com),(DOMAIN-SUFFIX,collector.github.com),(DOMAIN-SUFFIX,dependabot.com),(DOMAIN-SUFFIX,gh.io),(DOMAIN-SUFFIX,ghcr.io),(DOMAIN-SUFFIX,ghe.com),(DOMAIN-SUFFIX,git.io),(DOMAIN-SUFFIX,github.ai),(DOMAIN-SUFFIX,github.blog),(DOMAIN-SUFFIX,github.career),(DOMAIN-SUFFIX,github.com),(DOMAIN-SUFFIX,github.community),(DOMAIN-SUFFIX,github.dev),(DOMAIN-SUFFIX,github.io),(DOMAIN-SUFFIX,githubapp.com),(DOMAIN-SUFFIX,githubassets.com),(DOMAIN-SUFFIX,githubcopilot.com),(DOMAIN-SUFFIX,githubhackathon.com),(DOMAIN-SUFFIX,githubnext.com),(DOMAIN-SUFFIX,githubpreview.dev),(DOMAIN-SUFFIX,githubstatus.com),(DOMAIN-SUFFIX,githubsupport.com),(DOMAIN-SUFFIX,githubuniverse.com),(DOMAIN-SUFFIX,githubusercontent.com),(DOMAIN-SUFFIX,myoctocat.com),(DOMAIN-SUFFIX,npm.community),(DOMAIN-SUFFIX,npmjs.com),(DOMAIN-SUFFIX,npmjs.org),(DOMAIN-SUFFIX,octocaptcha.com),(DOMAIN-SUFFIX,opensource.guide),(DOMAIN-SUFFIX,repo.new),(DOMAIN-SUFFIX,thegithubshop.com))))))
@@ -16,7 +16,6 @@ AND,((AND,((DOMAIN-WILDCARD,r*[0-9].sn-j5o[a-z0-9_][a-z0-9_][a-z0-9_][a-z0-9_][a
 AND,((AND,((DOMAIN-WILDCARD,r*[0-9].sn-j5o[a-z0-9_][a-z0-9_][a-z0-9_][a-z0-9_][a-z0-9_].xn--ngstr-lra8j.com),(NOT,((DOMAIN-WILDCARD,r*[a-qs-z._-]*.sn-j5o[a-z0-9_][a-z0-9_][a-z0-9_][a-z0-9_][a-z0-9_].xn--ngstr-lra8j.com))),(NOT,((DOMAIN-WILDCARD,r*[0-9]*r*.sn-j5o[a-z0-9_][a-z0-9_][a-z0-9_][a-z0-9_][a-z0-9_].xn--ngstr-lra8j.com))))),(NOT,((OR,((DOMAIN,copilot-proxy.githubusercontent.com),(DOMAIN,copilot-telemetry-service.githubusercontent.com),(DOMAIN,copilot-telemetry.githubusercontent.com),(DOMAIN,copilot-workspace.githubnext.com),(DOMAIN,copilotprodattachments.blob.core.windows.net),(DOMAIN,github-api.arkoselabs.com),(DOMAIN,github-cloud.s3.amazonaws.com),(DOMAIN,github-production-release-asset-2e65be.s3.amazonaws.com),(DOMAIN,github-production-repository-file-5c1aeb.s3.amazonaws.com),(DOMAIN,github-production-repository-image-32fea6.s3.amazonaws.com),(DOMAIN,github-production-upload-manifest-file-7fdce7.s3.amazonaws.com),(DOMAIN,github-production-user-asset-6210df.s3.amazonaws.com),(DOMAIN,productionresultssa0.blob.core.windows.net),(DOMAIN,productionresultssa1.blob.core.windows.net),(DOMAIN,productionresultssa10.blob.core.windows.net),(DOMAIN,productionresultssa11.blob.core.windows.net),(DOMAIN,productionresultssa12.blob.core.windows.net),(DOMAIN,productionresultssa13.blob.core.windows.net),(DOMAIN,productionresultssa14.blob.core.windows.net),(DOMAIN,productionresultssa15.blob.core.windows.net),(DOMAIN,productionresultssa16.blob.core.windows.net),(DOMAIN,productionresultssa17.blob.core.windows.net),(DOMAIN,productionresultssa18.blob.core.windows.net),(DOMAIN,productionresultssa19.blob.core.windows.net),(DOMAIN,productionresultssa2.blob.core.windows.net),(DOMAIN,productionresultssa3.blob.core.windows.net),(DOMAIN,productionresultssa4.blob.core.windows.net),(DOMAIN,productionresultssa5.blob.core.windows.net),(DOMAIN,productionresultssa6.blob.core.windows.net),(DOMAIN,productionresultssa7.blob.core.windows.net),(DOMAIN,productionresultssa8.blob.core.windows.net),(DOMAIN,productionresultssa9.blob.core.windows.net),(DOMAIN-SUFFIX,atom.io),(DOMAIN-SUFFIX,cafe.github.com),(DOMAIN-SUFFIX,collector.github.com),(DOMAIN-SUFFIX,dependabot.com),(DOMAIN-SUFFIX,gh.io),(DOMAIN-SUFFIX,ghcr.io),(DOMAIN-SUFFIX,ghe.com),(DOMAIN-SUFFIX,git.io),(DOMAIN-SUFFIX,github.ai),(DOMAIN-SUFFIX,github.blog),(DOMAIN-SUFFIX,github.career),(DOMAIN-SUFFIX,github.com),(DOMAIN-SUFFIX,github.community),(DOMAIN-SUFFIX,github.dev),(DOMAIN-SUFFIX,github.io),(DOMAIN-SUFFIX,githubapp.com),(DOMAIN-SUFFIX,githubassets.com),(DOMAIN-SUFFIX,githubcopilot.com),(DOMAIN-SUFFIX,githubhackathon.com),(DOMAIN-SUFFIX,githubnext.com),(DOMAIN-SUFFIX,githubpreview.dev),(DOMAIN-SUFFIX,githubstatus.com),(DOMAIN-SUFFIX,githubsupport.com),(DOMAIN-SUFFIX,githubuniverse.com),(DOMAIN-SUFFIX,githubusercontent.com),(DOMAIN-SUFFIX,myoctocat.com),(DOMAIN-SUFFIX,npm.community),(DOMAIN-SUFFIX,npmjs.com),(DOMAIN-SUFFIX,npmjs.org),(DOMAIN-SUFFIX,octocaptcha.com),(DOMAIN-SUFFIX,opensource.guide),(DOMAIN-SUFFIX,repo.new),(DOMAIN-SUFFIX,thegithubshop.com))))))
 AND,((AND,((DOMAIN-WILDCARD,r*[0-9].sn-ni5[a-z0-9_][a-z0-9_][a-z0-9_][a-z0-9_][a-z0-9_].googlevideo.com),(NOT,((DOMAIN-WILDCARD,r*[a-qs-z._-]*.sn-ni5[a-z0-9_][a-z0-9_][a-z0-9_][a-z0-9_][a-z0-9_].googlevideo.com))),(NOT,((DOMAIN-WILDCARD,r*[0-9]*r*.sn-ni5[a-z0-9_][a-z0-9_][a-z0-9_][a-z0-9_][a-z0-9_].googlevideo.com))))),(NOT,((OR,((DOMAIN,copilot-proxy.githubusercontent.com),(DOMAIN,copilot-telemetry-service.githubusercontent.com),(DOMAIN,copilot-telemetry.githubusercontent.com),(DOMAIN,copilot-workspace.githubnext.com),(DOMAIN,copilotprodattachments.blob.core.windows.net),(DOMAIN,github-api.arkoselabs.com),(DOMAIN,github-cloud.s3.amazonaws.com),(DOMAIN,github-production-release-asset-2e65be.s3.amazonaws.com),(DOMAIN,github-production-repository-file-5c1aeb.s3.amazonaws.com),(DOMAIN,github-production-repository-image-32fea6.s3.amazonaws.com),(DOMAIN,github-production-upload-manifest-file-7fdce7.s3.amazonaws.com),(DOMAIN,github-production-user-asset-6210df.s3.amazonaws.com),(DOMAIN,productionresultssa0.blob.core.windows.net),(DOMAIN,productionresultssa1.blob.core.windows.net),(DOMAIN,productionresultssa10.blob.core.windows.net),(DOMAIN,productionresultssa11.blob.core.windows.net),(DOMAIN,productionresultssa12.blob.core.windows.net),(DOMAIN,productionresultssa13.blob.core.windows.net),(DOMAIN,productionresultssa14.blob.core.windows.net),(DOMAIN,productionresultssa15.blob.core.windows.net),(DOMAIN,productionresultssa16.blob.core.windows.net),(DOMAIN,productionresultssa17.blob.core.windows.net),(DOMAIN,productionresultssa18.blob.core.windows.net),(DOMAIN,productionresultssa19.blob.core.windows.net),(DOMAIN,productionresultssa2.blob.core.windows.net),(DOMAIN,productionresultssa3.blob.core.windows.net),(DOMAIN,productionresultssa4.blob.core.windows.net),(DOMAIN,productionresultssa5.blob.core.windows.net),(DOMAIN,productionresultssa6.blob.core.windows.net),(DOMAIN,productionresultssa7.blob.core.windows.net),(DOMAIN,productionresultssa8.blob.core.windows.net),(DOMAIN,productionresultssa9.blob.core.windows.net),(DOMAIN-SUFFIX,atom.io),(DOMAIN-SUFFIX,cafe.github.com),(DOMAIN-SUFFIX,collector.github.com),(DOMAIN-SUFFIX,dependabot.com),(DOMAIN-SUFFIX,gh.io),(DOMAIN-SUFFIX,ghcr.io),(DOMAIN-SUFFIX,ghe.com),(DOMAIN-SUFFIX,git.io),(DOMAIN-SUFFIX,github.ai),(DOMAIN-SUFFIX,github.blog),(DOMAIN-SUFFIX,github.career),(DOMAIN-SUFFIX,github.com),(DOMAIN-SUFFIX,github.community),(DOMAIN-SUFFIX,github.dev),(DOMAIN-SUFFIX,github.io),(DOMAIN-SUFFIX,githubapp.com),(DOMAIN-SUFFIX,githubassets.com),(DOMAIN-SUFFIX,githubcopilot.com),(DOMAIN-SUFFIX,githubhackathon.com),(DOMAIN-SUFFIX,githubnext.com),(DOMAIN-SUFFIX,githubpreview.dev),(DOMAIN-SUFFIX,githubstatus.com),(DOMAIN-SUFFIX,githubsupport.com),(DOMAIN-SUFFIX,githubuniverse.com),(DOMAIN-SUFFIX,githubusercontent.com),(DOMAIN-SUFFIX,myoctocat.com),(DOMAIN-SUFFIX,npm.community),(DOMAIN-SUFFIX,npmjs.com),(DOMAIN-SUFFIX,npmjs.org),(DOMAIN-SUFFIX,octocaptcha.com),(DOMAIN-SUFFIX,opensource.guide),(DOMAIN-SUFFIX,repo.new),(DOMAIN-SUFFIX,thegithubshop.com))))))
 AND,((AND,((DOMAIN-WILDCARD,r*[0-9].sn-ni5[a-z0-9_][a-z0-9_][a-z0-9_][a-z0-9_][a-z0-9_].xn--ngstr-lra8j.com),(NOT,((DOMAIN-WILDCARD,r*[a-qs-z._-]*.sn-ni5[a-z0-9_][a-z0-9_][a-z0-9_][a-z0-9_][a-z0-9_].xn--ngstr-lra8j.com))),(NOT,((DOMAIN-WILDCARD,r*[0-9]*r*.sn-ni5[a-z0-9_][a-z0-9_][a-z0-9_][a-z0-9_][a-z0-9_].xn--ngstr-lra8j.com))))),(NOT,((OR,((DOMAIN,copilot-proxy.githubusercontent.com),(DOMAIN,copilot-telemetry-service.githubusercontent.com),(DOMAIN,copilot-telemetry.githubusercontent.com),(DOMAIN,copilot-workspace.githubnext.com),(DOMAIN,copilotprodattachments.blob.core.windows.net),(DOMAIN,github-api.arkoselabs.com),(DOMAIN,github-cloud.s3.amazonaws.com),(DOMAIN,github-production-release-asset-2e65be.s3.amazonaws.com),(DOMAIN,github-production-repository-file-5c1aeb.s3.amazonaws.com),(DOMAIN,github-production-repository-image-32fea6.s3.amazonaws.com),(DOMAIN,github-production-upload-manifest-file-7fdce7.s3.amazonaws.com),(DOMAIN,github-production-user-asset-6210df.s3.amazonaws.com),(DOMAIN,productionresultssa0.blob.core.windows.net),(DOMAIN,productionresultssa1.blob.core.windows.net),(DOMAIN,productionresultssa10.blob.core.windows.net),(DOMAIN,productionresultssa11.blob.core.windows.net),(DOMAIN,productionresultssa12.blob.core.windows.net),(DOMAIN,productionresultssa13.blob.core.windows.net),(DOMAIN,productionresultssa14.blob.core.windows.net),(DOMAIN,productionresultssa15.blob.core.windows.net),(DOMAIN,productionresultssa16.blob.core.windows.net),(DOMAIN,productionresultssa17.blob.core.windows.net),(DOMAIN,productionresultssa18.blob.core.windows.net),(DOMAIN,productionresultssa19.blob.core.windows.net),(DOMAIN,productionresultssa2.blob.core.windows.net),(DOMAIN,productionresultssa3.blob.core.windows.net),(DOMAIN,productionresultssa4.blob.core.windows.net),(DOMAIN,productionresultssa5.blob.core.windows.net),(DOMAIN,productionresultssa6.blob.core.windows.net),(DOMAIN,productionresultssa7.blob.core.windows.net),(DOMAIN,productionresultssa8.blob.core.windows.net),(DOMAIN,productionresultssa9.blob.core.windows.net),(DOMAIN-SUFFIX,atom.io),(DOMAIN-SUFFIX,cafe.github.com),(DOMAIN-SUFFIX,collector.github.com),(DOMAIN-SUFFIX,dependabot.com),(DOMAIN-SUFFIX,gh.io),(DOMAIN-SUFFIX,ghcr.io),(DOMAIN-SUFFIX,ghe.com),(DOMAIN-SUFFIX,git.io),(DOMAIN-SUFFIX,github.ai),(DOMAIN-SUFFIX,github.blog),(DOMAIN-SUFFIX,github.career),(DOMAIN-SUFFIX,github.com),(DOMAIN-SUFFIX,github.community),(DOMAIN-SUFFIX,github.dev),(DOMAIN-SUFFIX,github.io),(DOMAIN-SUFFIX,githubapp.com),(DOMAIN-SUFFIX,githubassets.com),(DOMAIN-SUFFIX,githubcopilot.com),(DOMAIN-SUFFIX,githubhackathon.com),(DOMAIN-SUFFIX,githubnext.com),(DOMAIN-SUFFIX,githubpreview.dev),(DOMAIN-SUFFIX,githubstatus.com),(DOMAIN-SUFFIX,githubsupport.com),(DOMAIN-SUFFIX,githubuniverse.com),(DOMAIN-SUFFIX,githubusercontent.com),(DOMAIN-SUFFIX,myoctocat.com),(DOMAIN-SUFFIX,npm.community),(DOMAIN-SUFFIX,npmjs.com),(DOMAIN-SUFFIX,npmjs.org),(DOMAIN-SUFFIX,octocaptcha.com),(DOMAIN-SUFFIX,opensource.guide),(DOMAIN-SUFFIX,repo.new),(DOMAIN-SUFFIX,thegithubshop.com))))))
-AND,((AND,((OR,((DOMAIN-WILDCARD,[a-z]),(DOMAIN-WILDCARD,[a-z]*[a-z0-9]))),(NOT,((DOMAIN-WILDCARD,*.*))),(NOT,((DOMAIN-WILDCARD,*_*))),(NOT,((DOMAIN-WILDCARD,????????????????????????????????????????????????????????????????*))))),(NOT,((OR,((DOMAIN,copilot-proxy.githubusercontent.com),(DOMAIN,copilot-telemetry-service.githubusercontent.com),(DOMAIN,copilot-telemetry.githubusercontent.com),(DOMAIN,copilot-workspace.githubnext.com),(DOMAIN,copilotprodattachments.blob.core.windows.net),(DOMAIN,github-api.arkoselabs.com),(DOMAIN,github-cloud.s3.amazonaws.com),(DOMAIN,github-production-release-asset-2e65be.s3.amazonaws.com),(DOMAIN,github-production-repository-file-5c1aeb.s3.amazonaws.com),(DOMAIN,github-production-repository-image-32fea6.s3.amazonaws.com),(DOMAIN,github-production-upload-manifest-file-7fdce7.s3.amazonaws.com),(DOMAIN,github-production-user-asset-6210df.s3.amazonaws.com),(DOMAIN,productionresultssa0.blob.core.windows.net),(DOMAIN,productionresultssa1.blob.core.windows.net),(DOMAIN,productionresultssa10.blob.core.windows.net),(DOMAIN,productionresultssa11.blob.core.windows.net),(DOMAIN,productionresultssa12.blob.core.windows.net),(DOMAIN,productionresultssa13.blob.core.windows.net),(DOMAIN,productionresultssa14.blob.core.windows.net),(DOMAIN,productionresultssa15.blob.core.windows.net),(DOMAIN,productionresultssa16.blob.core.windows.net),(DOMAIN,productionresultssa17.blob.core.windows.net),(DOMAIN,productionresultssa18.blob.core.windows.net),(DOMAIN,productionresultssa19.blob.core.windows.net),(DOMAIN,productionresultssa2.blob.core.windows.net),(DOMAIN,productionresultssa3.blob.core.windows.net),(DOMAIN,productionresultssa4.blob.core.windows.net),(DOMAIN,productionresultssa5.blob.core.windows.net),(DOMAIN,productionresultssa6.blob.core.windows.net),(DOMAIN,productionresultssa7.blob.core.windows.net),(DOMAIN,productionresultssa8.blob.core.windows.net),(DOMAIN,productionresultssa9.blob.core.windows.net),(DOMAIN-SUFFIX,atom.io),(DOMAIN-SUFFIX,cafe.github.com),(DOMAIN-SUFFIX,collector.github.com),(DOMAIN-SUFFIX,dependabot.com),(DOMAIN-SUFFIX,gh.io),(DOMAIN-SUFFIX,ghcr.io),(DOMAIN-SUFFIX,ghe.com),(DOMAIN-SUFFIX,git.io),(DOMAIN-SUFFIX,github.ai),(DOMAIN-SUFFIX,github.blog),(DOMAIN-SUFFIX,github.career),(DOMAIN-SUFFIX,github.com),(DOMAIN-SUFFIX,github.community),(DOMAIN-SUFFIX,github.dev),(DOMAIN-SUFFIX,github.io),(DOMAIN-SUFFIX,githubapp.com),(DOMAIN-SUFFIX,githubassets.com),(DOMAIN-SUFFIX,githubcopilot.com),(DOMAIN-SUFFIX,githubhackathon.com),(DOMAIN-SUFFIX,githubnext.com),(DOMAIN-SUFFIX,githubpreview.dev),(DOMAIN-SUFFIX,githubstatus.com),(DOMAIN-SUFFIX,githubsupport.com),(DOMAIN-SUFFIX,githubuniverse.com),(DOMAIN-SUFFIX,githubusercontent.com),(DOMAIN-SUFFIX,myoctocat.com),(DOMAIN-SUFFIX,npm.community),(DOMAIN-SUFFIX,npmjs.com),(DOMAIN-SUFFIX,npmjs.org),(DOMAIN-SUFFIX,octocaptcha.com),(DOMAIN-SUFFIX,opensource.guide),(DOMAIN-SUFFIX,repo.new),(DOMAIN-SUFFIX,thegithubshop.com))))))
 AND,((DOMAIN-SUFFIX,windows.net),(NOT,((OR,((DOMAIN,copilot-proxy.githubusercontent.com),(DOMAIN,copilot-telemetry-service.githubusercontent.com),(DOMAIN,copilot-telemetry.githubusercontent.com),(DOMAIN,copilot-workspace.githubnext.com),(DOMAIN,copilotprodattachments.blob.core.windows.net),(DOMAIN,github-api.arkoselabs.com),(DOMAIN,github-cloud.s3.amazonaws.com),(DOMAIN,github-production-release-asset-2e65be.s3.amazonaws.com),(DOMAIN,github-production-repository-file-5c1aeb.s3.amazonaws.com),(DOMAIN,github-production-repository-image-32fea6.s3.amazonaws.com),(DOMAIN,github-production-upload-manifest-file-7fdce7.s3.amazonaws.com),(DOMAIN,github-production-user-asset-6210df.s3.amazonaws.com),(DOMAIN,productionresultssa0.blob.core.windows.net),(DOMAIN,productionresultssa1.blob.core.windows.net),(DOMAIN,productionresultssa10.blob.core.windows.net),(DOMAIN,productionresultssa11.blob.core.windows.net),(DOMAIN,productionresultssa12.blob.core.windows.net),(DOMAIN,productionresultssa13.blob.core.windows.net),(DOMAIN,productionresultssa14.blob.core.windows.net),(DOMAIN,productionresultssa15.blob.core.windows.net),(DOMAIN,productionresultssa16.blob.core.windows.net),(DOMAIN,productionresultssa17.blob.core.windows.net),(DOMAIN,productionresultssa18.blob.core.windows.net),(DOMAIN,productionresultssa19.blob.core.windows.net),(DOMAIN,productionresultssa2.blob.core.windows.net),(DOMAIN,productionresultssa3.blob.core.windows.net),(DOMAIN,productionresultssa4.blob.core.windows.net),(DOMAIN,productionresultssa5.blob.core.windows.net),(DOMAIN,productionresultssa6.blob.core.windows.net),(DOMAIN,productionresultssa7.blob.core.windows.net),(DOMAIN,productionresultssa8.blob.core.windows.net),(DOMAIN,productionresultssa9.blob.core.windows.net),(DOMAIN-SUFFIX,atom.io),(DOMAIN-SUFFIX,cafe.github.com),(DOMAIN-SUFFIX,collector.github.com),(DOMAIN-SUFFIX,dependabot.com),(DOMAIN-SUFFIX,gh.io),(DOMAIN-SUFFIX,ghcr.io),(DOMAIN-SUFFIX,ghe.com),(DOMAIN-SUFFIX,git.io),(DOMAIN-SUFFIX,github.ai),(DOMAIN-SUFFIX,github.blog),(DOMAIN-SUFFIX,github.career),(DOMAIN-SUFFIX,github.com),(DOMAIN-SUFFIX,github.community),(DOMAIN-SUFFIX,github.dev),(DOMAIN-SUFFIX,github.io),(DOMAIN-SUFFIX,githubapp.com),(DOMAIN-SUFFIX,githubassets.com),(DOMAIN-SUFFIX,githubcopilot.com),(DOMAIN-SUFFIX,githubhackathon.com),(DOMAIN-SUFFIX,githubnext.com),(DOMAIN-SUFFIX,githubpreview.dev),(DOMAIN-SUFFIX,githubstatus.com),(DOMAIN-SUFFIX,githubsupport.com),(DOMAIN-SUFFIX,githubuniverse.com),(DOMAIN-SUFFIX,githubusercontent.com),(DOMAIN-SUFFIX,myoctocat.com),(DOMAIN-SUFFIX,npm.community),(DOMAIN-SUFFIX,npmjs.com),(DOMAIN-SUFFIX,npmjs.org),(DOMAIN-SUFFIX,octocaptcha.com),(DOMAIN-SUFFIX,opensource.guide),(DOMAIN-SUFFIX,repo.new),(DOMAIN-SUFFIX,thegithubshop.com))))))
 AND,((DOMAIN-WILDCARD,?*-mihayo.akamaized.net),(NOT,((OR,((DOMAIN,copilot-proxy.githubusercontent.com),(DOMAIN,copilot-telemetry-service.githubusercontent.com),(DOMAIN,copilot-telemetry.githubusercontent.com),(DOMAIN,copilot-workspace.githubnext.com),(DOMAIN,copilotprodattachments.blob.core.windows.net),(DOMAIN,github-api.arkoselabs.com),(DOMAIN,github-cloud.s3.amazonaws.com),(DOMAIN,github-production-release-asset-2e65be.s3.amazonaws.com),(DOMAIN,github-production-repository-file-5c1aeb.s3.amazonaws.com),(DOMAIN,github-production-repository-image-32fea6.s3.amazonaws.com),(DOMAIN,github-production-upload-manifest-file-7fdce7.s3.amazonaws.com),(DOMAIN,github-production-user-asset-6210df.s3.amazonaws.com),(DOMAIN,productionresultssa0.blob.core.windows.net),(DOMAIN,productionresultssa1.blob.core.windows.net),(DOMAIN,productionresultssa10.blob.core.windows.net),(DOMAIN,productionresultssa11.blob.core.windows.net),(DOMAIN,productionresultssa12.blob.core.windows.net),(DOMAIN,productionresultssa13.blob.core.windows.net),(DOMAIN,productionresultssa14.blob.core.windows.net),(DOMAIN,productionresultssa15.blob.core.windows.net),(DOMAIN,productionresultssa16.blob.core.windows.net),(DOMAIN,productionresultssa17.blob.core.windows.net),(DOMAIN,productionresultssa18.blob.core.windows.net),(DOMAIN,productionresultssa19.blob.core.windows.net),(DOMAIN,productionresultssa2.blob.core.windows.net),(DOMAIN,productionresultssa3.blob.core.windows.net),(DOMAIN,productionresultssa4.blob.core.windows.net),(DOMAIN,productionresultssa5.blob.core.windows.net),(DOMAIN,productionresultssa6.blob.core.windows.net),(DOMAIN,productionresultssa7.blob.core.windows.net),(DOMAIN,productionresultssa8.blob.core.windows.net),(DOMAIN,productionresultssa9.blob.core.windows.net),(DOMAIN-SUFFIX,atom.io),(DOMAIN-SUFFIX,cafe.github.com),(DOMAIN-SUFFIX,collector.github.com),(DOMAIN-SUFFIX,dependabot.com),(DOMAIN-SUFFIX,gh.io),(DOMAIN-SUFFIX,ghcr.io),(DOMAIN-SUFFIX,ghe.com),(DOMAIN-SUFFIX,git.io),(DOMAIN-SUFFIX,github.ai),(DOMAIN-SUFFIX,github.blog),(DOMAIN-SUFFIX,github.career),(DOMAIN-SUFFIX,github.com),(DOMAIN-SUFFIX,github.community),(DOMAIN-SUFFIX,github.dev),(DOMAIN-SUFFIX,github.io),(DOMAIN-SUFFIX,githubapp.com),(DOMAIN-SUFFIX,githubassets.com),(DOMAIN-SUFFIX,githubcopilot.com),(DOMAIN-SUFFIX,githubhackathon.com),(DOMAIN-SUFFIX,githubnext.com),(DOMAIN-SUFFIX,githubpreview.dev),(DOMAIN-SUFFIX,githubstatus.com),(DOMAIN-SUFFIX,githubsupport.com),(DOMAIN-SUFFIX,githubuniverse.com),(DOMAIN-SUFFIX,githubusercontent.com),(DOMAIN-SUFFIX,myoctocat.com),(DOMAIN-SUFFIX,npm.community),(DOMAIN-SUFFIX,npmjs.com),(DOMAIN-SUFFIX,npmjs.org),(DOMAIN-SUFFIX,octocaptcha.com),(DOMAIN-SUFFIX,opensource.guide),(DOMAIN-SUFFIX,repo.new),(DOMAIN-SUFFIX,thegithubshop.com))))))
 AND,((DOMAIN-WILDCARD,?*.awsdns-cn-[0-9][0-9].biz),(NOT,((OR,((DOMAIN,copilot-proxy.githubusercontent.com),(DOMAIN,copilot-telemetry-service.githubusercontent.com),(DOMAIN,copilot-telemetry.githubusercontent.com),(DOMAIN,copilot-workspace.githubnext.com),(DOMAIN,copilotprodattachments.blob.core.windows.net),(DOMAIN,github-api.arkoselabs.com),(DOMAIN,github-cloud.s3.amazonaws.com),(DOMAIN,github-production-release-asset-2e65be.s3.amazonaws.com),(DOMAIN,github-production-repository-file-5c1aeb.s3.amazonaws.com),(DOMAIN,github-production-repository-image-32fea6.s3.amazonaws.com),(DOMAIN,github-production-upload-manifest-file-7fdce7.s3.amazonaws.com),(DOMAIN,github-production-user-asset-6210df.s3.amazonaws.com),(DOMAIN,productionresultssa0.blob.core.windows.net),(DOMAIN,productionresultssa1.blob.core.windows.net),(DOMAIN,productionresultssa10.blob.core.windows.net),(DOMAIN,productionresultssa11.blob.core.windows.net),(DOMAIN,productionresultssa12.blob.core.windows.net),(DOMAIN,productionresultssa13.blob.core.windows.net),(DOMAIN,productionresultssa14.blob.core.windows.net),(DOMAIN,productionresultssa15.blob.core.windows.net),(DOMAIN,productionresultssa16.blob.core.windows.net),(DOMAIN,productionresultssa17.blob.core.windows.net),(DOMAIN,productionresultssa18.blob.core.windows.net),(DOMAIN,productionresultssa19.blob.core.windows.net),(DOMAIN,productionresultssa2.blob.core.windows.net),(DOMAIN,productionresultssa3.blob.core.windows.net),(DOMAIN,productionresultssa4.blob.core.windows.net),(DOMAIN,productionresultssa5.blob.core.windows.net),(DOMAIN,productionresultssa6.blob.core.windows.net),(DOMAIN,productionresultssa7.blob.core.windows.net),(DOMAIN,productionresultssa8.blob.core.windows.net),(DOMAIN,productionresultssa9.blob.core.windows.net),(DOMAIN-SUFFIX,atom.io),(DOMAIN-SUFFIX,cafe.github.com),(DOMAIN-SUFFIX,collector.github.com),(DOMAIN-SUFFIX,dependabot.com),(DOMAIN-SUFFIX,gh.io),(DOMAIN-SUFFIX,ghcr.io),(DOMAIN-SUFFIX,ghe.com),(DOMAIN-SUFFIX,git.io),(DOMAIN-SUFFIX,github.ai),(DOMAIN-SUFFIX,github.blog),(DOMAIN-SUFFIX,github.career),(DOMAIN-SUFFIX,github.com),(DOMAIN-SUFFIX,github.community),(DOMAIN-SUFFIX,github.dev),(DOMAIN-SUFFIX,github.io),(DOMAIN-SUFFIX,githubapp.com),(DOMAIN-SUFFIX,githubassets.com),(DOMAIN-SUFFIX,githubcopilot.com),(DOMAIN-SUFFIX,githubhackathon.com),(DOMAIN-SUFFIX,githubnext.com),(DOMAIN-SUFFIX,githubpreview.dev),(DOMAIN-SUFFIX,githubstatus.com),(DOMAIN-SUFFIX,githubsupport.com),(DOMAIN-SUFFIX,githubuniverse.com),(DOMAIN-SUFFIX,githubusercontent.com),(DOMAIN-SUFFIX,myoctocat.com),(DOMAIN-SUFFIX,npm.community),(DOMAIN-SUFFIX,npmjs.com),(DOMAIN-SUFFIX,npmjs.org),(DOMAIN-SUFFIX,octocaptcha.com),(DOMAIN-SUFFIX,opensource.guide),(DOMAIN-SUFFIX,repo.new),(DOMAIN-SUFFIX,thegithubshop.com))))))
@@ -40,7 +39,6 @@ DOMAIN,apple.com.akadns.net
 DOMAIN,appleworldwidedeveloper.hb-api.omtrdc.net
 DOMAIN,appleworldwidedeveloper.sc.omtrdc.net
 DOMAIN,apps5.oingo.com
-DOMAIN,asusrouter.com
 DOMAIN,avail.googleflights.net
 DOMAIN,beacons.gcp.gvt2.com
 DOMAIN,beacons.gvt2.com
@@ -140,7 +138,6 @@ DOMAIN,init-p01md-lb.push-apple.com.akadns.net
 DOMAIN,init-p01st-lb.push-apple.com.akadns.net
 DOMAIN,init-s01st-lb.push-apple.com.akadns.net
 DOMAIN,init.gc-lb.apple.com.akadns.net
-DOMAIN,instant.arubanetworks.com
 DOMAIN,iphone-ld.origin-apple.com.akadns.net
 DOMAIN,izattime.qcomgeo2.com
 DOMAIN,ksn-cinfo-geo.kaspersky-labs.com
@@ -167,7 +164,6 @@ DOMAIN,ksn-url-geo.kaspersky-labs.com
 DOMAIN,ksn-url.geoksn.kaspersky.com
 DOMAIN,ksn-verdict-geo.kaspersky-labs.com
 DOMAIN,ksn-verdict.geoksn.kaspersky.com
-DOMAIN,local.adguard.org
 DOMAIN,mdr.ksn.kaspersky-labs.com
 DOMAIN,mesu-cdn.apple.com.akadns.net
 DOMAIN,mesu-china.apple.com.akadns.net
@@ -203,12 +199,9 @@ DOMAIN,redirector.snap.gvt1.com
 DOMAIN,redirector.xn--ngstr-lra8j.com
 DOMAIN,refresh-bkg.activation-v2.kaspersky.com
 DOMAIN,rink.hockeyapp.net
-DOMAIN,router.asus.com
-DOMAIN,routerlogin.com
 DOMAIN,safebrowsing-cache.google.com
 DOMAIN,safebrowsing.googleapis.com
 DOMAIN,service.urchin.com
-DOMAIN,setmeup.arubanetworks.com
 DOMAIN,ssl-google-analytics.l.google.com
 DOMAIN,ssl.gstatic.com
 DOMAIN,staging-controlbe.floonet.goog
@@ -239,13 +232,11 @@ DOMAIN,www-cdn.icloud.com.akadns.net
 DOMAIN,www-google-analytics.l.google.com
 DOMAIN,www-googletagmanager.l.google.com
 DOMAIN,www.apple.com.edgekey.net.globalredir.akadns.net
-DOMAIN,www.asusrouter.com
 DOMAIN,www.destinationurl.com
 DOMAIN,www.gstatic.com
 DOMAIN,www.pxcc.com
 DOMAIN,www.recaptcha-cn.net
 DOMAIN,www.recaptcha.net
-DOMAIN,www.routerlogin.com
 DOMAIN,xtratime.qcomgeo2.com
 DOMAIN-SUFFIX,0.zone
 DOMAIN-SUFFIX,00.net
@@ -1325,13 +1316,9 @@ DOMAIN-SUFFIX,1-du.net
 DOMAIN-SUFFIX,1-luxury.com
 DOMAIN-SUFFIX,1-sakuracat.com
 DOMAIN-SUFFIX,1-yuan.net
-DOMAIN-SUFFIX,1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa
 DOMAIN-SUFFIX,1.biz
 DOMAIN-SUFFIX,1.cc
-DOMAIN-SUFFIX,10.in-addr.arpa
 DOMAIN-SUFFIX,100-tong.com
-DOMAIN-SUFFIX,100.100.in-addr.arpa
-DOMAIN-SUFFIX,100.51.198.in-addr.arpa
 DOMAIN-SUFFIX,100.com
 DOMAIN-SUFFIX,100.me
 DOMAIN-SUFFIX,100.travel
@@ -1464,7 +1451,6 @@ DOMAIN-SUFFIX,100yingcai.com
 DOMAIN-SUFFIX,100zd.com
 DOMAIN-SUFFIX,100zhuang.com
 DOMAIN-SUFFIX,100zp.com
-DOMAIN-SUFFIX,101.100.in-addr.arpa
 DOMAIN-SUFFIX,101.com
 DOMAIN-SUFFIX,10100.com
 DOMAIN-SUFFIX,10101111.com
@@ -1485,7 +1471,6 @@ DOMAIN-SUFFIX,101hr.com
 DOMAIN-SUFFIX,101jiajiao.com
 DOMAIN-SUFFIX,101weiqi.com
 DOMAIN-SUFFIX,101yx.com
-DOMAIN-SUFFIX,102.100.in-addr.arpa
 DOMAIN-SUFFIX,1024fuli.com
 DOMAIN-SUFFIX,1024g.com
 DOMAIN-SUFFIX,1024ie.com
@@ -1496,22 +1481,16 @@ DOMAIN-SUFFIX,1024zx.com
 DOMAIN-SUFFIX,1026jz.com
 DOMAIN-SUFFIX,102no.com
 DOMAIN-SUFFIX,102pay.com
-DOMAIN-SUFFIX,103.100.in-addr.arpa
 DOMAIN-SUFFIX,103153.com
 DOMAIN-SUFFIX,10333.com
 DOMAIN-SUFFIX,10349.com
-DOMAIN-SUFFIX,104.100.in-addr.arpa
-DOMAIN-SUFFIX,105.100.in-addr.arpa
 DOMAIN-SUFFIX,1059.net
-DOMAIN-SUFFIX,106.100.in-addr.arpa
 DOMAIN-SUFFIX,10625fffd42119ce.com
 DOMAIN-SUFFIX,10639888.com
 DOMAIN-SUFFIX,1065m.com
 DOMAIN-SUFFIX,10666114.net
-DOMAIN-SUFFIX,107.100.in-addr.arpa
 DOMAIN-SUFFIX,1073.com
 DOMAIN-SUFFIX,107788.com
-DOMAIN-SUFFIX,108.100.in-addr.arpa
 DOMAIN-SUFFIX,1088hg41.com
 DOMAIN-SUFFIX,108addf0811012.beer
 DOMAIN-SUFFIX,108ai.com
@@ -1520,7 +1499,6 @@ DOMAIN-SUFFIX,108pk.com
 DOMAIN-SUFFIX,108qi.com
 DOMAIN-SUFFIX,108sq.com
 DOMAIN-SUFFIX,108tian.com
-DOMAIN-SUFFIX,109.100.in-addr.arpa
 DOMAIN-SUFFIX,109.com
 DOMAIN-SUFFIX,109360.com
 DOMAIN-SUFFIX,10966.net
@@ -1546,7 +1524,6 @@ DOMAIN-SUFFIX,10sea.com
 DOMAIN-SUFFIX,10soo.com
 DOMAIN-SUFFIX,10tianqi.com
 DOMAIN-SUFFIX,10yan.com
-DOMAIN-SUFFIX,110.100.in-addr.arpa
 DOMAIN-SUFFIX,110.com
 DOMAIN-SUFFIX,11000011.com
 DOMAIN-SUFFIX,1108cd985e95ad39.com
@@ -1554,7 +1531,6 @@ DOMAIN-SUFFIX,110ask.com
 DOMAIN-SUFFIX,110disk.net
 DOMAIN-SUFFIX,110route.com
 DOMAIN-SUFFIX,110tm.com
-DOMAIN-SUFFIX,111.100.in-addr.arpa
 DOMAIN-SUFFIX,111.com
 DOMAIN-SUFFIX,111111111.com
 DOMAIN-SUFFIX,111237.com
@@ -1570,7 +1546,6 @@ DOMAIN-SUFFIX,111867.com
 DOMAIN-SUFFIX,111com.net
 DOMAIN-SUFFIX,111yao.com
 DOMAIN-SUFFIX,111zyw.com
-DOMAIN-SUFFIX,112.100.in-addr.arpa
 DOMAIN-SUFFIX,112112.com
 DOMAIN-SUFFIX,112192.com
 DOMAIN-SUFFIX,1122.com
@@ -1580,15 +1555,12 @@ DOMAIN-SUFFIX,1128job.com
 DOMAIN-SUFFIX,112998.xyz
 DOMAIN-SUFFIX,112seo.com
 DOMAIN-SUFFIX,112wan.com
-DOMAIN-SUFFIX,113.0.203.in-addr.arpa
-DOMAIN-SUFFIX,113.100.in-addr.arpa
 DOMAIN-SUFFIX,11315.com
 DOMAIN-SUFFIX,1133.cc
 DOMAIN-SUFFIX,11343.com
 DOMAIN-SUFFIX,113989.com
 DOMAIN-SUFFIX,113dh.com
 DOMAIN-SUFFIX,114-91.com
-DOMAIN-SUFFIX,114.100.in-addr.arpa
 DOMAIN-SUFFIX,114.tel
 DOMAIN-SUFFIX,1145858.com
 DOMAIN-SUFFIX,11467.com
@@ -1632,7 +1604,6 @@ DOMAIN-SUFFIX,114yygh.com
 DOMAIN-SUFFIX,114zhibo.com
 DOMAIN-SUFFIX,114zpw.com
 DOMAIN-SUFFIX,114zw.org
-DOMAIN-SUFFIX,115.100.in-addr.arpa
 DOMAIN-SUFFIX,115.com
 DOMAIN-SUFFIX,115155.xyz
 DOMAIN-SUFFIX,1156.com
@@ -1647,7 +1618,6 @@ DOMAIN-SUFFIX,115img.com
 DOMAIN-SUFFIX,115meta.com
 DOMAIN-SUFFIX,115vod.com
 DOMAIN-SUFFIX,115wg.com
-DOMAIN-SUFFIX,116.100.in-addr.arpa
 DOMAIN-SUFFIX,1166.com
 DOMAIN-SUFFIX,1168.tv
 DOMAIN-SUFFIX,11684.com
@@ -1657,13 +1627,11 @@ DOMAIN-SUFFIX,116cd.net
 DOMAIN-SUFFIX,116daohang.com
 DOMAIN-SUFFIX,116kj.com
 DOMAIN-SUFFIX,116yx.com
-DOMAIN-SUFFIX,117.100.in-addr.arpa
 DOMAIN-SUFFIX,11714ae0b1014.beer
 DOMAIN-SUFFIX,117915.com
 DOMAIN-SUFFIX,117a6af992d4208e.com
 DOMAIN-SUFFIX,117trip.com
 DOMAIN-SUFFIX,117y.com
-DOMAIN-SUFFIX,118.100.in-addr.arpa
 DOMAIN-SUFFIX,1181.com
 DOMAIN-SUFFIX,118114.net
 DOMAIN-SUFFIX,118360.com
@@ -1674,7 +1642,6 @@ DOMAIN-SUFFIX,118inns.com
 DOMAIN-SUFFIX,118pan.com
 DOMAIN-SUFFIX,118ttc.com
 DOMAIN-SUFFIX,118wa.com
-DOMAIN-SUFFIX,119.100.in-addr.arpa
 DOMAIN-SUFFIX,1190119.com
 DOMAIN-SUFFIX,119120.org
 DOMAIN-SUFFIX,11951.com
@@ -1710,7 +1677,6 @@ DOMAIN-SUFFIX,11sun.com
 DOMAIN-SUFFIX,11wow.com
 DOMAIN-SUFFIX,11xotn7p.com
 DOMAIN-SUFFIX,11yinyuan.com
-DOMAIN-SUFFIX,120.100.in-addr.arpa
 DOMAIN-SUFFIX,120.net
 DOMAIN-SUFFIX,120918.com
 DOMAIN-SUFFIX,120ask.com
@@ -1731,7 +1697,6 @@ DOMAIN-SUFFIX,120shgc.com
 DOMAIN-SUFFIX,120spd.com
 DOMAIN-SUFFIX,120sun.com
 DOMAIN-SUFFIX,120x.net
-DOMAIN-SUFFIX,121.100.in-addr.arpa
 DOMAIN-SUFFIX,121034.com
 DOMAIN-SUFFIX,121121.net
 DOMAIN-SUFFIX,1212.com
@@ -1743,7 +1708,6 @@ DOMAIN-SUFFIX,121ghs.com
 DOMAIN-SUFFIX,121mai.com
 DOMAIN-SUFFIX,121mu.com
 DOMAIN-SUFFIX,121wty.com
-DOMAIN-SUFFIX,122.100.in-addr.arpa
 DOMAIN-SUFFIX,122521.com
 DOMAIN-SUFFIX,12272.vip
 DOMAIN-SUFFIX,12291.com
@@ -1753,7 +1717,6 @@ DOMAIN-SUFFIX,122cn.net
 DOMAIN-SUFFIX,122law.com
 DOMAIN-SUFFIX,122w.net
 DOMAIN-SUFFIX,123-789.com
-DOMAIN-SUFFIX,123.100.in-addr.arpa
 DOMAIN-SUFFIX,123.cc
 DOMAIN-SUFFIX,12301.cc
 DOMAIN-SUFFIX,1230539.com
@@ -1862,9 +1825,7 @@ DOMAIN-SUFFIX,123xueshu.com
 DOMAIN-SUFFIX,123yiche.com
 DOMAIN-SUFFIX,123ypw.com
 DOMAIN-SUFFIX,123yx.com
-DOMAIN-SUFFIX,124.100.in-addr.arpa
 DOMAIN-SUFFIX,124866.xyz
-DOMAIN-SUFFIX,125.100.in-addr.arpa
 DOMAIN-SUFFIX,125.la
 DOMAIN-SUFFIX,125180.com
 DOMAIN-SUFFIX,12530.com
@@ -1881,7 +1842,6 @@ DOMAIN-SUFFIX,125school.com
 DOMAIN-SUFFIX,125visa.com
 DOMAIN-SUFFIX,125y.com
 DOMAIN-SUFFIX,125yan.com
-DOMAIN-SUFFIX,126.100.in-addr.arpa
 DOMAIN-SUFFIX,126.com
 DOMAIN-SUFFIX,126.fm
 DOMAIN-SUFFIX,126.net
@@ -1890,9 +1850,7 @@ DOMAIN-SUFFIX,126disk.com
 DOMAIN-SUFFIX,126doc.com
 DOMAIN-SUFFIX,126job.net
 DOMAIN-SUFFIX,126qiye.com
-DOMAIN-SUFFIX,127.100.in-addr.arpa
 DOMAIN-SUFFIX,127.com
-DOMAIN-SUFFIX,127.in-addr.arpa
 DOMAIN-SUFFIX,127.net
 DOMAIN-SUFFIX,127z.com
 DOMAIN-SUFFIX,128456.com
@@ -2111,7 +2069,6 @@ DOMAIN-SUFFIX,15wkd6i45lq3.com
 DOMAIN-SUFFIX,15xdd.com
 DOMAIN-SUFFIX,15yl.com
 DOMAIN-SUFFIX,15yunmall.com
-DOMAIN-SUFFIX,16.172.in-addr.arpa
 DOMAIN-SUFFIX,160.com
 DOMAIN-SUFFIX,1606c348011042.beer
 DOMAIN-SUFFIX,160c7443c1019.beer
@@ -2194,7 +2151,6 @@ DOMAIN-SUFFIX,166cdn.com
 DOMAIN-SUFFIX,166dns.com
 DOMAIN-SUFFIX,16757.com
 DOMAIN-SUFFIX,16768.com
-DOMAIN-SUFFIX,168.192.in-addr.arpa
 DOMAIN-SUFFIX,168.com
 DOMAIN-SUFFIX,16816.com
 DOMAIN-SUFFIX,168267xz.com
@@ -2266,7 +2222,6 @@ DOMAIN-SUFFIX,16type.com
 DOMAIN-SUFFIX,16tz.com
 DOMAIN-SUFFIX,16wl.cc
 DOMAIN-SUFFIX,16xx8.com
-DOMAIN-SUFFIX,17.172.in-addr.arpa
 DOMAIN-SUFFIX,170.com
 DOMAIN-SUFFIX,17025.org
 DOMAIN-SUFFIX,170601.xyz
@@ -2556,7 +2511,6 @@ DOMAIN-SUFFIX,17zuqiu.com
 DOMAIN-SUFFIX,17zwd.com
 DOMAIN-SUFFIX,17zyxy.com
 DOMAIN-SUFFIX,17zyxy.net
-DOMAIN-SUFFIX,18.172.in-addr.arpa
 DOMAIN-SUFFIX,18.cm
 DOMAIN-SUFFIX,18023.com
 DOMAIN-SUFFIX,18095.com
@@ -2662,7 +2616,6 @@ DOMAIN-SUFFIX,18zhongyao.com
 DOMAIN-SUFFIX,18zhuanqian.com
 DOMAIN-SUFFIX,18zp.com
 DOMAIN-SUFFIX,18zw.com
-DOMAIN-SUFFIX,19.172.in-addr.arpa
 DOMAIN-SUFFIX,19.com
 DOMAIN-SUFFIX,190.vip
 DOMAIN-SUFFIX,1900.live
@@ -2952,9 +2905,7 @@ DOMAIN-SUFFIX,1zjob.com
 DOMAIN-SUFFIX,1zu.com
 DOMAIN-SUFFIX,2-class.com
 DOMAIN-SUFFIX,2-mm.net
-DOMAIN-SUFFIX,2.0.192.in-addr.arpa
 DOMAIN-SUFFIX,2.biz
-DOMAIN-SUFFIX,20.172.in-addr.arpa
 DOMAIN-SUFFIX,20001104.com
 DOMAIN-SUFFIX,2000200.com
 DOMAIN-SUFFIX,200022.xyz
@@ -3031,7 +2982,6 @@ DOMAIN-SUFFIX,20xue.com
 DOMAIN-SUFFIX,20xy.cc
 DOMAIN-SUFFIX,20z.com
 DOMAIN-SUFFIX,21-sun.com
-DOMAIN-SUFFIX,21.172.in-addr.arpa
 DOMAIN-SUFFIX,210189.com
 DOMAIN-SUFFIX,210997.com
 DOMAIN-SUFFIX,210z.com
@@ -3163,7 +3113,6 @@ DOMAIN-SUFFIX,21yangjie.com
 DOMAIN-SUFFIX,21yq.com
 DOMAIN-SUFFIX,21ytv.com
 DOMAIN-SUFFIX,21zbs.com
-DOMAIN-SUFFIX,22.172.in-addr.arpa
 DOMAIN-SUFFIX,22.com
 DOMAIN-SUFFIX,220840.com
 DOMAIN-SUFFIX,220c.com
@@ -3224,7 +3173,6 @@ DOMAIN-SUFFIX,22tianbo.com
 DOMAIN-SUFFIX,22tj.com
 DOMAIN-SUFFIX,22vape.com
 DOMAIN-SUFFIX,22vd.com
-DOMAIN-SUFFIX,23.172.in-addr.arpa
 DOMAIN-SUFFIX,230890.com
 DOMAIN-SUFFIX,231083.com
 DOMAIN-SUFFIX,231122.com
@@ -3313,7 +3261,6 @@ DOMAIN-SUFFIX,23xsw.cc
 DOMAIN-SUFFIX,23ye.com
 DOMAIN-SUFFIX,23yy.com
 DOMAIN-SUFFIX,23zw.com
-DOMAIN-SUFFIX,24.172.in-addr.arpa
 DOMAIN-SUFFIX,24198ef3f855c8ff.com
 DOMAIN-SUFFIX,2424ph.com
 DOMAIN-SUFFIX,24335.org
@@ -3339,7 +3286,6 @@ DOMAIN-SUFFIX,24pay.sbs
 DOMAIN-SUFFIX,24th.com
 DOMAIN-SUFFIX,24timemap.com
 DOMAIN-SUFFIX,24u7tos.com
-DOMAIN-SUFFIX,25.172.in-addr.arpa
 DOMAIN-SUFFIX,250.cc
 DOMAIN-SUFFIX,2500.tv
 DOMAIN-SUFFIX,2500city.com
@@ -3355,10 +3301,8 @@ DOMAIN-SUFFIX,253.com
 DOMAIN-SUFFIX,25395.vip
 DOMAIN-SUFFIX,253952.com
 DOMAIN-SUFFIX,253u.com
-DOMAIN-SUFFIX,254.169.in-addr.arpa
 DOMAIN-SUFFIX,254254.com
 DOMAIN-SUFFIX,254game.com
-DOMAIN-SUFFIX,255.255.255.255.in-addr.arpa
 DOMAIN-SUFFIX,2551aa29811031.beer
 DOMAIN-SUFFIX,255616.com
 DOMAIN-SUFFIX,25565.net
@@ -3397,7 +3341,6 @@ DOMAIN-SUFFIX,25xm.com
 DOMAIN-SUFFIX,25xz.com
 DOMAIN-SUFFIX,25yi.com
 DOMAIN-SUFFIX,25yz.com
-DOMAIN-SUFFIX,26.172.in-addr.arpa
 DOMAIN-SUFFIX,260.net
 DOMAIN-SUFFIX,260068.com
 DOMAIN-SUFFIX,263-mail.net
@@ -3444,7 +3387,6 @@ DOMAIN-SUFFIX,26host.com
 DOMAIN-SUFFIX,26joy.com
 DOMAIN-SUFFIX,26ks.cc
 DOMAIN-SUFFIX,26s.com
-DOMAIN-SUFFIX,27.172.in-addr.arpa
 DOMAIN-SUFFIX,270326012f82.icu
 DOMAIN-SUFFIX,270top.com
 DOMAIN-SUFFIX,27195.vip
@@ -3467,7 +3409,6 @@ DOMAIN-SUFFIX,27daili.com
 DOMAIN-SUFFIX,27l.com
 DOMAIN-SUFFIX,27tj.com
 DOMAIN-SUFFIX,27ws.com
-DOMAIN-SUFFIX,28.172.in-addr.arpa
 DOMAIN-SUFFIX,28.bet
 DOMAIN-SUFFIX,281010.com
 DOMAIN-SUFFIX,28126.cc
@@ -3500,7 +3441,6 @@ DOMAIN-SUFFIX,28tui.com
 DOMAIN-SUFFIX,28yt.com
 DOMAIN-SUFFIX,28z9.com
 DOMAIN-SUFFIX,28zhe.com
-DOMAIN-SUFFIX,29.172.in-addr.arpa
 DOMAIN-SUFFIX,29029.com
 DOMAIN-SUFFIX,2903866.net
 DOMAIN-SUFFIX,291315.com
@@ -3664,7 +3604,6 @@ DOMAIN-SUFFIX,2zzt.com
 DOMAIN-SUFFIX,3-3.me
 DOMAIN-SUFFIX,3-hospital-cqmu.com
 DOMAIN-SUFFIX,3.biz
-DOMAIN-SUFFIX,30.172.in-addr.arpa
 DOMAIN-SUFFIX,30.net
 DOMAIN-SUFFIX,3000.com
 DOMAIN-SUFFIX,300033.info
@@ -3709,7 +3648,6 @@ DOMAIN-SUFFIX,30sche.com
 DOMAIN-SUFFIX,30th-feb.com
 DOMAIN-SUFFIX,30vps.com
 DOMAIN-SUFFIX,30w.co
-DOMAIN-SUFFIX,31.172.in-addr.arpa
 DOMAIN-SUFFIX,310game.com
 DOMAIN-SUFFIX,310s-2520.com
 DOMAIN-SUFFIX,310tv.com
@@ -7075,7 +7013,6 @@ DOMAIN-SUFFIX,63pe.com
 DOMAIN-SUFFIX,63u.net
 DOMAIN-SUFFIX,63yx.com
 DOMAIN-SUFFIX,63yy.com
-DOMAIN-SUFFIX,64.100.in-addr.arpa
 DOMAIN-SUFFIX,641.com
 DOMAIN-SUFFIX,642online.com
 DOMAIN-SUFFIX,64365.com
@@ -7095,7 +7032,6 @@ DOMAIN-SUFFIX,64gua.com
 DOMAIN-SUFFIX,64ma.com
 DOMAIN-SUFFIX,64mv.com
 DOMAIN-SUFFIX,64pay.com
-DOMAIN-SUFFIX,65.100.in-addr.arpa
 DOMAIN-SUFFIX,6501111.com
 DOMAIN-SUFFIX,65119.com
 DOMAIN-SUFFIX,651700.com
@@ -7122,7 +7058,6 @@ DOMAIN-SUFFIX,65box.com
 DOMAIN-SUFFIX,65ec0ea7f04562ad.com
 DOMAIN-SUFFIX,65liuxue.com
 DOMAIN-SUFFIX,65mhxy.com
-DOMAIN-SUFFIX,66.100.in-addr.arpa
 DOMAIN-SUFFIX,6600.org
 DOMAIN-SUFFIX,66016.com
 DOMAIN-SUFFIX,660378.com
@@ -7261,7 +7196,6 @@ DOMAIN-SUFFIX,66yyba.com
 DOMAIN-SUFFIX,66zhang.com
 DOMAIN-SUFFIX,66zhizu.com
 DOMAIN-SUFFIX,66zhuang.com
-DOMAIN-SUFFIX,67.100.in-addr.arpa
 DOMAIN-SUFFIX,67.com
 DOMAIN-SUFFIX,67017.com
 DOMAIN-SUFFIX,670e13a8f11042.beer
@@ -7300,7 +7234,6 @@ DOMAIN-SUFFIX,67tool.com
 DOMAIN-SUFFIX,67wanwan.com
 DOMAIN-SUFFIX,67wx.com
 DOMAIN-SUFFIX,67y.com
-DOMAIN-SUFFIX,68.100.in-addr.arpa
 DOMAIN-SUFFIX,68.com
 DOMAIN-SUFFIX,68.gy
 DOMAIN-SUFFIX,68.vip
@@ -7347,7 +7280,6 @@ DOMAIN-SUFFIX,68team.com
 DOMAIN-SUFFIX,68u.co
 DOMAIN-SUFFIX,68websoft.com
 DOMAIN-SUFFIX,68zhan.net
-DOMAIN-SUFFIX,69.100.in-addr.arpa
 DOMAIN-SUFFIX,69090.com
 DOMAIN-SUFFIX,6912s.com
 DOMAIN-SUFFIX,6917.com
@@ -7515,7 +7447,6 @@ DOMAIN-SUFFIX,7-che.com
 DOMAIN-SUFFIX,7-meeting.com
 DOMAIN-SUFFIX,7-mi.net
 DOMAIN-SUFFIX,7-wx.com
-DOMAIN-SUFFIX,70.100.in-addr.arpa
 DOMAIN-SUFFIX,70.cc
 DOMAIN-SUFFIX,700618.com
 DOMAIN-SUFFIX,70098.com
@@ -7543,7 +7474,6 @@ DOMAIN-SUFFIX,70ka.com
 DOMAIN-SUFFIX,70ppt.com
 DOMAIN-SUFFIX,70ym.com
 DOMAIN-SUFFIX,70yx.com
-DOMAIN-SUFFIX,71.100.in-addr.arpa
 DOMAIN-SUFFIX,71.am
 DOMAIN-SUFFIX,71.net
 DOMAIN-SUFFIX,710hf.com
@@ -7599,7 +7529,6 @@ DOMAIN-SUFFIX,71wl.com
 DOMAIN-SUFFIX,71xe.com
 DOMAIN-SUFFIX,71xk.com
 DOMAIN-SUFFIX,71ywl.com
-DOMAIN-SUFFIX,72.100.in-addr.arpa
 DOMAIN-SUFFIX,72.chat
 DOMAIN-SUFFIX,72.com
 DOMAIN-SUFFIX,72017.net
@@ -7658,7 +7587,6 @@ DOMAIN-SUFFIX,72xuan.com
 DOMAIN-SUFFIX,72y.co
 DOMAIN-SUFFIX,72yun.com
 DOMAIN-SUFFIX,72zhan.com
-DOMAIN-SUFFIX,73.100.in-addr.arpa
 DOMAIN-SUFFIX,730d60bec10281.beer
 DOMAIN-SUFFIX,731.tv
 DOMAIN-SUFFIX,73110010.com
@@ -7683,7 +7611,6 @@ DOMAIN-SUFFIX,73d1708e01022.beer
 DOMAIN-SUFFIX,73ea00c7710272.beer
 DOMAIN-SUFFIX,73so.com
 DOMAIN-SUFFIX,73zw8.com
-DOMAIN-SUFFIX,74.100.in-addr.arpa
 DOMAIN-SUFFIX,74.com
 DOMAIN-SUFFIX,7415.com
 DOMAIN-SUFFIX,741b0fca410271.beer
@@ -7706,7 +7633,6 @@ DOMAIN-SUFFIX,74da6ad581020.beer
 DOMAIN-SUFFIX,74dns.com
 DOMAIN-SUFFIX,74f11ac633122c20.com
 DOMAIN-SUFFIX,74hao.com
-DOMAIN-SUFFIX,75.100.in-addr.arpa
 DOMAIN-SUFFIX,75111.com
 DOMAIN-SUFFIX,75111.net
 DOMAIN-SUFFIX,75122d9a05f7a5a7.com
@@ -7732,7 +7658,6 @@ DOMAIN-SUFFIX,75n474.com
 DOMAIN-SUFFIX,75pk.com
 DOMAIN-SUFFIX,75txt.com
 DOMAIN-SUFFIX,75ww.com
-DOMAIN-SUFFIX,76.100.in-addr.arpa
 DOMAIN-SUFFIX,7618.com
 DOMAIN-SUFFIX,7631.com
 DOMAIN-SUFFIX,7651.com
@@ -7758,7 +7683,6 @@ DOMAIN-SUFFIX,76ju.com
 DOMAIN-SUFFIX,76pay.com
 DOMAIN-SUFFIX,76y.com
 DOMAIN-SUFFIX,76zu.com
-DOMAIN-SUFFIX,77.100.in-addr.arpa
 DOMAIN-SUFFIX,77005163.xyz
 DOMAIN-SUFFIX,770539.com
 DOMAIN-SUFFIX,7711.com
@@ -7862,7 +7786,6 @@ DOMAIN-SUFFIX,77yx.com
 DOMAIN-SUFFIX,77zhangh.com
 DOMAIN-SUFFIX,77zhanghao.com
 DOMAIN-SUFFIX,77zn.com
-DOMAIN-SUFFIX,78.100.in-addr.arpa
 DOMAIN-SUFFIX,78.link
 DOMAIN-SUFFIX,781203.com
 DOMAIN-SUFFIX,78126dh.com
@@ -7898,7 +7821,6 @@ DOMAIN-SUFFIX,78os.com
 DOMAIN-SUFFIX,78plat.com
 DOMAIN-SUFFIX,78v.com
 DOMAIN-SUFFIX,78yx.net
-DOMAIN-SUFFIX,79.100.in-addr.arpa
 DOMAIN-SUFFIX,79.biz
 DOMAIN-SUFFIX,790.com
 DOMAIN-SUFFIX,790a8f76c10301.beer
@@ -8086,11 +8008,8 @@ DOMAIN-SUFFIX,7zkj.com
 DOMAIN-SUFFIX,7zm.com
 DOMAIN-SUFFIX,7zz6.com
 DOMAIN-SUFFIX,7zzy.com
-DOMAIN-SUFFIX,8.b.d.0.1.0.0.2.ip6.arpa
 DOMAIN-SUFFIX,8.biz
-DOMAIN-SUFFIX,8.e.f.ip6.arpa
 DOMAIN-SUFFIX,8.xyz
-DOMAIN-SUFFIX,80.100.in-addr.arpa
 DOMAIN-SUFFIX,80.hk
 DOMAIN-SUFFIX,80000.cc
 DOMAIN-SUFFIX,8000yi.com
@@ -8181,7 +8100,6 @@ DOMAIN-SUFFIX,80x.co
 DOMAIN-SUFFIX,80xg.com
 DOMAIN-SUFFIX,80xs.la
 DOMAIN-SUFFIX,80zw.info
-DOMAIN-SUFFIX,81.100.in-addr.arpa
 DOMAIN-SUFFIX,8100ab16d11021.beer
 DOMAIN-SUFFIX,810840.com
 DOMAIN-SUFFIX,81138183c1024.beer
@@ -8237,7 +8155,6 @@ DOMAIN-SUFFIX,81xy.com
 DOMAIN-SUFFIX,81zhongwenx.com
 DOMAIN-SUFFIX,81zw.com
 DOMAIN-SUFFIX,81zw.la
-DOMAIN-SUFFIX,82.100.in-addr.arpa
 DOMAIN-SUFFIX,8203app.com
 DOMAIN-SUFFIX,8207hh.net
 DOMAIN-SUFFIX,8207uu.net
@@ -8271,7 +8188,6 @@ DOMAIN-SUFFIX,82flex.com
 DOMAIN-SUFFIX,82ip.com
 DOMAIN-SUFFIX,82ky.com
 DOMAIN-SUFFIX,82pk.com
-DOMAIN-SUFFIX,83.100.in-addr.arpa
 DOMAIN-SUFFIX,830096.com
 DOMAIN-SUFFIX,83124.com
 DOMAIN-SUFFIX,83133.com
@@ -8300,7 +8216,6 @@ DOMAIN-SUFFIX,83iiq501o2.com
 DOMAIN-SUFFIX,83kxs.com
 DOMAIN-SUFFIX,83mo7n9giq.com
 DOMAIN-SUFFIX,83x.cc
-DOMAIN-SUFFIX,84.100.in-addr.arpa
 DOMAIN-SUFFIX,84.com
 DOMAIN-SUFFIX,84.vc
 DOMAIN-SUFFIX,84008.com
@@ -8321,7 +8236,6 @@ DOMAIN-SUFFIX,84d8388721016.beer
 DOMAIN-SUFFIX,84ke.com
 DOMAIN-SUFFIX,84ktv.com
 DOMAIN-SUFFIX,84ny.com
-DOMAIN-SUFFIX,85.100.in-addr.arpa
 DOMAIN-SUFFIX,850718.xyz
 DOMAIN-SUFFIX,85229666.com
 DOMAIN-SUFFIX,85253000.com
@@ -8343,7 +8257,6 @@ DOMAIN-SUFFIX,85kf.com
 DOMAIN-SUFFIX,85sc.com
 DOMAIN-SUFFIX,85xt.com
 DOMAIN-SUFFIX,86-import.com
-DOMAIN-SUFFIX,86.100.in-addr.arpa
 DOMAIN-SUFFIX,86.cc
 DOMAIN-SUFFIX,860029.com
 DOMAIN-SUFFIX,860527.com
@@ -8410,7 +8323,6 @@ DOMAIN-SUFFIX,86wol.com
 DOMAIN-SUFFIX,86xq.com
 DOMAIN-SUFFIX,86y.org
 DOMAIN-SUFFIX,86yqy.com
-DOMAIN-SUFFIX,87.100.in-addr.arpa
 DOMAIN-SUFFIX,87.vip
 DOMAIN-SUFFIX,870.com
 DOMAIN-SUFFIX,870818.com
@@ -8449,7 +8361,6 @@ DOMAIN-SUFFIX,87pk.com
 DOMAIN-SUFFIX,87vr.com
 DOMAIN-SUFFIX,87yy.com
 DOMAIN-SUFFIX,88-z.com
-DOMAIN-SUFFIX,88.100.in-addr.arpa
 DOMAIN-SUFFIX,88.com
 DOMAIN-SUFFIX,880.net
 DOMAIN-SUFFIX,8800.org
@@ -8567,7 +8478,6 @@ DOMAIN-SUFFIX,88y5.com
 DOMAIN-SUFFIX,88ysg.com
 DOMAIN-SUFFIX,88zha.com
 DOMAIN-SUFFIX,88zjzy.com
-DOMAIN-SUFFIX,89.100.in-addr.arpa
 DOMAIN-SUFFIX,89006006.com
 DOMAIN-SUFFIX,8910.io
 DOMAIN-SUFFIX,89178.com
@@ -8720,10 +8630,8 @@ DOMAIN-SUFFIX,8zy.com
 DOMAIN-SUFFIX,9-xin.com
 DOMAIN-SUFFIX,9-zhuce.com
 DOMAIN-SUFFIX,9.biz
-DOMAIN-SUFFIX,9.e.f.ip6.arpa
 DOMAIN-SUFFIX,9.plus
 DOMAIN-SUFFIX,9.xyz
-DOMAIN-SUFFIX,90.100.in-addr.arpa
 DOMAIN-SUFFIX,90.cc
 DOMAIN-SUFFIX,900.la
 DOMAIN-SUFFIX,900.vc
@@ -8761,7 +8669,6 @@ DOMAIN-SUFFIX,90yang.com
 DOMAIN-SUFFIX,90yk.com
 DOMAIN-SUFFIX,90zm.net
 DOMAIN-SUFFIX,91-box.com
-DOMAIN-SUFFIX,91.100.in-addr.arpa
 DOMAIN-SUFFIX,91.com
 DOMAIN-SUFFIX,91.plus
 DOMAIN-SUFFIX,9100.ink
@@ -8997,7 +8904,6 @@ DOMAIN-SUFFIX,91yywan.com
 DOMAIN-SUFFIX,91zhongkao.com
 DOMAIN-SUFFIX,91zhuti.com
 DOMAIN-SUFFIX,91znyx.com
-DOMAIN-SUFFIX,92.100.in-addr.arpa
 DOMAIN-SUFFIX,92.net
 DOMAIN-SUFFIX,920uc.com
 DOMAIN-SUFFIX,921.com
@@ -9067,7 +8973,6 @@ DOMAIN-SUFFIX,92yo.com
 DOMAIN-SUFFIX,92zc.com
 DOMAIN-SUFFIX,92zhiqu.com
 DOMAIN-SUFFIX,92zuqu.com
-DOMAIN-SUFFIX,93.100.in-addr.arpa
 DOMAIN-SUFFIX,930a48879eaa652b.com
 DOMAIN-SUFFIX,930hh.com
 DOMAIN-SUFFIX,9312.net
@@ -9110,7 +9015,6 @@ DOMAIN-SUFFIX,93wgames.com
 DOMAIN-SUFFIX,93yo.com
 DOMAIN-SUFFIX,93you.com
 DOMAIN-SUFFIX,93zp.com
-DOMAIN-SUFFIX,94.100.in-addr.arpa
 DOMAIN-SUFFIX,94001.vip
 DOMAIN-SUFFIX,940177.com
 DOMAIN-SUFFIX,940304.xyz
@@ -9154,7 +9058,6 @@ DOMAIN-SUFFIX,94xy.com
 DOMAIN-SUFFIX,94you.net
 DOMAIN-SUFFIX,94ys.com
 DOMAIN-SUFFIX,95-1.vip
-DOMAIN-SUFFIX,95.100.in-addr.arpa
 DOMAIN-SUFFIX,95.com
 DOMAIN-SUFFIX,95001111.com
 DOMAIN-SUFFIX,95007.com
@@ -9233,7 +9136,6 @@ DOMAIN-SUFFIX,95shubao.info
 DOMAIN-SUFFIX,95xiu.com
 DOMAIN-SUFFIX,95ye.com
 DOMAIN-SUFFIX,95yijing.com
-DOMAIN-SUFFIX,96.100.in-addr.arpa
 DOMAIN-SUFFIX,960123.com
 DOMAIN-SUFFIX,960638.com
 DOMAIN-SUFFIX,96090090.com
@@ -9313,7 +9215,6 @@ DOMAIN-SUFFIX,96weixin.com
 DOMAIN-SUFFIX,96xz.com
 DOMAIN-SUFFIX,96yx.com
 DOMAIN-SUFFIX,96zxue.com
-DOMAIN-SUFFIX,97.100.in-addr.arpa
 DOMAIN-SUFFIX,97.biz
 DOMAIN-SUFFIX,97.cc
 DOMAIN-SUFFIX,9700hg.com
@@ -9363,7 +9264,6 @@ DOMAIN-SUFFIX,97wd.com
 DOMAIN-SUFFIX,97wyw.com
 DOMAIN-SUFFIX,97xdj.net
 DOMAIN-SUFFIX,97zm.com
-DOMAIN-SUFFIX,98.100.in-addr.arpa
 DOMAIN-SUFFIX,98.com
 DOMAIN-SUFFIX,98.ma
 DOMAIN-SUFFIX,980.ag
@@ -9428,7 +9328,6 @@ DOMAIN-SUFFIX,98xz.com
 DOMAIN-SUFFIX,98yl.com
 DOMAIN-SUFFIX,98zhibo.com
 DOMAIN-SUFFIX,98znz.com
-DOMAIN-SUFFIX,99.100.in-addr.arpa
 DOMAIN-SUFFIX,99.com
 DOMAIN-SUFFIX,99113guoji.com
 DOMAIN-SUFFIX,99114.com
@@ -9775,7 +9674,6 @@ DOMAIN-SUFFIX,a-msedge.net
 DOMAIN-SUFFIX,a-startech.com
 DOMAIN-SUFFIX,a-sy.com
 DOMAIN-SUFFIX,a-xun.com
-DOMAIN-SUFFIX,a.e.f.ip6.arpa
 DOMAIN-SUFFIX,a049636971024.beer
 DOMAIN-SUFFIX,a04d48409e40ca3f.com
 DOMAIN-SUFFIX,a0598.com
@@ -14140,7 +14038,6 @@ DOMAIN-SUFFIX,b-fairy.com
 DOMAIN-SUFFIX,b-k-automation.com
 DOMAIN-SUFFIX,b-raymedia.com
 DOMAIN-SUFFIX,b.biz
-DOMAIN-SUFFIX,b.e.f.ip6.arpa
 DOMAIN-SUFFIX,b01.net
 DOMAIN-SUFFIX,b041e427810281.beer
 DOMAIN-SUFFIX,b07cceaf011012.beer
@@ -27741,7 +27638,6 @@ DOMAIN-SUFFIX,d-techs.com
 DOMAIN-SUFFIX,d-wolves.com
 DOMAIN-SUFFIX,d.cg
 DOMAIN-SUFFIX,d.design
-DOMAIN-SUFFIX,d.f.ip6.arpa
 DOMAIN-SUFFIX,d00.net
 DOMAIN-SUFFIX,d03jd.com
 DOMAIN-SUFFIX,d05512bf210292.beer
@@ -33946,7 +33842,6 @@ DOMAIN-SUFFIX,examcoo.com
 DOMAIN-SUFFIX,examda.com
 DOMAIN-SUFFIX,examebook.com
 DOMAIN-SUFFIX,examk.com
-DOMAIN-SUFFIX,example
 DOMAIN-SUFFIX,exampx.com
 DOMAIN-SUFFIX,examw.com
 DOMAIN-SUFFIX,exands.com
@@ -47043,7 +46938,6 @@ DOMAIN-SUFFIX,holteksupport.com
 DOMAIN-SUFFIX,holy58.com
 DOMAIN-SUFFIX,holymalls.com
 DOMAIN-SUFFIX,holyxiongan.com
-DOMAIN-SUFFIX,home.arpa
 DOMAIN-SUFFIX,home0311.com
 DOMAIN-SUFFIX,home0538.com
 DOMAIN-SUFFIX,home0668.com
@@ -52007,7 +51901,6 @@ DOMAIN-SUFFIX,interactivebrokers.hk
 DOMAIN-SUFFIX,interchinawater.com
 DOMAIN-SUFFIX,interface003.com
 DOMAIN-SUFFIX,interiorous.com
-DOMAIN-SUFFIX,internal
 DOMAIN-SUFFIX,internationalbrand.net
 DOMAIN-SUFFIX,internbird.com
 DOMAIN-SUFFIX,internetexplorer.co
@@ -52044,7 +51937,6 @@ DOMAIN-SUFFIX,inuobi.com
 DOMAIN-SUFFIX,inuorui.com
 DOMAIN-SUFFIX,inuu6.com
 DOMAIN-SUFFIX,inuyasha.love
-DOMAIN-SUFFIX,invalid
 DOMAIN-SUFFIX,invaluablu.com
 DOMAIN-SUFFIX,inveno.com
 DOMAIN-SUFFIX,inverter.so
@@ -58884,7 +58776,6 @@ DOMAIN-SUFFIX,kirgen.com
 DOMAIN-SUFFIX,kirin-tech.com
 DOMAIN-SUFFIX,kirinmach.com
 DOMAIN-SUFFIX,kirkcloud.com
-DOMAIN-SUFFIX,kis.v2.scr.kaspersky-labs.com
 DOMAIN-SUFFIX,kiscoca.com
 DOMAIN-SUFFIX,kisdee.com
 DOMAIN-SUFFIX,kisence.com
@@ -60259,7 +60150,6 @@ DOMAIN-SUFFIX,lampbi.com
 DOMAIN-SUFFIX,lampouomo.com
 DOMAIN-SUFFIX,lamwatch.com
 DOMAIN-SUFFIX,lamyu.com
-DOMAIN-SUFFIX,lan
 DOMAIN-SUFFIX,lan-bridge.com
 DOMAIN-SUFFIX,lan-lin.com
 DOMAIN-SUFFIX,lan-ning.com
@@ -62843,11 +62733,8 @@ DOMAIN-SUFFIX,lo97.com
 DOMAIN-SUFFIX,loac.cc
 DOMAIN-SUFFIX,loadingbay.com
 DOMAIN-SUFFIX,loansliml.com
-DOMAIN-SUFFIX,local
 DOMAIN-SUFFIX,local-ip.online
 DOMAIN-SUFFIX,local.hk
-DOMAIN-SUFFIX,localdomain
-DOMAIN-SUFFIX,localhost
 DOMAIN-SUFFIX,localxcafe.com
 DOMAIN-SUFFIX,locatran.com
 DOMAIN-SUFFIX,locez.com
@@ -68187,7 +68074,6 @@ DOMAIN-SUFFIX,my-le.com
 DOMAIN-SUFFIX,my-ndns.com
 DOMAIN-SUFFIX,my-qcloud.com
 DOMAIN-SUFFIX,my-tcloud.com
-DOMAIN-SUFFIX,my.router
 DOMAIN-SUFFIX,my.st.com
 DOMAIN-SUFFIX,my0511.com
 DOMAIN-SUFFIX,my0511.net
@@ -73355,7 +73241,6 @@ DOMAIN-SUFFIX,phet.fan
 DOMAIN-SUFFIX,phezzan.com
 DOMAIN-SUFFIX,phhongyu.com
 DOMAIN-SUFFIX,phicomm.com
-DOMAIN-SUFFIX,phicomm.me
 DOMAIN-SUFFIX,philanthropy.xin
 DOMAIN-SUFFIX,philipswechat.com
 DOMAIN-SUFFIX,philisense.com
@@ -73857,7 +73742,6 @@ DOMAIN-SUFFIX,plcloud.com
 DOMAIN-SUFFIX,plctlab.com
 DOMAIN-SUFFIX,plentypolymer.com
 DOMAIN-SUFFIX,plesk-cn.com
-DOMAIN-SUFFIX,plex.direct
 DOMAIN-SUFFIX,plex2.com
 DOMAIN-SUFFIX,plexpt.com
 DOMAIN-SUFFIX,plfrog.com
@@ -78609,7 +78493,6 @@ DOMAIN-SUFFIX,rouruan.com
 DOMAIN-SUFFIX,roushidongwu.com
 DOMAIN-SUFFIX,rousin.com
 DOMAIN-SUFFIX,route78asia.com
-DOMAIN-SUFFIX,router.ctc
 DOMAIN-SUFFIX,router.tw
 DOMAIN-SUFFIX,routerclub.com
 DOMAIN-SUFFIX,routeryun.com
@@ -89204,7 +89087,6 @@ DOMAIN-SUFFIX,tesight.com
 DOMAIN-SUFFIX,tesiro.com
 DOMAIN-SUFFIX,tesolsh.com
 DOMAIN-SUFFIX,tesoon.com
-DOMAIN-SUFFIX,test
 DOMAIN-SUFFIX,test-cignacmb.com
 DOMAIN-SUFFIX,testbird.com
 DOMAIN-SUFFIX,testcoo.com
@@ -90982,7 +90864,6 @@ DOMAIN-SUFFIX,tpjwww.com
 DOMAIN-SUFFIX,tpkey.com
 DOMAIN-SUFFIX,tplcd100.com
 DOMAIN-SUFFIX,tplife.com
-DOMAIN-SUFFIX,tplinkwifi.net
 DOMAIN-SUFFIX,tplogincn.com
 DOMAIN-SUFFIX,tpooo.com
 DOMAIN-SUFFIX,tpoxiaozhan.com
@@ -91281,7 +91162,6 @@ DOMAIN-SUFFIX,ts-juheng.com
 DOMAIN-SUFFIX,ts-marathon.com
 DOMAIN-SUFFIX,ts-precision.com
 DOMAIN-SUFFIX,ts.cc
-DOMAIN-SUFFIX,ts.net
 DOMAIN-SUFFIX,ts0775.com
 DOMAIN-SUFFIX,ts100.com
 DOMAIN-SUFFIX,ts166.net
@@ -111776,7 +111656,6 @@ DOMAIN-SUFFIX,ztcnwy.com
 DOMAIN-SUFFIX,ztcpa.com
 DOMAIN-SUFFIX,ztdgroup.com
 DOMAIN-SUFFIX,ztdli.com
-DOMAIN-SUFFIX,zte.home
 DOMAIN-SUFFIX,zte.net
 DOMAIN-SUFFIX,ztedevice.com
 DOMAIN-SUFFIX,ztedevices.com
