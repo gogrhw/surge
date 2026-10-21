@@ -13,6 +13,7 @@
 | KiwiVM 面板 | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/kiwivm-panel.sgmodule |
 | Plexamp Qwen | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/plexamp-qwen.sgmodule |
 | Plex Fast Connect | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/plex-fast-connect.sgmodule |
+| sub2api 面板 | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/sub2api-panel.sgmodule |
 | YouTube Plus | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/youtube-plus.sgmodule |
 
 ## 模块参数说明
@@ -197,6 +198,31 @@ ISVORO
 | `DEBUG` | `false` | 输出不含 API Key 的诊断日志 |
 
 模块 MITM `api.openai.com`。安装前需在 Surge 中启用 MITM、脚本并信任 Surge CA。API Key 只从 Plexamp 请求头转发到百炼，不会写入模块、脚本、日志或持久化存储。
+
+### sub2api 面板
+
+[sub2api-panel.sgmodule](Modules/sub2api-panel.sgmodule) 在一张面板中自动展示 [sub2api](https://github.com/Wei-Shaw/sub2api) 的全部上游平台及账号，不传平台、分组或数量筛选参数。查询异常、限流、过载、临时不可调度或任一窗口剩余额度不超过 10% 的账号优先。已停用的账号显示状态，不发起额度查询。邮箱显示为 `al***@example.com`。
+
+额度来自后台账号页使用的批量用量接口，按平台显示：Anthropic OAuth / Setup Token 的 5 小时、周、周 Sonnet 窗口；OpenAI OAuth（Codex）的 5 小时和周窗口；Gemini 的日请求配额；Antigravity 按 Claude/GPT 与 Gemini 模型组取最紧张的模型，并显示订阅等级和 AI Credits；Grok 的请求与 Token 配额。API Key 类账号显示后台为该账号配置的日、周、总额度上限及已用金额。没有用量接口也没有额度上限的账号保留显示并标明“暂不可查询”，不计入需关注。
+
+填写 `BASE_URL` 和 `ADMIN_API_KEY` 后刷新面板。`BASE_URL` 使用 sub2api 的 HTTPS 地址，例如 `https://sub2api.example.com`，也接受以 `/api/v1` 结尾的地址。`ADMIN_API_KEY` 在 sub2api 后台「系统设置」中生成，以 `admin-` 开头，只在生成时显示一次；用户 API Key（`sk-` 开头）和登录 Token 不可用。首次使用前需在后台确认合规声明，否则接口返回 HTTP 423。
+
+`SCRIPT_PATH=auto` 使用本仓库远程脚本。本地使用时填写该设备上 `sub2api-panel.js` 的绝对路径，例如 `/path/to/surge/Scripts/sub2api-panel.js`。
+
+| 参数 | 默认值 | 说明 |
+|------|--------|------|
+| `BASE_URL` | 必填 | sub2api HTTPS 地址，不含 `/v1` |
+| `ADMIN_API_KEY` | 必填 | sub2api 管理员 API Key（`admin-` 开头） |
+| `SCRIPT_PATH` | `auto` | 本仓库远程脚本、自定义 URL 或本地绝对路径 |
+| `UPDATE_INTERVAL` | `600` | 打开面板时检查的刷新间隔，单位秒 |
+
+参数含 `&`、`+`、`%`、逗号或双引号时，先用 URL 编码。模块不需要 MITM。
+
+账号列表每页 500 个，最多读取 10 页。批量用量每批 10 个账号，最多并发 2 批，单次请求超时为 20 秒，整个脚本在 28 秒内返回。部分查询失败或超时时，其他账号的结果继续显示。Surge 本机只缓存归一化额度、脱敏标签、账号 ID 和成功时间，最长回退 24 小时。回退数据标明“缓存”及原成功时间；失败不会延长缓存有效期。限流、过载等调度状态每次从账号列表读取，不缓存。管理接口拒绝账号列表请求时不展示缓存。
+
+脚本固定调用两个查询入口：`GET /api/v1/admin/accounts` 和 `POST /api/v1/admin/accounts/usage/batch`，后者始终提交 `force: false`，只发送有用量接口的账号。模块不调用账号变更、调度开关、强制探测、凭据刷新或额度重置接口。**这是脚本行为只读，管理员 API Key 本身拥有完整管理权限。** 批量用量查询的服务端行为与在后台打开账号页相同：Anthropic 只读数据库快照；Codex 快照缺失或过期时 sub2api 会向上游发送一次探测请求（每账号 10 分钟最多一次，可能消耗极少额度）；Antigravity 会请求上游并缓存 3 分钟；查询成功时 sub2api 可能自动清除可恢复的账号错误状态。密钥和上游 Token 不写入脚本日志或脚本缓存。
+
+接口依据：[sub2api 管理路由](https://github.com/Wei-Shaw/sub2api/blob/main/backend/internal/server/routes/admin.go)、[账号接口实现](https://github.com/Wei-Shaw/sub2api/blob/main/backend/internal/handler/admin/account_handler.go)和[用量查询实现](https://github.com/Wei-Shaw/sub2api/blob/main/backend/internal/service/account_usage_service.go)。测试使用 [虚构额度样例](Tests/Fixtures/sub2api-quota.json)，可运行 `node --check Scripts/sub2api-panel.js` 和 `node Tests/sub2api-panel.test.js --preview` 检查语法、预览面板并验证自动展示全部平台、分页、只读请求、缓存、部分失败和超时行为。
 
 ### YouTube Plus
 

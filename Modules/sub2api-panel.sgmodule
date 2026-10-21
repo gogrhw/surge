@@ -1,0 +1,14 @@
+#!name=sub2api Panel
+#!author=gogrhw
+#!category=Philalethia
+#!desc=Read-only sub2api quota panel. Automatically lists every upstream platform and account, with remaining quota, reset times, scheduling states, and dated cache on query failure. Accounts without a usage API remain visible. No management or reset actions.
+#!arguments=BASE_URL:YOUR_SUB2API_URL,ADMIN_API_KEY:YOUR_ADMIN_API_KEY,SCRIPT_PATH:auto,UPDATE_INTERVAL:600
+#!arguments-desc=- BASE_URL: sub2api HTTPS server address, without /v1. Also accepts /api/v1.\n- ADMIN_API_KEY: admin API key starting with admin-, generated in sub2api settings. Not a user API key. The script only queries quota; sub2api does not restrict this key to read access. URL-encode special characters.\n- SCRIPT_PATH: auto uses this repository's remote script. Accepts a custom URL or an absolute local path.\n- UPDATE_INTERVAL: refresh interval in seconds, checked when the panel is opened.\n\nAll platforms and accounts returned by sub2api are displayed automatically. Disabled accounts are displayed without querying quota. Quota comes from the same batch usage interface as the admin account page, never forced. No MITM is required.
+#!requirement=CORE_VERSION>=22
+
+[Panel]
+Sub2API = title="sub2api",content="Waiting for refresh",script-name=sub2api-panel,update-interval={{{UPDATE_INTERVAL}}}
+
+[Script]
+sub2api-panel = type=generic,timeout=30,script-path=https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Scripts/sub2api-panel.js,argument="base_url={{{BASE_URL}}}&admin_api_key={{{ADMIN_API_KEY}}}" #!REQUIREMENT "'{{{SCRIPT_PATH}}}' == 'auto'"
+sub2api-panel = type=generic,timeout=30,script-path={{{SCRIPT_PATH}}},argument="base_url={{{BASE_URL}}}&admin_api_key={{{ADMIN_API_KEY}}}" #!REQUIREMENT "'{{{SCRIPT_PATH}}}' != 'auto'"
