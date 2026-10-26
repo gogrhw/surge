@@ -2,8 +2,8 @@
 #!author=gogrhw + Maasea + Aioneas + QingRex + VirgilClyne
 #!category=Philalethia
 #!desc=YouTube ad blocking, Shorts & content filtering, PiP/background playback, bilingual subtitles.
-#!arguments=blockUpload:true,blockImmersive:true,blockShorts:true,debug:false,Type:Translate,AutoCC:false,ShowOnly:false,Position:Forward
-#!arguments-desc=- Content Filtering -\n- blockUpload: block upload-type feed content, [true, false]\n- blockImmersive: block immersive music feed content, [true, false]\n- blockShorts: block YouTube Shorts, [true, false]\n- debug: enable debug logging, [true, false]\n- Subtitle Translation -\n- Type: subtitle type, [Official, Translate]\n- AutoCC: auto-show translated subtitles, [true, false]\n- ShowOnly: only show translated subtitles, [true, false]\n- Position: original subtitle position, [Forward, Reverse]
+#!arguments=blockUpload:true,blockImmersive:true,blockShorts:true,subsTabOnly:true,debug:false,Type:Translate,AutoCC:false,ShowOnly:false,Position:Forward
+#!arguments-desc=- Content Filtering -\n- blockUpload: block upload-type feed content, [true, false]\n- blockImmersive: block immersive music feed content, [true, false]\n- blockShorts: block YouTube Shorts, [true, false]\n- subsTabOnly: keep only the Subscriptions tab in the Home top tab row, [true, false]\n- debug: enable debug logging, [true, false]\n- Subtitle Translation -\n- Type: subtitle type, [Official, Translate]\n- AutoCC: auto-show translated subtitles, [true, false]\n- ShowOnly: only show translated subtitles, [true, false]\n- Position: original subtitle position, [Forward, Reverse]
 
 [URL Rewrite]
 # PiP & background playback
@@ -19,7 +19,7 @@
 
 [Script]
 # --- Ad blocking, Shorts filtering & lyric translation ---
-youtube.response = type=http-response, pattern=^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next|player|search|reel\/reel_watch_sequence|guide|account\/get_setting|get_watch), script-path=https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Scripts/youtube.response.js, requires-body=true, binary-body-mode=true, max-size=-1, timeout=60, argument=blockUpload={{{blockUpload}}}&blockImmersive={{{blockImmersive}}}&blockShorts={{{blockShorts}}}&debug={{{debug}}}
+youtube.response = type=http-response, pattern=^https?:\/\/youtubei\.googleapis\.com\/youtubei\/v1\/(browse|next|player|search|reel\/reel_watch_sequence|guide|account\/get_setting|get_watch), script-path=https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Scripts/youtube.response.js, requires-body=true, binary-body-mode=true, max-size=-1, timeout=60, argument=blockUpload={{{blockUpload}}}&blockImmersive={{{blockImmersive}}}&blockShorts={{{blockShorts}}}&subsTabOnly={{{subsTabOnly}}}&debug={{{debug}}}
 
 # --- Subtitle translation: Player (JSON) ---
 youtube-subtitles-request-player-json = type=http-request,pattern=^https?:\/\/(www|m|tv)\.youtube\.com\/youtubei\/v1\/player\?(.*),requires-body=true,max-size=-1,script-path=https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Scripts/youtube-subtitles-request.js,tag=JSON YouTube Player Request,argument=Type={{{Type}}}&AutoCC={{{AutoCC}}}&ShowOnly={{{ShowOnly}}}&Position={{{Position}}}
