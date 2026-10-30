@@ -352,7 +352,7 @@
   function finish(lines) {
     if (finished) return;
     finished = true;
-    $done({ title: "sub2api", content: lines.join("\n") });
+    $done({ title: "Sub2API", content: lines.join("\n") });
   }
   function httpError(status) {
     if (status === 401) return "sub2api HTTP 401（管理员 API Key 无效）";

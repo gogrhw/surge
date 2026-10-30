@@ -13,7 +13,7 @@
 | KiwiVM 面板 | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/kiwivm-panel.sgmodule |
 | Plexamp Qwen | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/plexamp-qwen.sgmodule |
 | Plex Fast Connect | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/plex-fast-connect.sgmodule |
-| sub2api 面板 | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/sub2api-panel.sgmodule |
+| Sub2API 面板 | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/sub2api-panel.sgmodule |
 | YouTube Plus | https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Modules/youtube-plus.sgmodule |
 
 ## 模块参数说明
@@ -199,7 +199,7 @@ ISVORO
 
 模块 MITM `api.openai.com`。安装前需在 Surge 中启用 MITM、脚本并信任 Surge CA。API Key 只从 Plexamp 请求头转发到百炼，不会写入模块、脚本、日志或持久化存储。
 
-### sub2api 面板
+### Sub2API 面板
 
 [sub2api-panel.sgmodule](Modules/sub2api-panel.sgmodule) 在一张面板中自动展示 [sub2api](https://github.com/Wei-Shaw/sub2api) 的全部上游平台及账号，不传平台、分组或数量筛选参数。查询异常、限流、过载、临时不可调度或任一窗口剩余额度不超过 10% 的账号优先。已停用的账号显示状态，不发起额度查询。邮箱显示为 `al***@example.com`。
 

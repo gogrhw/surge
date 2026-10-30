@@ -121,7 +121,7 @@ async function main() {
   const c = overview.panel.content;
   assert.equal(overview.requests.length, 2);
   assert.deepEqual(JSON.parse(overview.requests[1].body).account_ids, [1, 2, 3, 4], "only accounts with a usage API are batched");
-  assert.equal(overview.panel.title, "sub2api");
+  assert.equal(overview.panel.title, "Sub2API");
   assert.match(c, /^6个平台 · 7个账号 · 1个需关注/);
   assert.match(c, /Anthropic · al\*\*\*@example\.com · OAuth\n5小时 剩余 70% · 3时0分后重置（01\/01 11:00）\n周 剩余 44.5%/);
   assert.match(c, /OpenAI · codex-plus · OAuth\n5小时 剩余 80%[^\n]*\n周 剩余 60%/);

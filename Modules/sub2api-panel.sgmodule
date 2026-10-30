@@ -1,4 +1,4 @@
-#!name=sub2api Panel
+#!name=Sub2API Panel
 #!author=gogrhw
 #!category=Philalethia
 #!desc=Read-only sub2api quota panel. Automatically lists every upstream platform and account, with remaining quota, reset times, scheduling states, and dated cache on query failure. Accounts without a usage API remain visible. No management or reset actions.
@@ -7,7 +7,7 @@
 #!requirement=CORE_VERSION>=22
 
 [Panel]
-Sub2API = title="sub2api",content="Waiting for refresh",script-name=sub2api-panel,update-interval={{{UPDATE_INTERVAL}}}
+Sub2API = title="Sub2API",content="Waiting for refresh",script-name=sub2api-panel,update-interval={{{UPDATE_INTERVAL}}}
 
 [Script]
 sub2api-panel = type=generic,timeout=30,script-path=https://raw.githubusercontent.com/gogrhw/surge/refs/heads/main/Scripts/sub2api-panel.js,argument="base_url={{{BASE_URL}}}&admin_api_key={{{ADMIN_API_KEY}}}" #!REQUIREMENT "'{{{SCRIPT_PATH}}}' == 'auto'"
