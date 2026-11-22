@@ -1,7 +1,8 @@
 # Surge domain direct rules; use RULE-SET,<URL>,DIRECT
 # Source: https://github.com/Loyalsoldier/v2ray-rules-dat
-# Geosite: apple, microsoft!github, zotero, cn
+# Geosite: apple, microsoft!github, zotero, cn, aws
 # Excluded: github, google, google-cn
+AND,((DOMAIN-SUFFIX,amazonaws.com),(NOT,((OR,((DOMAIN,github-cloud.s3.amazonaws.com),(DOMAIN,github-production-release-asset-2e65be.s3.amazonaws.com),(DOMAIN,github-production-repository-file-5c1aeb.s3.amazonaws.com),(DOMAIN,github-production-repository-image-32fea6.s3.amazonaws.com),(DOMAIN,github-production-upload-manifest-file-7fdce7.s3.amazonaws.com),(DOMAIN,github-production-user-asset-6210df.s3.amazonaws.com))))))
 AND,((DOMAIN-SUFFIX,azure.com),(NOT,((DOMAIN,production-copilot-host-westus.webpubsub.azure.com))))
 AND,((DOMAIN-SUFFIX,cn),(NOT,((OR,((DOMAIN-SUFFIX,doubleclick.cn),(DOMAIN-SUFFIX,g.cn),(DOMAIN-SUFFIX,ggpht.cn),(DOMAIN-SUFFIX,gkecnapps.cn),(DOMAIN-SUFFIX,google.cn),(DOMAIN-SUFFIX,googleadsserving.cn),(DOMAIN-SUFFIX,googleapis.cn),(DOMAIN-SUFFIX,googlecnapps.cn),(DOMAIN-SUFFIX,gstatic.cn),(DOMAIN-SUFFIX,gstaticcnapps.cn))))))
 AND,((DOMAIN-SUFFIX,qiao-cn.com),(NOT,((DOMAIN,qiao-cn.com))))
@@ -80,8 +81,6 @@ DOMAIN,mdr.ksn.kaspersky-labs.com
 DOMAIN,mesu-cdn.apple.com.akadns.net
 DOMAIN,mesu-china.apple.com.akadns.net
 DOMAIN,mwf-service.akamaized.net
-DOMAIN,notary-submissions-prod.s3-accelerate.amazonaws.com
-DOMAIN,notary-submissions-prod.s3.us-west-2.amazonaws.com
 DOMAIN,officecdn-microsoft-com.akamaized.net
 DOMAIN,oscdn.origin-apple.com.akadns.net
 DOMAIN,p-events-delivery.akamaized.net
@@ -9515,6 +9514,8 @@ DOMAIN-SUFFIX,acmetranslation.com
 DOMAIN-SUFFIX,acmoba.com
 DOMAIN-SUFFIX,acmsearch.com
 DOMAIN-SUFFIX,acmturc.com
+DOMAIN-SUFFIX,acmvalidations.com
+DOMAIN-SUFFIX,acmvalidationsaws.com
 DOMAIN-SUFFIX,acnow.net
 DOMAIN-SUFFIX,aco-musical.com
 DOMAIN-SUFFIX,acobt.tech
@@ -9836,6 +9837,7 @@ DOMAIN-SUFFIX,aes-beijing.org
 DOMAIN-SUFFIX,aesimka.com
 DOMAIN-SUFFIX,aesoftland.com
 DOMAIN-SUFFIX,aestheticbutler.xyz
+DOMAIN-SUFFIX,aesworkshops.com
 DOMAIN-SUFFIX,aevit.xyz
 DOMAIN-SUFFIX,aexpec.com
 DOMAIN-SUFFIX,af165fa2910261.beer
@@ -11340,6 +11342,17 @@ DOMAIN-SUFFIX,amaxchina.com
 DOMAIN-SUFFIX,amayad.com
 DOMAIN-SUFFIX,amazfit.com
 DOMAIN-SUFFIX,amazingsys.com
+DOMAIN-SUFFIX,amazonaws-china.com
+DOMAIN-SUFFIX,amazonaws.biz
+DOMAIN-SUFFIX,amazonaws.co.uk
+DOMAIN-SUFFIX,amazonaws.info
+DOMAIN-SUFFIX,amazonaws.net
+DOMAIN-SUFFIX,amazonaws.org
+DOMAIN-SUFFIX,amazonaws.tv
+DOMAIN-SUFFIX,amazoncognito.com
+DOMAIN-SUFFIX,amazonses.com
+DOMAIN-SUFFIX,amazonwebservices.com
+DOMAIN-SUFFIX,amazonworkdocs.com
 DOMAIN-SUFFIX,ambassadorchina.com
 DOMAIN-SUFFIX,amberbj.com
 DOMAIN-SUFFIX,amberedu.com
@@ -11390,6 +11403,8 @@ DOMAIN-SUFFIX,amphenol-industrial.com
 DOMAIN-SUFFIX,amphenol-jet.com
 DOMAIN-SUFFIX,amphibiachina.org
 DOMAIN-SUFFIX,amplesky.com
+DOMAIN-SUFFIX,amplifyapp.com
+DOMAIN-SUFFIX,amplifyframework.com
 DOMAIN-SUFFIX,amplly.com
 DOMAIN-SUFFIX,ampmake.com
 DOMAIN-SUFFIX,ampxl.com
@@ -11422,6 +11437,10 @@ DOMAIN-SUFFIX,amzmm.com
 DOMAIN-SUFFIX,amzndns-cn.biz
 DOMAIN-SUFFIX,amzndns-cn.com
 DOMAIN-SUFFIX,amzndns-cn.net
+DOMAIN-SUFFIX,amzndns.co.uk
+DOMAIN-SUFFIX,amzndns.com
+DOMAIN-SUFFIX,amzndns.net
+DOMAIN-SUFFIX,amzndns.org
 DOMAIN-SUFFIX,an1health.com
 DOMAIN-SUFFIX,an2.net
 DOMAIN-SUFFIX,an68.com
@@ -13195,7 +13214,19 @@ DOMAIN-SUFFIX,awmote.com
 DOMAIN-SUFFIX,aword.net
 DOMAIN-SUFFIX,awotuan.com
 DOMAIN-SUFFIX,awoyun.com
+DOMAIN-SUFFIX,aws
+DOMAIN-SUFFIX,aws-iot-hackathon.com
+DOMAIN-SUFFIX,aws.a2z.com
+DOMAIN-SUFFIX,aws.amazon.com
+DOMAIN-SUFFIX,aws.com
+DOMAIN-SUFFIX,aws.dev
 DOMAIN-SUFFIX,awsamazonlab.com
+DOMAIN-SUFFIX,awsapprunner.com
+DOMAIN-SUFFIX,awsapps.com
+DOMAIN-SUFFIX,awsautopilot.com
+DOMAIN-SUFFIX,awsautoscaling.com
+DOMAIN-SUFFIX,awsbraket.com
+DOMAIN-SUFFIX,awscommandlineinterface.com
 DOMAIN-SUFFIX,awsdns-cn-00.com
 DOMAIN-SUFFIX,awsdns-cn-00.net
 DOMAIN-SUFFIX,awsdns-cn-01.biz
@@ -13325,10 +13356,22 @@ DOMAIN-SUFFIX,awsdns-cn-63.biz
 DOMAIN-SUFFIX,awsdns-cn-63.com
 DOMAIN-SUFFIX,awsdns-cn-63.net
 DOMAIN-SUFFIX,awsdns-vip.com
+DOMAIN-SUFFIX,awsedstart.com
+DOMAIN-SUFFIX,awseducate.com
+DOMAIN-SUFFIX,awseducate.net
+DOMAIN-SUFFIX,awseducate.org
+DOMAIN-SUFFIX,awsglobalaccelerator.com
+DOMAIN-SUFFIX,awsloft-johannesburg.com
+DOMAIN-SUFFIX,awsloft-stockholm.com
 DOMAIN-SUFFIX,awsonamazon.com
 DOMAIN-SUFFIX,awspaas.com
 DOMAIN-SUFFIX,awspony.com
+DOMAIN-SUFFIX,awssecworkshops.com
+DOMAIN-SUFFIX,awsstatic.com
 DOMAIN-SUFFIX,awstar.net
+DOMAIN-SUFFIX,awsthinkbox.com
+DOMAIN-SUFFIX,awstrack.me
+DOMAIN-SUFFIX,awswaf.com
 DOMAIN-SUFFIX,awtmt.com
 DOMAIN-SUFFIX,awuming.com
 DOMAIN-SUFFIX,awx1.com
@@ -19631,6 +19674,7 @@ DOMAIN-SUFFIX,cdkf.com
 DOMAIN-SUFFIX,cdkjbg.com
 DOMAIN-SUFFIX,cdkjw.org
 DOMAIN-SUFFIX,cdks.run
+DOMAIN-SUFFIX,cdkworkshop.com
 DOMAIN-SUFFIX,cdlaobing.com
 DOMAIN-SUFFIX,cdlbmy.com
 DOMAIN-SUFFIX,cdlbyl.com
@@ -23267,6 +23311,8 @@ DOMAIN-SUFFIX,cloudflarestoragegw.com
 DOMAIN-SUFFIX,cloudflvare.com
 DOMAIN-SUFFIX,cloudfoshan.com
 DOMAIN-SUFFIX,cloudfront-cn.net
+DOMAIN-SUFFIX,cloudfront.com
+DOMAIN-SUFFIX,cloudfront.net
 DOMAIN-SUFFIX,cloudfuqing.com
 DOMAIN-SUFFIX,cloudganzhou.com
 DOMAIN-SUFFIX,cloudgap.net
@@ -24843,6 +24889,7 @@ DOMAIN-SUFFIX,constantinefun.com
 DOMAIN-SUFFIX,constao.com
 DOMAIN-SUFFIX,constar-gd.com
 DOMAIN-SUFFIX,constgroup.com
+DOMAIN-SUFFIX,containersonaws.com
 DOMAIN-SUFFIX,content4ads.com
 DOMAIN-SUFFIX,contentchina.com
 DOMAIN-SUFFIX,contentstore.htcvive.com
@@ -32247,6 +32294,7 @@ DOMAIN-SUFFIX,elanking.com
 DOMAIN-SUFFIX,elanso.com
 DOMAIN-SUFFIX,elanw.com
 DOMAIN-SUFFIX,elascloud.com
+DOMAIN-SUFFIX,elasticbeanstalk.com
 DOMAIN-SUFFIX,elawoffice.net
 DOMAIN-SUFFIX,elbmodel.com
 DOMAIN-SUFFIX,elderscrolls.com
@@ -88459,6 +88507,7 @@ DOMAIN-SUFFIX,thingskit.com
 DOMAIN-SUFFIX,thinheal.com
 DOMAIN-SUFFIX,think-mall.com
 DOMAIN-SUFFIX,think-way.net
+DOMAIN-SUFFIX,thinkboxsoftware.com
 DOMAIN-SUFFIX,thinkcloudlab.com
 DOMAIN-SUFFIX,thinkcmf.com
 DOMAIN-SUFFIX,thinkdid.com
@@ -111516,6 +111565,10 @@ DOMAIN-SUFFIX,zzzyyy.com
 DOMAIN-SUFFIX,zzzzaaaa.com
 DOMAIN-SUFFIX,zzzzzz.me
 DOMAIN-WILDCARD,?*-mihayo.akamaized.net
+DOMAIN-WILDCARD,?*.awsdns-[0-9][0-9].co.uk
+DOMAIN-WILDCARD,?*.awsdns-[0-9][0-9].com
+DOMAIN-WILDCARD,?*.awsdns-[0-9][0-9].net
+DOMAIN-WILDCARD,?*.awsdns-[0-9][0-9].org
 DOMAIN-WILDCARD,?*.awsdns-cn-[0-9][0-9].biz
 DOMAIN-WILDCARD,?*.awsdns-cn-[0-9][0-9].com
 DOMAIN-WILDCARD,?*.awsdns-cn-[0-9][0-9].net
