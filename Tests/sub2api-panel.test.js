@@ -25,12 +25,25 @@ function batch(ids, usage = fixture.usage, errors = {}) {
   }
   return ok(out);
 }
+function batchTodayStats(ids, stats = fixture.todayStats) {
+  const out = { stats: {} };
+  for (const id of ids) {
+    if (stats[id]) out.stats[id] = clone(stats[id]);
+  }
+  return ok(out);
+}
 function response(request) {
   if (request.method === "GET") return page(clone(fixture.accounts));
-  return batch(JSON.parse(request.body).account_ids);
+  const ids = JSON.parse(request.body).account_ids;
+  if (request.url.includes("/today-stats/batch")) return batchTodayStats(ids);
+  return batch(ids);
 }
-const withAccounts = (accounts, usage = fixture.usage, errors = {}) => (r) =>
-  r.method === "GET" ? page(clone(accounts)) : batch(JSON.parse(r.body).account_ids, usage, errors);
+const withAccounts = (accounts, usage = fixture.usage, errors = {}, todayStats = fixture.todayStats) => (r) => {
+  if (r.method === "GET") return page(clone(accounts));
+  const ids = JSON.parse(r.body).account_ids;
+  if (r.url.includes("/today-stats/batch")) return batchTodayStats(ids, todayStats);
+  return batch(ids, usage, errors);
+};
 
 function start(responder = response, options = {}) {
   const storage = options.storage || new Map();
@@ -59,11 +72,16 @@ function start(responder = response, options = {}) {
         assert.equal(url.pathname, "/api/v1/admin/accounts");
         assert.equal(url.searchParams.get("page_size"), "500");
         assert.equal(request.body, undefined);
-      } else {
-        assert.equal(url.pathname, "/api/v1/admin/accounts/usage/batch");
+      } else if (url.pathname === "/api/v1/admin/accounts/usage/batch") {
         const q = JSON.parse(request.body);
         assert.deepEqual(Object.keys(q), ["account_ids", "force"]);
         assert.equal(q.force, false);
+        assert.ok(q.account_ids.length > 0 && q.account_ids.length <= 10);
+        assert.ok(q.account_ids.every((id) => Number.isInteger(id)));
+      } else {
+        assert.equal(url.pathname, "/api/v1/admin/accounts/today-stats/batch");
+        const q = JSON.parse(request.body);
+        assert.deepEqual(Object.keys(q), ["account_ids"]);
         assert.ok(q.account_ids.length > 0 && q.account_ids.length <= 10);
         assert.ok(q.account_ids.every((id) => Number.isInteger(id)));
       }
@@ -119,38 +137,86 @@ const run = async (...args) => completed(start(...args));
 async function main() {
   const overview = await run();
   const c = overview.panel.content;
-  assert.equal(overview.requests.length, 2);
-  assert.deepEqual(JSON.parse(overview.requests[1].body).account_ids, [1, 2, 3, 4], "only accounts with a usage API are batched");
+  assert.equal(overview.requests.length, 3);
+  assert.deepEqual(JSON.parse(overview.requests[1].body).account_ids, [1, 2, 3, 4], "only accounts with a usage API are batched to usage/batch");
+  assert.deepEqual(JSON.parse(overview.requests[2].body).account_ids, [5, 6, 8], "enabled non-usage accounts are batched to today-stats/batch");
   assert.equal(overview.panel.title, "Sub2API");
-  assert.match(c, /^6个平台 · 7个账号 · 1个需关注/);
+  assert.match(c, /^6个平台 · 8个账号 · 1个需关注/);
   assert.match(c, /Anthropic · al\*\*\*@example\.com · OAuth\n5小时 剩余 70% · 3时0分后重置（01\/01 11:00）\n周 剩余 44.5%/);
   assert.match(c, /OpenAI · codex-plus · OAuth\n5小时 剩余 80%[^\n]*\n周 剩余 60%/);
   assert.match(c, /Antigravity · ag-ultra · Ultra\nClaude\/GPT 剩余 65% · 4时0分后重置[^\n]*\nGemini 剩余 100%[^\n]*\nCredits GOOGLE_ONE_AI 1000/);
   assert.doesNotMatch(c, /Antigravity[^\n]*\n5小时/);
   assert.match(c, /Gemini · gemini-cli · OAuth\n共享 · 日 剩余 88%/);
-  assert.match(c, /DeepSeek · deepseek-key · API Key\n日额度 \$9.5\/\$10 剩余 5% · 16时0分后重置（01\/02 00:00）\n总额度 \$25\/\$100 剩余 75% · 不自动重置/);
-  assert.match(c, /Kimi · kimi-key\n暂不可查询：该账号类型无额度接口/);
+  assert.match(c, /DeepSeek · deepseek-key · API Key\n日额度 \$9.5\/\$10 剩余 5% · 16时0分后重置（01\/02 00:00）\n总额度 \$25\/\$100 剩余 75% · 不自动重置\n今日 12 次 · 12\.5K tokens · \$1\.25/);
+  assert.match(c, /Kimi · kimi-key · API Key\n今日 0 次 · 0 tokens · \$0/);
+  assert.match(c, /OpenAI · sub2api-upstream · API Key\n来源 upstream\.sub2api\.example · 上游倍率 1x\n今日 244 次 · 1\.23M tokens · \$34\.06/);
   assert.match(c, /OpenAI · bo\*\*\*@example\.com\n已停用（未查询）/);
   assert.ok(c.indexOf("deepseek-key") < c.indexOf("al***"), "low quota sorts first");
-  assert.ok(c.indexOf("kimi-key") > c.indexOf("al***"), "unsupported accounts are not alerts");
-  assert.equal(JSON.parse([...overview.storage.values()][0]).accounts.length, 5);
+  assert.ok(c.indexOf("kimi-key") > c.indexOf("al***"), "non-alert apikey accounts do not sort as alerts");
+  assert.equal(JSON.parse([...overview.storage.values()][0]).accounts.length, 7);
 
+  // Upstream billing probe states & base_url credential/query stripping.
   const secretProbe = "synthetic-upstream-token-never-display";
   const privacy = await run((r) => {
     const out = response(r);
-    if (r.method === "GET") out.json.data.items.forEach((a) => { a.credentials = { access_token: secretProbe }; a.extra = { token: secretProbe }; });
-    else Object.values(out.json.data.usage).forEach((u) => Object.assign(u, { access_token: secretProbe, email: "private-address@example.com" }));
+    if (r.method === "GET") {
+      out.json.data.items.forEach((a) => {
+        a.credentials = { ...(a.credentials || {}), access_token: secretProbe };
+        a.extra = { ...(a.extra || {}), token: secretProbe };
+      });
+      out.json.data.items[7].credentials.base_url = "https://user:" + secretProbe + "@relay.example:8443/v1?token=" + secretProbe;
+    } else if (r.url.includes("/usage/batch")) {
+      Object.values(out.json.data.usage).forEach((u) => Object.assign(u, { access_token: secretProbe, email: "private-address@example.com" }));
+    }
     return out;
   });
   const visible = JSON.stringify([privacy.panel, privacy.writes, privacy.logs]);
   assert.ok(!visible.includes(secretProbe));
   assert.doesNotMatch(visible, /private-address/);
+  assert.match(privacy.panel.content, /来源 relay\.example:8443 · 上游倍率 1x/);
   assert.ok(privacy.requests.every((r) => !(r.body || "").includes(secretProbe)));
   const echoed = await run(withAccounts([{ ...fixture.accounts[0], name: "leak " + key }]));
   assert.match(echoed.panel.content, /leak \[已隐藏\]/);
   const redirect = await run(() => ({ status: 302, raw: "https://untrusted.example/" + key }));
   assert.equal(redirect.requests.length, 1);
   assert.match(redirect.panel.content, /HTTP 302/);
+
+  const probeStates = await run(withAccounts([
+    { id: 81, name: "stale-probe", platform: "openai", type: "apikey", status: "active",
+      credentials: { base_url: "https://stale.example/v1" },
+      extra: { upstream_billing_probe: { status: "ok", received_at: "2025-12-31T20:00:00Z", fresh_until: "2025-12-31T21:00:00Z", data: { effective_rate_multiplier: 0.8 } } } },
+    { id: 82, name: "peak-probe", platform: "openai", type: "apikey", status: "active",
+      credentials: { base_url: "https://peak.example/v1" },
+      extra: { upstream_billing_probe: { status: "ok", received_at: "2025-12-31T23:50:00Z", fresh_until: "2026-01-01T01:00:00Z",
+        data: { effective_rate_multiplier: 1.2, peak_rate_enabled: true, peak_rate_multiplier: 1.5 } } } },
+    { id: 83, name: "failed-probe", platform: "openai", type: "apikey", status: "active",
+      extra: { upstream_billing_probe: { status: "failed", received_at: "2025-12-31T23:50:00Z", data: { effective_rate_multiplier: 1 } } } },
+    { id: 84, name: "unsupported-probe", platform: "openai", type: "apikey", status: "active",
+      credentials: { base_url: "https://direct.example/v1" },
+      extra: { upstream_billing_probe: { status: "unsupported" } } },
+  ], {}, {}, { 81: { requests: 1, tokens: 500, cost: 0.002 } }));
+  assert.match(probeStates.panel.content, /来源 stale\.example · 上游倍率 0\.8x（01\/01 04:00）\n今日 1 次 · 500 tokens · \$<0\.01/);
+  assert.match(probeStates.panel.content, /来源 peak\.example · 上游倍率 1\.2x（高峰 1\.5x）/);
+  assert.match(probeStates.panel.content, /上游倍率 1x（探测失败）/);
+  assert.match(probeStates.panel.content, /OpenAI · unsupported-probe · API Key\n来源 direct\.example$/);
+
+  // CN provider persisted extra snapshots and rolling local quota reset.
+  const cnSnapshots = await run(withAccounts([
+    { id: 91, name: "ds-payg", platform: "deepseek", type: "apikey", status: "active",
+      extra: { deepseek_balances: [{ currency: "CNY", balance: 12.5 }, { currency: "USD", balance: 3 }], deepseek_balance_low: true } },
+    { id: 92, name: "kimi-coding", platform: "kimi", type: "apikey", status: "active",
+      quota_daily_limit: 20, quota_daily_used: 4,
+      extra: { quota_daily_start: "2025-12-31T20:00:00Z", kimi_5h_used_percent: 25, kimi_5h_reset_at: "2026-01-01T02:00:00Z" } },
+  ], {}, {}, { 91: { requests: 3, tokens: 4200, cost: 0.05 }, 92: { requests: 5, tokens: 8000, cost: 0.1 } }));
+  assert.match(cnSnapshots.panel.content, /DeepSeek · ds-payg · API Key\n余额不足\n余额 CNY 12\.5 · USD 3\n今日 3 次 · 4\.2K tokens · \$0\.05/);
+  assert.match(cnSnapshots.panel.content, /Kimi · kimi-coding · API Key\n日额度 \$4\/\$20 剩余 80% · 20时0分后重置（01\/02 04:00）\n5小时 剩余 75% · 2时0分后重置（01\/01 10:00）\n今日 5 次 · 8K tokens · \$0\.1/);
+
+  // Older sub2api without today-stats/batch (HTTP 404) degrades cleanly without alerting.
+  const legacy404 = await run((r) => r.url.includes("/today-stats/batch") ? { status: 404, raw: "404 page not found" } : response(r));
+  assert.match(legacy404.panel.content, /^6个平台 · 8个账号 · 1个需关注/);
+  assert.match(legacy404.panel.content, /OpenAI · sub2api-upstream · API Key\n来源 upstream\.sub2api\.example · 上游倍率 1x/);
+  assert.match(legacy404.panel.content, /Kimi · kimi-key\n暂不可查询：该账号类型无额度接口/);
+  assert.match(legacy404.panel.content, /DeepSeek · deepseek-key · API Key\n日额度 \$9\.5\/\$10/);
 
   let pages = 0;
   const paged = await run((r) => {
@@ -160,9 +226,9 @@ async function main() {
     return page(clone(fixture.accounts.slice((n - 1) * 4, n * 4)), 2);
   });
   assert.equal(pages, 2);
-  assert.match(paged.panel.content, /7个账号/);
+  assert.match(paged.panel.content, /8个账号/);
   const runaway = await run(() => page([clone(fixture.accounts[5])], 99));
-  assert.equal(runaway.requests.length, 10, "pagination is capped");
+  assert.equal(runaway.requests.length, 11, "pagination is capped at 10 list pages plus today-stats");
   assert.match(runaway.panel.content, /1个账号/);
 
   const limitedAccount = { ...fixture.accounts[1], rate_limit_reset_at: "2026-01-01T01:30:00Z", overload_until: "2025-12-31T00:00:00Z" };
@@ -174,8 +240,8 @@ async function main() {
     temp_unschedulable_until: "2026-01-01T00:10:00Z", temp_unschedulable_reason: "529" }]));
   assert.match(states.panel.content, /账号异常：token refresh failed\n临时不可调度（529） · 10分后恢复\n已暂停调度/);
 
-  const grokUsage = { 8: { grok_request_quota: { limit: 200, remaining: 50, reset_unix: 1767232800 }, grok_token_quota: { limit: 0 }, seven_day: { utilization: 10, resets_at: null } } };
-  const grok = await run(withAccounts([{ id: 8, name: "grok", platform: "grok", type: "oauth", status: "active" }], grokUsage));
+  const grokUsage = { 9: { grok_request_quota: { limit: 200, remaining: 50, reset_unix: 1767232800 }, grok_token_quota: { limit: 0 }, seven_day: { utilization: 10, resets_at: null } } };
+  const grok = await run(withAccounts([{ id: 9, name: "grok", platform: "grok", type: "oauth", status: "active" }], grokUsage));
   assert.match(grok.panel.content, /Grok · grok · OAuth\n周 剩余 90% · 重置时间未知\n请求 剩余 25% · 2时0分后重置（01\/01 10:00）$/);
   assert.doesNotMatch(grok.panel.content, /需关注|Token/);
   const over = await run(withAccounts([fixture.accounts[0]], { 1: { five_hour: { utilization: 130, resets_at: "bad" } } }));
@@ -196,12 +262,14 @@ async function main() {
   assert.match(missing.panel.content, /查询失败：未返回额度数据/);
   const batchDown = await run((r) => r.method === "POST" ? { status: 500, json: { code: 500, message: "internal" } } : response(r), { storage: new Map(overview.storage), now: now + 600000 });
   assert.match(batchDown.panel.content, /HTTP 500 · 缓存/);
-  assert.match(batchDown.panel.content, /日额度 \$9.5/, "local quota does not depend on the batch call");
+  assert.match(batchDown.panel.content, /日额度 \$9\.5/, "local quota does not depend on the batch call");
+  assert.match(batchDown.panel.content, /来源 upstream\.sub2api\.example · 上游倍率 1x/, "upstream source does not depend on today-stats batch");
+  assert.match(batchDown.panel.content, /Kimi · kimi-key · API Key\n查询失败：sub2api HTTP 500 · 缓存 01\/01 08:00\n今日 0 次/);
 
   const offline = await run(() => ({ error: key }), { storage: new Map(overview.storage), now: now + 600000 });
   assert.match(offline.panel.content, /账号列表查询失败：网络错误或请求超时/);
   assert.match(offline.panel.content, /账号列表未更新 · 缓存/);
-  assert.match(offline.panel.content, /周 剩余 44.5%/);
+  assert.match(offline.panel.content, /周 剩余 44\.5%/);
   assert.equal(offline.writes.length, 0);
   const expired = await run(() => ({ error: "offline" }), { storage: new Map(overview.storage), now: now + 86400001 });
   assert.doesNotMatch(expired.panel.content, /剩余/);
@@ -230,18 +298,19 @@ async function main() {
 
   const hanging = start((r) => r.method === "POST" ? { defer: true } : response(r));
   await new Promise((yes) => setImmediate(yes));
-  assert.equal(hanging.requests.length, 2);
+  assert.equal(hanging.requests.length, 3);
   hanging.timers[0].callback();
   const timed = await completed(hanging);
   assert.match(timed.panel.content, /查询超时/);
-  assert.match(timed.panel.content, /日额度 \$9.5/);
+  assert.match(timed.panel.content, /日额度 \$9\.5/);
+  assert.match(timed.panel.content, /来源 upstream\.sub2api\.example/);
   timed.callbacks[1](null, { status: 200 }, JSON.stringify(response(timed.requests[1]).json));
   assert.equal(timed.done.length, 1);
   const listHang = start(() => ({ defer: true }), { storage: new Map(overview.storage) });
   listHang.timers[0].callback();
   const listTimed = await completed(listHang);
   assert.match(listTimed.panel.content, /缓存/);
-  assert.match(listTimed.panel.content, /周 剩余 44.5%/);
+  assert.match(listTimed.panel.content, /周 剩余 44\.5%/);
 
   const lots = Array.from({ length: 25 }, (_, i) => ({ ...fixture.accounts[1], id: 100 + i, name: "codex-" + i }));
   const many = start((r) => r.method === "GET" ? page(clone(lots)) : { defer: true });

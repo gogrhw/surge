@@ -1,7 +1,7 @@
 /**
  * Read-only sub2api quota panel for every upstream account.
  * https://github.com/Wei-Shaw/sub2api
- * Uses the account list and the batch usage endpoint the admin account page loads.
+ * Uses the account list, batch usage, and batch today-stats endpoints the admin account page loads.
  * No force probe, refresh, reset, scheduling, or configuration API is called.
  */
 (function () {
@@ -40,7 +40,14 @@
     if (finished) return;
     if (accounts === null) return listFailure("查询超时");
     accounts.forEach(function (account, i) {
-      if (!results[i]) results[i] = failedAccount(account, "查询超时或尚未查询");
+      if (!results[i]) {
+        if (!account.usage && account.local) {
+          results[i] = fresh(account, account.local);
+          results[i].error = "查询超时或尚未查询";
+        } else {
+          results[i] = failedAccount(account, "查询超时或尚未查询");
+        }
+      }
     });
     render(true);
   }, 28000);
@@ -77,64 +84,90 @@
         type: type,
         label: text(a.name || "账号 " + (i + 1)),
         disabled: a.status === "disabled",
-        states: states(a),
-        local: localQuota(a),
+        states: states(a, platform),
+        local: localQuota(a, platform),
         usage: usageSupported(platform, type),
       };
     });
     if (!accounts.length) return render(true);
 
-    var pending = [];
+    var usagePending = [];
+    var statsPending = [];
     accounts.forEach(function (account, i) {
       if (account.disabled) results[i] = { id: account.id, platform: account.platform, label: account.label, disabled: true, states: [], data: null, updatedAt: null };
-      else if (!account.usage) results[i] = account.local ? fresh(account, account.local) :
-        { id: account.id, platform: account.platform, label: account.label, states: account.states, note: "暂不可查询：该账号类型无额度接口", data: null, updatedAt: null };
-      else pending.push(i);
+      else if (account.usage) usagePending.push(i);
+      else statsPending.push(i);
     });
-    var chunks = [];
-    for (var c = 0; c < pending.length; c += chunkSize) chunks.push(pending.slice(c, c + chunkSize));
+    var jobs = [];
+    for (var c = 0; c < usagePending.length; c += chunkSize) jobs.push({ op: "usage", chunk: usagePending.slice(c, c + chunkSize) });
+    for (var s = 0; s < statsPending.length; s += chunkSize) jobs.push({ op: "todayStats", chunk: statsPending.slice(s, s + chunkSize) });
     var next = 0;
     var active = 0;
     var completed = 0;
     function pump() {
       if (finished) return;
-      if (completed === chunks.length) return render(true);
-      while (!finished && active < 2 && next < chunks.length) {
-        (function (chunk) {
+      if (completed === jobs.length) return render(true);
+      while (!finished && active < 2 && next < jobs.length) {
+        (function (job) {
           active += 1;
-          request("usage", chunk.map(function (i) { return Number(accounts[i].id); }), function (error, data) {
+          request(job.op, job.chunk.map(function (i) { return Number(accounts[i].id); }), function (error, data, status) {
             if (finished) return;
-            var usage = object(data) && object(data.usage) ? data.usage : null;
-            var errors = object(data) && object(data.errors) ? data.errors : {};
-            if (!error && !usage) error = "额度响应格式错误";
-            chunk.forEach(function (i) {
-              var account = accounts[i];
-              if (error) { results[i] = failedAccount(account, error); return; }
-              var info = usage[account.id];
-              if (!object(info)) {
-                results[i] = failedAccount(account, errors[account.id] ? text(errors[account.id]) : "未返回额度数据");
-                return;
-              }
-              var parsed = usageQuota(account, info);
-              if (!parsed.data) {
-                results[i] = parsed.error ? failedAccount(account, parsed.error) :
-                  { id: account.id, platform: account.platform, label: account.label, states: account.states, note: "暂无额度数据", data: null, updatedAt: null };
-              } else {
-                results[i] = fresh(account, parsed.data);
-                if (parsed.error) results[i].error = parsed.error;
-              }
-            });
+            if (job.op === "usage") {
+              var usage = object(data) && object(data.usage) ? data.usage : null;
+              var errors = object(data) && object(data.errors) ? data.errors : {};
+              if (!error && !usage) error = "额度响应格式错误";
+              job.chunk.forEach(function (i) {
+                var account = accounts[i];
+                if (error) { results[i] = failedAccount(account, error); return; }
+                var info = usage[account.id];
+                if (!object(info)) {
+                  results[i] = failedAccount(account, errors[account.id] ? text(errors[account.id]) : "未返回额度数据");
+                  return;
+                }
+                var parsed = usageQuota(account, info);
+                if (!parsed.data) {
+                  results[i] = parsed.error ? failedAccount(account, parsed.error) :
+                    { id: account.id, platform: account.platform, label: account.label, states: account.states, note: "暂无额度数据", data: null, updatedAt: null };
+                } else {
+                  results[i] = fresh(account, parsed.data);
+                  if (parsed.error) results[i].error = parsed.error;
+                }
+              });
+            } else {
+              var stats = object(data) && object(data.stats) ? data.stats : null;
+              if (!error && !stats) error = "今日用量响应格式错误";
+              job.chunk.forEach(function (i) {
+                var account = accounts[i];
+                if (error) {
+                  if (status === 404) {
+                    results[i] = account.local ? fresh(account, account.local) :
+                      { id: account.id, platform: account.platform, label: account.label, states: account.states, note: "暂不可查询：该账号类型无额度接口", data: null, updatedAt: null };
+                    return;
+                  }
+                  if (account.local) {
+                    results[i] = fresh(account, account.local);
+                    results[i].error = error;
+                    return;
+                  }
+                  results[i] = failedAccount(account, error);
+                  return;
+                }
+                var merged = mergeLocal(account, todaySummary(stats[account.id]));
+                results[i] = merged ? fresh(account, merged) :
+                  { id: account.id, platform: account.platform, label: account.label, states: account.states, note: "暂不可查询：该账号类型无额度接口", data: null, updatedAt: null };
+              });
+            }
             active -= 1;
             completed += 1;
             pump();
           });
-        })(chunks[next++]);
+        })(jobs[next++]);
       }
     }
     pump();
   }
 
-  // Only these two sub2api reads can be sent. Batch usage is always unforced.
+  // Only these three sub2api reads can be sent. Batch usage is always unforced.
   function request(operation, input, callback) {
     if (finished) return;
     var responded = false;
@@ -150,6 +183,11 @@
       options.timeout = 20;
       options.headers["Content-Type"] = "application/json";
       options.body = JSON.stringify({ account_ids: input, force: false });
+    } else if (operation === "todayStats") {
+      options.url = base + "/api/v1/admin/accounts/today-stats/batch";
+      options.timeout = 15;
+      options.headers["Content-Type"] = "application/json";
+      options.body = JSON.stringify({ account_ids: input });
     } else return callback("不支持的查询操作");
     function respond(error, data, status) {
       if (responded || finished) return;
@@ -234,28 +272,120 @@
     return { data: data, error: error };
   }
 
-  // Local spending caps configured on API-key style accounts.
-  function localQuota(a) {
+  // Local caps, upstream source/billing snapshot, and CN provider snapshots from account list.
+  function localQuota(a, platform) {
+    var extra = object(a.extra) ? a.extra : {};
     var data = { plan: typeLabel(String(a.type || "").toLowerCase()), windows: [], summary: [] };
-    [["quota_daily_limit", "quota_daily_used", "日额度", "quota_daily_reset_at"], ["quota_weekly_limit", "quota_weekly_used", "周额度", "quota_weekly_reset_at"],
-      ["quota_limit", "quota_used", "总额度", null]].forEach(function (f) {
+    var host = baseHost(object(a.credentials) ? a.credentials.base_url : null);
+    var billing = upstreamBilling(extra.upstream_billing_probe);
+    if (host && billing) data.summary.push({ label: "来源", value: host + " · 上游倍率 " + billing });
+    else if (host) data.summary.push({ label: "来源", value: host });
+    else if (billing) data.summary.push({ label: "上游倍率", value: billing });
+    [["quota_daily_limit", "quota_daily_used", "日额度", "quota_daily_reset_at", "quota_daily_start", 86400000],
+      ["quota_weekly_limit", "quota_weekly_used", "周额度", "quota_weekly_reset_at", "quota_weekly_start", 604800000],
+      ["quota_limit", "quota_used", "总额度", null, null, 0]].forEach(function (f) {
       var limit = number(a[f[0]]);
       var used = number(a[f[1]]);
       if (limit === null || limit <= 0) return;
       used = used === null || used < 0 ? 0 : used;
+      var resetAt = null;
+      if (f[3]) {
+        resetAt = timestamp(a[f[3]]);
+        if (resetAt === null) resetAt = timestamp(extra[f[3]]);
+        if (resetAt === null && f[4]) {
+          var start = timestamp(extra[f[4]]);
+          if (start !== null) resetAt = start + f[5];
+        }
+      }
       data.windows.push({
         label: f[2] + " $" + money(used) + "/$" + money(limit),
         remaining: Math.max(0, Math.min(100, (limit - used) / limit * 100)),
-        resetAt: f[3] ? timestamp(a[f[3]]) : null, noReset: !f[3],
+        resetAt: resetAt, noReset: !f[3],
       });
     });
-    return data.windows.length ? data : null;
+    if (platform) {
+      [["5h", "5小时"], ["weekly", "周"], ["monthly", "月"]].forEach(function (w) {
+        var usedPct = number(extra[platform + "_" + w[0] + "_used_percent"]);
+        if (usedPct === null || usedPct < 0) return;
+        data.windows.push({
+          label: w[1],
+          remaining: Math.max(0, 100 - usedPct),
+          resetAt: timestamp(extra[platform + "_" + w[0] + "_reset_at"]),
+        });
+      });
+      var balances = [];
+      array(extra[platform + "_balances"]).forEach(function (entry) {
+        if (!object(entry)) return;
+        var amount = number(entry.balance);
+        if (amount === null) return;
+        var currency = typeof entry.currency === "string" && entry.currency.trim() ? text(entry.currency.trim()) : "¥";
+        balances.push(currency + " " + money(amount));
+      });
+      if (!balances.length) {
+        var single = number(extra[platform + "_balance"]);
+        if (single !== null) {
+          var cur = typeof extra[platform + "_balance_currency"] === "string" && extra[platform + "_balance_currency"].trim() ? text(extra[platform + "_balance_currency"].trim()) : "¥";
+          balances.push(cur + " " + money(single));
+        }
+      }
+      if (balances.length) data.summary.push({ label: "余额", value: balances.join(" · ") });
+    }
+    return data.windows.length || data.summary.length ? data : null;
+  }
+
+  function upstreamBilling(probe) {
+    if (!object(probe) || probe.status === "unsupported") return "";
+    var receivedAt = timestamp(probe.received_at);
+    var freshUntil = timestamp(probe.fresh_until);
+    if (freshUntil === null && probe.status === "ok" && receivedAt !== null) {
+      var nextProbeAt = timestamp(probe.next_probe_at);
+      if (nextProbeAt !== null && nextProbeAt > receivedAt) freshUntil = receivedAt + 2 * (nextProbeAt - receivedAt);
+    }
+    var stale = receivedAt === null ? probe.status === "ok" : freshUntil !== null && started > freshUntil;
+    var d = object(probe.data) ? probe.data : null;
+    var rate = d ? number(d.effective_rate_multiplier) : null;
+    if (rate === null && d && d.billing_scope === "token") rate = number(d.resolved_rate_multiplier);
+    if (rate !== null && rate >= 0) {
+      var label = multiplier(rate);
+      if (probe.status === "failed") return label + "（探测失败）";
+      if (stale && receivedAt !== null) return label + "（" + date(receivedAt) + "）";
+      var peak = d && d.peak_rate_enabled === true ? number(d.peak_rate_multiplier) : null;
+      if (peak !== null && peak >= 0) return label + "（高峰 " + multiplier(peak) + "）";
+      return label;
+    }
+    return probe.status === "failed" ? "探测失败" : "";
+  }
+
+  function todaySummary(stats) {
+    if (!object(stats)) return null;
+    var reqs = number(stats.requests);
+    var tokens = number(stats.tokens);
+    var cost = number(stats.cost);
+    if (cost === null) cost = number(stats.user_cost);
+    if (reqs === null && tokens === null && cost === null) return null;
+    var parts = [];
+    if (reqs !== null && reqs >= 0) parts.push(compactInt(reqs) + " 次");
+    if (tokens !== null && tokens >= 0) parts.push(compactCount(tokens) + " tokens");
+    if (cost !== null && cost >= 0) parts.push("$" + costText(cost));
+    return parts.length ? { label: "今日", value: parts.join(" · ") } : null;
+  }
+
+  function mergeLocal(account, metric) {
+    var baseData = account.local;
+    if (!baseData && !metric) return null;
+    return {
+      plan: baseData ? baseData.plan : typeLabel(account.type),
+      windows: baseData ? baseData.windows.slice() : [],
+      summary: (baseData ? baseData.summary.slice() : []).concat(metric ? [metric] : []),
+    };
   }
 
   // Scheduling states come from the list itself and are never cached.
-  function states(a) {
+  function states(a, platform) {
     var out = [];
+    var extra = object(a.extra) ? a.extra : {};
     if (a.status === "error") out.push("账号异常" + (a.error_message ? "：" + text(a.error_message) : ""));
+    if (platform && extra[platform + "_balance_low"] === true) out.push("余额不足");
     var limited = timestamp(a.rate_limit_reset_at);
     if (limited !== null && limited > started) out.push("当前已限流 · " + until(limited, "解除") + "（" + date(limited) + "）");
     var overload = timestamp(a.overload_until);
@@ -380,6 +510,20 @@
   function array(v) { return Array.isArray(v) ? v : []; }
   function number(v) { return (typeof v !== "number" && typeof v !== "string") || String(v).trim() === "" || !isFinite(Number(v)) ? null : Number(v); }
   function money(n) { return String(Number(n.toFixed(2))); }
+  function costText(n) { return n > 0 && n < 0.01 ? "<0.01" : money(n); }
+  function multiplier(n) { return String(Number(n.toFixed(4))) + "x"; }
+  function compactCount(n) {
+    if (n >= 1000000000) return String(Number((n / 1000000000).toFixed(2))) + "B";
+    if (n >= 1000000) return String(Number((n / 1000000).toFixed(2))) + "M";
+    if (n >= 1000) return String(Number((n / 1000).toFixed(1))) + "K";
+    return String(Math.round(n));
+  }
+  function compactInt(n) { return n >= 10000 ? compactCount(n) : String(Math.round(n)); }
+  function baseHost(url) {
+    if (typeof url !== "string") return "";
+    var m = /^https?:\/\/(?:[^\/@?#]*@)?(\[[0-9a-fA-F:]+\]|[a-zA-Z0-9.-]+(?::\d{1,5})?)(?:[\/?#]|$)/.exec(url.trim());
+    return m ? text(m[1]) : "";
+  }
   function text(v) {
     var s = String(v === undefined || v === null ? "" : v).replace(/[\x00-\x1f\x7f]/g, " ");
     if (key) s = s.split(key).join("[已隐藏]");

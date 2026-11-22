@@ -9,7 +9,17 @@
     { "id": 5, "name": "deepseek-key", "platform": "deepseek", "type": "apikey", "status": "active", "schedulable": true,
       "quota_daily_limit": 10, "quota_daily_used": 9.5, "quota_daily_reset_at": "2026-01-01T16:00:00Z", "quota_limit": 100, "quota_used": 25 },
     { "id": 6, "name": "kimi-key", "platform": "kimi", "type": "apikey", "status": "active", "schedulable": true },
-    { "id": 7, "name": "bob@example.com", "platform": "openai", "type": "oauth", "status": "disabled", "schedulable": false }
+    { "id": 7, "name": "bob@example.com", "platform": "openai", "type": "oauth", "status": "disabled", "schedulable": false },
+    { "id": 8, "name": "sub2api-upstream", "platform": "openai", "type": "apikey", "status": "active", "schedulable": true,
+      "credentials": { "base_url": "https://upstream.sub2api.example/v1" },
+      "extra": {
+        "upstream_billing_probe": {
+          "status": "ok",
+          "received_at": "2025-12-31T23:30:00Z",
+          "fresh_until": "2026-01-01T00:30:00Z",
+          "data": { "object": "sub2api.key_billing", "billing_scope": "token", "resolved_rate_multiplier": 1, "effective_rate_multiplier": 1, "peak_rate_enabled": false }
+        }
+      } }
   ],
   "usage": {
     "1": { "source": "passive", "five_hour": { "utilization": 30, "resets_at": "2026-01-01T03:00:00Z", "remaining_seconds": 10800 },
@@ -24,5 +34,10 @@
       },
       "ai_credits": [{ "credit_type": "GOOGLE_ONE_AI", "amount": 1000 }] },
     "4": { "five_hour": null, "gemini_shared_daily": { "utilization": 12, "resets_at": "2026-01-01T08:00:00Z", "used_requests": 120, "limit_requests": 1000 } }
+  },
+  "todayStats": {
+    "5": { "requests": 12, "tokens": 12500, "cost": 1.25, "standard_cost": 1.25, "user_cost": 1.5 },
+    "6": { "requests": 0, "tokens": 0, "cost": 0, "standard_cost": 0, "user_cost": 0 },
+    "8": { "requests": 244, "tokens": 1234567, "cost": 34.058, "standard_cost": 36.265, "user_cost": 36.265 }
   }
 }
