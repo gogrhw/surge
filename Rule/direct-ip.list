@@ -12519,7 +12519,6 @@ IP-CIDR6,2600:f0f0:c144::/46,no-resolve
 IP-CIDR6,2600:f0f0:c148::/46,no-resolve
 IP-CIDR6,2600:f0f0:c14c::/47,no-resolve
 IP-CIDR6,2600:f0f1:10::/45,no-resolve
-IP-CIDR6,2600:f0f1:18::/46,no-resolve
 IP-CIDR6,2600:f0f1:80::/44,no-resolve
 IP-CIDR6,2600:f0f1:4000::/41,no-resolve
 IP-CIDR6,2600:f0f1:40c0::/42,no-resolve
