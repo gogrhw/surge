@@ -514,6 +514,8 @@ IP-CIDR,15.248.176.0/20,no-resolve
 IP-CIDR,15.248.193.0/31,no-resolve
 IP-CIDR,15.248.194.0/23,no-resolve
 IP-CIDR,15.248.198.0/24,no-resolve
+IP-CIDR,15.248.200.0/26,no-resolve
+IP-CIDR,15.248.208.0/25,no-resolve
 IP-CIDR,15.249.0.0/16,no-resolve
 IP-CIDR,15.251.0.0/28,no-resolve
 IP-CIDR,15.251.0.20/30,no-resolve
@@ -12566,6 +12568,7 @@ IP-CIDR6,2600:f0fb:c000::/47,no-resolve
 IP-CIDR6,2600:f0fb:c002::/56,no-resolve
 IP-CIDR6,2600:f0fb:c003::/48,no-resolve
 IP-CIDR6,2600:f0fb:c004::/46,no-resolve
+IP-CIDR6,2600:f0fb:c008::/48,no-resolve
 IP-CIDR6,2600:f0fb:c0ff::/56,no-resolve
 IP-CIDR6,2600:f0fb:c800::/46,no-resolve
 IP-CIDR6,2600:f0fb:c804::/47,no-resolve
